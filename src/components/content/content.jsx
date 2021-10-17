@@ -20,7 +20,7 @@ export default function Content() {
         if (searchString !== "") {
             persons.forEach((person) => {
                 if (person.name.toLowerCase().includes(searchString.toLowerCase()))
-                    arr.push(<ContentItem nameProp={person.name} key={person.id} id={person.id} delete={removePerson} />)
+                    arr.push(<ContentItem nameProp={person.name} key={person.id} id={person.id} remove={removePerson} />)
             })
         } else {
             arr = persons.map((person) => <ContentItem nameProp={person.name} key={person.id} id={person.id} remove={removePerson} />)
