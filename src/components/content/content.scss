@@ -4,8 +4,10 @@
 #content {
     margin-top: 10vh;
     flex-grow: 9;
+    overflow-y: auto;
 
     .action-bar {
+        height: 40px;
         display: flex;
         justify-content: space-between;
 
@@ -35,6 +37,7 @@
     }
 
     .content-container {
+        max-height: inherit;
         @extend .default-padding;
 
         .content-item {
