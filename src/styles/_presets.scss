@@ -9,9 +9,19 @@
 }
 
 .box-shadow {
-    box-shadow: 0em 0em 0.2em $blackLight;
+    box-shadow: 0em 0em 1em $blackLight;
 }
 
 .default-padding {
     padding: 16px;
+}
+
+.no-select {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
