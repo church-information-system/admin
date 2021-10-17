@@ -37,12 +37,21 @@
     }
 
     .content-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 16px;
+
         max-height: inherit;
+
         @extend .default-padding;
 
         .content-item {
+            justify-content: space-between;
+            display: flex;
             margin-bottom: 16px;
+            align-items: center;
 
+            @extend .subtle-hover-grow;
             @extend .bg-white;
             @extend .default-padding;
             @extend .box-shadow;

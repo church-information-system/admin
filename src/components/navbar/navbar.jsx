@@ -6,7 +6,7 @@ export default function NavBar() {
     return (
         <div id="navbar">
             <h2>National Shrine of Our Lady of sorrows</h2>
-            <img src={settings} alt="Settings" className="icon clickable" onClick={() =>
+            <img src={settings} title="settings" alt="Settings" className="icon clickable" onClick={() =>
                 Swal.fire({ title: "Settings" })
             } />
         </div>

@@ -3,13 +3,20 @@
 // compound
 .clickable:hover {
     @extend .no-select;
-    @extend .subtle-hover;
+    @extend .hover-grow;
     @extend .hover-pointer;
     @extend .active-shrink;
 }
 
 // individual
-.subtle-hover:hover {
+.subtle-hover-grow:hover {
+    @include desktop {
+        transition: 100ms;
+        transform: scale(1.02);
+    }
+}
+
+.hover-grow:hover {
     @include desktop {
         transition: 200ms;
         transform: scale(1.05);

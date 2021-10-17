@@ -8,22 +8,18 @@ export default function Content() {
         <div id="content">
             <ActionBar />
 
-            <div class="content-container">
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
-                <ContentItem />
+            <div className="content-container">
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
+                <ContentItem name="Juan Dela Cruz" />
             </div>
 
         </div>
