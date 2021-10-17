@@ -1,12 +1,10 @@
 import Swal from "sweetalert2"
-import React, { useState } from 'react'
 
 import print from "../../assets/print.svg"
 import edit from "../../assets/edit.svg"
 import trash from "../../assets/delete.svg"
 
-export default function ContentItem({ nameProp, remove, id }) {
-    const [name, setName] = useState(nameProp);
+export default function ContentItem({ name, remove, id, rename }) {
     return (
         <div className="content-item">
             <h3>{name}</h3>
@@ -19,7 +17,9 @@ export default function ContentItem({ nameProp, remove, id }) {
                             '<span class="swal2-input-label" >Fullname</span>' +
                             '<input id="swal-input1" class="swal2-input">',
                         showCancelButton: true,
-                    }).then(() => setName(() => document.getElementById('swal-input1').value))
+                    }).then(() => {
+                        rename(document.getElementById('swal-input1').value, id)
+                    })
                 }} />
                 <img src={trash} title="delete" alt="delete" className="icon clickable" onClick={() =>
                     Swal.fire({
