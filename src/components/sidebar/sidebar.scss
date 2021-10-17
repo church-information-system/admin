@@ -1,0 +1,10 @@
+@import "../../styles/presets";
+
+#sidebar {
+    padding-top: 10vh;
+    flex-grow: 1;
+
+    @extend .bg-white;
+    @extend .default-padding;
+    @extend .box-shadow;
+}

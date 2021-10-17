@@ -1,0 +1,14 @@
+@import "../../styles/presets";
+@import "../../styles/variables";
+
+#navbar {
+    background-color: $white;
+    height: 6vh;
+    width: 100%;
+    z-index: 8;
+    position: fixed;
+
+    @extend .bg-white;
+    @extend .box-shadow;
+    @extend .default-padding;
+}

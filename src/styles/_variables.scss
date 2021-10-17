@@ -1,0 +1,17 @@
+
+// COLORS
+$primary: #52CE9C;
+$secondary: #D20000;
+
+$primaryLight: lighten($primary, 10%);
+$primaryLighter: lighten($primary, 20%);
+$primaryLightest: lighten($primary, 30%);
+
+$bg: #e5e5e5;
+$white: #fff;
+$black: #000;
+
+$blackLight: lighten($black, 60%);
+
+// SIZES
+$desktop: 960px;
