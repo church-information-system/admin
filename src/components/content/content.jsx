@@ -6,25 +6,26 @@ import { useState } from "react"
 
 export default function Content() {
 
-    const [persons, setPersons] = useState(["Juan Dela Cruz"])
+    const [persons, setPersons] = useState([{ name: "Juan Dela Cruz", id: 0 }])
     const [searchString, setSearchString] = useState("");
 
-    const addPerson = (name) => setPersons((current) => [...current, name,])
-    const removePerson = (index) => {
-        let temp = [...persons]
-        temp.splice(index, 1)
-        setPersons(() => temp)
+    const addPerson = (name) => setPersons((current) => [...current, { name: name, id: persons.length }])
+    const removePerson = (id) => {
+        setPersons(() => persons.filter(item => item.id !== id))
     }
     const search = (input) => setSearchString(() => input)
 
     function getMatches() {
-        return (searchString !== "") ?
-            persons.map((person, index) => {
-                if (person.includes(searchString))
-                    return <ContentItem name={person} key={person + index} index={index} delete={removePerson} />
-                else return null
-            }) :
-            persons.map((person, index) => <ContentItem nameProp={person} key={person + index} index={index} remove={removePerson} />)
+        let arr = []
+        if (searchString !== "") {
+            persons.forEach((person) => {
+                if (person.name.toLowerCase().includes(searchString.toLowerCase()))
+                    arr.push(<ContentItem nameProp={person.name} key={person.id} id={person.id} delete={removePerson} />)
+            })
+        } else {
+            arr = persons.map((person) => <ContentItem nameProp={person.name} key={person.id} id={person.id} remove={removePerson} />)
+        }
+        return arr
     }
 
     return (

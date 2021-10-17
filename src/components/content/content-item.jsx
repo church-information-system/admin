@@ -5,7 +5,7 @@ import print from "../../assets/print.svg"
 import edit from "../../assets/edit.svg"
 import trash from "../../assets/delete.svg"
 
-export default function ContentItem({ nameProp, remove, index }) {
+export default function ContentItem({ nameProp, remove, id }) {
     const [name, setName] = useState(nameProp);
     return (
         <div className="content-item">
@@ -29,7 +29,7 @@ export default function ContentItem({ nameProp, remove, index }) {
                         confirmButtonText: "Delete",
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            remove(index)
+                            remove(id)
                         }
                     })
                 } />
