@@ -2,11 +2,12 @@ import "./content.scss"
 
 import ContentItem from "./content-item"
 import ActionBar from "./action-bar"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { fetchCollection } from "../../api/FirebaseHelper"
 
 export default function Content() {
 
-    const [persons, setPersons] = useState([{ name: "Juan Dela Cruz", id: 0 }])
+    const [persons, setPersons] = useState([])
     const [searchString, setSearchString] = useState("");
 
     const addPerson = (name) => setPersons((current) => [...current, { name: name, id: persons.length }])
@@ -18,6 +19,8 @@ export default function Content() {
         temp[temp.findIndex((item) => item.id === id)].name = name
         setPersons(() => temp)
     }
+
+    useEffect(() => fetchRecords(), [])
 
     function getMatches() {
         let arr = []
@@ -34,6 +37,11 @@ export default function Content() {
 
     function createItem(name, id) {
         return <ContentItem name={name} key={id} id={id} remove={removePerson} rename={renamePerson} />
+    }
+
+    async function fetchRecords() {
+        console.log("fetching")
+        setPersons(await fetchCollection("marriage"))
     }
 
     return (
