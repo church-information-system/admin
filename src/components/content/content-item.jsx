@@ -4,10 +4,14 @@ import print from "../../assets/print.svg"
 import edit from "../../assets/edit.svg"
 import trash from "../../assets/delete.svg"
 
-export default function ContentItem({ name, remove, id, rename }) {
+export default function ContentItem({ name, address, phone, id, rename, remove }) {
     return (
         <div className="content-item">
-            <h3>{name}</h3>
+            <div>
+                <h3>{name}</h3>
+                <p>{address}</p>
+                <small>{phone}</small>
+            </div>
             <span>
                 <img src={print} title="print" alt="" className="icon clickable" onClick={() => Swal.fire({ title: "print" })} />
                 <img src={edit} title="edit" alt="" className="icon clickable" onClick={() => {

@@ -8,15 +8,19 @@ export default function ActionBar({ addPerson, search }) {
     const [addingRecord, setAddingRecord] = useState(false)
 
 
-    async function submit(name) {
+    async function submit(name, address, phone) {
         if (await addRecord("marriage", {
             name: name,
-            address: "somewhere",
-            phone: "0999",
+            address: address,
+            phone: phone,
         })) {
-            addPerson(name)
+            addPerson(name, address, phone)
             setAddingRecord(false)
         }
+    }
+
+    function inputGetter(id) {
+        return document.getElementById(id).value;
     }
 
     return (
@@ -32,16 +36,22 @@ export default function ActionBar({ addPerson, search }) {
                     title: "Enter Name",
                     html:
                         '<span class="swal2-input-label">Fullname</span>' +
-                        '<input id="swal-input1" class="swal2-input">',
+                        '<input id="fullname" class="swal2-input">' +
+                        '<span class="swal2-input-label">Address</span>' +
+                        '<input id="address" class="swal2-input">' +
+                        '<span class="swal2-input-label">Phone</span>' +
+                        '<input id="phone" class="swal2-input">',
                     showCancelButton: true,
-                }).then(() => {
-                    submit(document.getElementById('swal-input1').value)
-                    setAddingRecord(true)
+                }).then((value) => {
+                    if (value.isConfirmed) {
+                        submit(inputGetter("fullname"), inputGetter("address"), inputGetter("phone"))
+                        setAddingRecord(true)
+                    }
                 })
             }}>
                 {addingRecord ? <MiniLoader /> : <img src={add} alt="add" className="icon" />}
                 <h4>Add Record</h4>
             </span>
-        </div>
+        </div >
     )
 }

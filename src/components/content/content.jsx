@@ -10,7 +10,8 @@ export default function Content() {
     const [persons, setPersons] = useState([])
     const [searchString, setSearchString] = useState("");
 
-    const addPerson = (name) => setPersons((current) => [...current, { name: name, id: persons.length }])
+    const addPerson = (name, address, phone) => setPersons((current) =>
+        [...current, { name: name, id: persons.length, address: address, phone: phone }])
     const removePerson = (id) => setPersons(() => persons.filter(item => item.id !== id))
 
     const search = (input) => setSearchString(() => input)
@@ -27,16 +28,16 @@ export default function Content() {
         if (searchString !== "") {
             persons.forEach((person) => {
                 if (person.name.trim().toLowerCase().includes(searchString.trim().toLowerCase()))
-                    arr.push(createItem(person.name, person.id))
+                    arr.push(createItem(person.name, person.id, person.address, person.phone))
             })
         } else {
-            arr = persons.map((person) => createItem(person.name, person.id))
+            arr = persons.map((person) => createItem(person.name, person.id, person.address, person.phone))
         }
         return arr
     }
 
-    function createItem(name, id) {
-        return <ContentItem name={name} key={id} id={id} remove={removePerson} rename={renamePerson} />
+    function createItem(name, id, address, phone) {
+        return <ContentItem name={name} address={address} phone={phone} key={id} id={id} remove={removePerson} rename={renamePerson} />
     }
 
     async function fetchRecords() {
