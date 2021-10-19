@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.loader-container {
+    margin: 0.5em;
+}
+
+.loader {
+    margin: 4em auto;
+    border: 1em solid #f2f2f2;
+    border-top: 1em solid $black;
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    animation: spin 1s linear infinite;
+}
+
+.mini-loader {
+    border: 0.3em solid $blackLight;
+    border-top: 0.3em solid $black;
+    border-radius: 100%;
+    width: 0.8em;
+    height: 0.8em;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

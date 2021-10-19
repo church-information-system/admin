@@ -1,7 +1,24 @@
 import add from "../../assets/add.svg"
 import Swal from "sweetalert2"
+import { addRecord } from "../../api/FirebaseHelper"
+import { useState } from "react/cjs/react.development"
+import { MiniLoader } from "../misc/loader"
 
 export default function ActionBar({ addPerson, search }) {
+    const [addingRecord, setAddingRecord] = useState(false)
+
+
+    async function submit(name) {
+        if (await addRecord("marriage", {
+            name: name,
+            address: "somewhere",
+            phone: "0999",
+        })) {
+            addPerson(name)
+            setAddingRecord(false)
+        }
+    }
+
     return (
         <div className="action-bar">
             <span className="search-bar">
@@ -17,9 +34,12 @@ export default function ActionBar({ addPerson, search }) {
                         '<span class="swal2-input-label">Fullname</span>' +
                         '<input id="swal-input1" class="swal2-input">',
                     showCancelButton: true,
-                }).then(() => addPerson(document.getElementById('swal-input1').value))
+                }).then(() => {
+                    submit(document.getElementById('swal-input1').value)
+                    setAddingRecord(true)
+                })
             }}>
-                <img src={add} alt="add" className="icon" />
+                {addingRecord ? <MiniLoader /> : <img src={add} alt="add" className="icon" />}
                 <h4>Add Record</h4>
             </span>
         </div>

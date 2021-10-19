@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { firestore } from "../App";
 
 export async function fetchCollection(collectionName) {
@@ -10,4 +10,15 @@ export async function fetchCollection(collectionName) {
         datas.push(data)
     });
     return datas;
+}
+
+export async function addRecord(collectionName, record) {
+    let success
+    try {
+        await addDoc(collection(firestore, collectionName), record);
+        success = true
+    } catch (e) {
+        success = false
+    }
+    return success
 }
