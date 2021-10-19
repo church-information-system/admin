@@ -1,8 +1,8 @@
 import add from "../../assets/add.svg"
 import Swal from "sweetalert2"
 import { addRecord } from "../../api/FirebaseHelper"
-import { useState } from "react/cjs/react.development"
 import { MiniLoader } from "../misc/loader"
+import { useState } from "react"
 
 export default function ActionBar({ addPerson, search }) {
     const [addingRecord, setAddingRecord] = useState(false)
