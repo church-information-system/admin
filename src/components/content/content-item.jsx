@@ -3,7 +3,7 @@ import Swal from "sweetalert2"
 import print from "../../assets/print.svg"
 import edit from "../../assets/edit.svg"
 import archive from "../../assets/archive.svg"
-import { deleteRecord, editRecord } from "../../api/FirebaseHelper"
+import { archiveRecord, editRecord } from "../../api/FirebaseHelper"
 import { customAlert, inputGetter } from "../../helpers"
 import { useState } from "react"
 import { MiniLoader } from "../misc/loader"
@@ -17,18 +17,22 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
             customAlert("Record Updated!", "success")
             requestRefresh()
         } else {
-            customAlert("Failed to update record", "failed")
+            customAlert("Failed to update record", "error")
         }
         setUpdating(false)
     }
 
-    async function confirmDelete() {
+    async function confirmArchive() {
 
-        if (await deleteRecord("marriage", id)) {
-            customAlert("Record Deleted!", "success")
+        if (await archiveRecord("marriage", "marriage_archive", id, {
+            name: name,
+            address: address,
+            phone: phone,
+        })) {
+            customAlert("Record Archived!", "success")
             requestRefresh()
         } else {
-            customAlert("Failed to delete record", "failed")
+            customAlert("Failed to Archive record", "error")
         }
         setDeleting(false)
 
@@ -82,7 +86,7 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
                                         confirmButtonText: "archive",
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            confirmDelete()
+                                            confirmArchive()
                                         }
                                     })
                                 } />

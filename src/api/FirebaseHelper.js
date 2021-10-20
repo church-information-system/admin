@@ -45,11 +45,11 @@ export async function deleteRecord(collectionName, docId) {
     return success
 }
 
-export async function archiveRecord(collectionName, docId, record) {
+export async function archiveRecord(currentCollectionName, targetCollectionName, docId, record) {
     let success = false
     try {
-        if (await addRecord(collectionName, record)) {
-            if (await deleteRecord(collectionName, docId)) {
+        if (await addRecord(targetCollectionName, record)) {
+            if (await deleteRecord(currentCollectionName, docId)) {
                 success = true
             }
         }
