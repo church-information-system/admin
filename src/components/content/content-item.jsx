@@ -2,7 +2,7 @@ import Swal from "sweetalert2"
 
 import print from "../../assets/print.svg"
 import edit from "../../assets/edit.svg"
-import trash from "../../assets/delete.svg"
+import archive from "../../assets/archive.svg"
 
 export default function ContentItem({ name, address, phone, id, rename, remove }) {
     return (
@@ -25,12 +25,12 @@ export default function ContentItem({ name, address, phone, id, rename, remove }
                         rename(document.getElementById('swal-input1').value, id)
                     })
                 }} />
-                <img src={trash} title="delete" alt="delete" className="icon clickable" onClick={() =>
+                <img src={archive} title="archive" alt="archive" className="icon clickable" onClick={() =>
                     Swal.fire({
                         title: "Are you sure you want to delete this record?",
                         icon: "warning",
                         showCancelButton: true,
-                        confirmButtonText: "Delete",
+                        confirmButtonText: "archive",
                     }).then((result) => {
                         if (result.isConfirmed) {
                             remove(id)
