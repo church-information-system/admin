@@ -4,8 +4,9 @@
 #sidebar {
     padding-top: 10vh;
     flex-grow: 1;
+    background-color: $primary;
+    color: white;
 
-    @extend .bg-white;
     @extend .default-padding;
     @extend .box-shadow;
 

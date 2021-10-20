@@ -12,6 +12,10 @@
     box-shadow: 0em 0em 1em $blackLight;
 }
 
+.box-shadow-darker {
+    box-shadow: 0em 0em 1em $black;
+}
+
 .default-padding {
     padding: 16px;
 }
@@ -20,7 +24,12 @@
     margin: 16px;
 }
 
+.button-primary {
+    background-color: $primary;
+}
+
 .icon {
+    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(216deg) brightness(101%) contrast(102%);
     padding: 8px;
     height: 24px;
     width: 24px;

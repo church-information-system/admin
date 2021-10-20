@@ -28,8 +28,9 @@
             padding: 0 16px;
             display: flex;
             align-items: center;
+            color: white;
 
-            @extend .bg-white;
+            @extend .button-primary;
             @extend .clickable;
             @extend .rounded-border;
             @extend .box-shadow;
@@ -51,11 +52,27 @@
             margin-bottom: 16px;
             align-items: center;
 
+            border-left: 8px solid $secondary;
+
             @extend .subtle-hover-grow;
             @extend .bg-white;
             @extend .default-padding;
             @extend .box-shadow;
             @extend .rounded-border;
+
+            .icons-container {
+                display: flex;
+
+                .icon-container {
+                    // filter: invert(62%) sepia(78%) saturate(3342%) hue-rotate(219deg) brightness(77%) contrast(84%);
+                    margin: 8px;
+                    background-color: $primary;
+
+                    @extend .rounded-border;
+                    @extend .clickable;
+                    @extend .box-shadow;
+                }
+            }
         }
     }
 }

@@ -10,8 +10,9 @@
     align-items: center;
     justify-content: space-between;
     font-family: "Dancing Script", cursive;
+    background-color: $secondary;
+    color: white;
 
-    @extend .bg-white;
-    @extend .box-shadow;
+    @extend .box-shadow-darker;
     @extend .default-padding;
 }
