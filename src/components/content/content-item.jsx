@@ -4,7 +4,7 @@ import print from "../../assets/print.svg"
 import edit from "../../assets/edit.svg"
 import archive from "../../assets/archive.svg"
 import { archiveRecord, editRecord } from "../../api/FirebaseHelper"
-import { customAlert, inputGetter } from "../../helpers"
+import { customAlert, getById, inputGetter } from "../../helpers"
 import { useState } from "react"
 import { MiniLoader } from "../misc/loader"
 
@@ -58,16 +58,42 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
                                     Swal.fire({
                                         title: "Enter Details",
                                         html:
+                                            '<span id="empty" class="error-text"> </span>' +
+                                            '<span id="nothingChanged" class="error-text"> </span>' +
                                             '<span class="swal2-input-label">Fullname</span>' +
                                             '<input id="fullname" class="swal2-input">' +
                                             '<span class="swal2-input-label">Address</span>' +
                                             '<input id="address" class="swal2-input">' +
                                             '<span class="swal2-input-label">Phone</span>' +
                                             '<input id="phone" class="swal2-input">',
+                                        didOpen: () => {
+                                            getById("fullname").value = name
+                                            getById("address").value = address
+                                            getById("phone").value = phone
+                                        },
+                                        preConfirm: () => {
+                                            let newname = inputGetter("fullname")
+                                            let newaddress = inputGetter("address")
+                                            let newphone = inputGetter("phone")
+
+                                            let noempty = (newname.length > 0 && newaddress.length > 0 && newphone.length > 0)
+                                            if (!noempty) getById("empty").innerHTML = "Complete all fields"
+
+                                            let nothingChanged = (newname === name && newaddress === address && newphone === phone)
+                                            console.log(noempty)
+                                            console.log(nothingChanged)
+                                            if (nothingChanged) getById("nothingChanged").innerHTML = "Change atleast one value"
+
+                                            return noempty && !nothingChanged
+                                        },
                                         showCancelButton: true,
                                     }).then((value) => {
                                         if (value.isConfirmed) {
-                                            submit({ name: inputGetter("fullname"), address: inputGetter("address"), phone: inputGetter("phone") })
+                                            let newname = inputGetter("fullname")
+                                            let newaddress = inputGetter("address")
+                                            let newphone = inputGetter("phone")
+
+                                            submit({ name: newname, address: newaddress, phone: newphone })
                                             setUpdating(() => true)
                                         }
                                     })

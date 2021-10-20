@@ -4,6 +4,10 @@ export function inputGetter(id) {
     return document.getElementById(id).value;
 }
 
+export function getById(id) {
+    return document.getElementById(id)
+}
+
 export function customAlert(message, icon) {
     Swal.fire({
         title: message,
