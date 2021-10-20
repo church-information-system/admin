@@ -16,15 +16,9 @@ export default function Content() {
 
     const refreshList = () => setRefreshes((count) => count + 1)
 
-
     const removePerson = (id) => setPersons(() => persons.filter(item => item.id !== id))
 
     const search = (input) => setSearchString(() => input)
-    const renamePerson = (name, id) => {
-        let temp = [...persons]
-        temp[temp.findIndex((item) => item.id === id)].name = name
-        setPersons(() => temp)
-    }
 
     useEffect(() => fetchRecords(), [refreshes])
 
@@ -42,7 +36,7 @@ export default function Content() {
     }
 
     function createItem(name, id, address, phone) {
-        return <ContentItem name={name} address={address} phone={phone} key={id} id={id} remove={removePerson} rename={renamePerson} />
+        return <ContentItem name={name} address={address} phone={phone} key={id} id={id} remove={removePerson} requestRefresh={refreshList} />
     }
 
     async function fetchRecords() {
