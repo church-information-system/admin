@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, addDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { firestore } from "../App";
 
 export async function fetchCollection(collectionName) {
@@ -28,6 +28,31 @@ export async function editRecord(collectionName, docId, value) {
     try {
         await updateDoc(doc(collection(firestore, collectionName), docId), value)
         success = true
+    } catch (e) {
+        success = false
+    }
+    return success
+}
+
+export async function deleteRecord(collectionName, docId) {
+    let success
+    try {
+        await deleteDoc(doc(collection(firestore, collectionName), docId))
+        success = true
+    } catch (e) {
+        success = false
+    }
+    return success
+}
+
+export async function archiveRecord(collectionName, docId, record) {
+    let success = false
+    try {
+        if (await addRecord(collectionName, record)) {
+            if (await deleteRecord(collectionName, docId)) {
+                success = true
+            }
+        }
     } catch (e) {
         success = false
     }

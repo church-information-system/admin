@@ -3,24 +3,36 @@ import Swal from "sweetalert2"
 import print from "../../assets/print.svg"
 import edit from "../../assets/edit.svg"
 import archive from "../../assets/archive.svg"
-import { editRecord } from "../../api/FirebaseHelper"
+import { deleteRecord, editRecord } from "../../api/FirebaseHelper"
 import { customAlert, inputGetter } from "../../helpers"
 import { useState } from "react"
 import { MiniLoader } from "../misc/loader"
 
 export default function ContentItem({ name, address, phone, id, requestRefresh, remove }) {
     const [updating, setUpdating] = useState(false)
+    const [deleting, setDeleting] = useState(false)
 
     async function submit(values) {
         if (await editRecord("marriage", id, values)) {
             customAlert("Record Updated!", "success")
             requestRefresh()
         } else {
-            customAlert("Failde to update record", "failed")
+            customAlert("Failed to update record", "failed")
         }
         setUpdating(false)
     }
 
+    async function confirmDelete() {
+
+        if (await deleteRecord("marriage", id)) {
+            customAlert("Record Deleted!", "success")
+            requestRefresh()
+        } else {
+            customAlert("Failed to delete record", "failed")
+        }
+        setDeleting(false)
+
+    }
 
     return (
         <div className="content-item">
@@ -59,18 +71,22 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
                         }
                     </div>
                     <div className="icon-container">
-                        <img src={archive} title="archive" alt="archive" className="icon" onClick={() =>
-                            Swal.fire({
-                                title: "Are you sure you want to delete this record?",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonText: "archive",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    remove(id)
-                                }
-                            })
-                        } />
+                        {
+                            deleting ?
+                                <MiniLoader /> :
+                                <img src={archive} title="archive" alt="archive" className="icon" onClick={() =>
+                                    Swal.fire({
+                                        title: "Are you sure you want to archive this record?",
+                                        icon: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonText: "archive",
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            confirmDelete()
+                                        }
+                                    })
+                                } />
+                        }
                     </div>
                 </div>
             </span>
