@@ -4,7 +4,7 @@ import { addRecord } from "../../api/FirebaseHelper"
 import { MiniLoader } from "../misc/loader"
 import { useState } from "react"
 
-export default function ActionBar({ addPerson, search }) {
+export default function ActionBar({ requestRefresh, search }) {
     const [addingRecord, setAddingRecord] = useState(false)
 
 
@@ -14,8 +14,8 @@ export default function ActionBar({ addPerson, search }) {
             address: address,
             phone: phone,
         })) {
-            addPerson(name, address, phone)
             setAddingRecord(false)
+            requestRefresh()
         }
     }
 

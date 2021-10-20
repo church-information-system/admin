@@ -9,9 +9,14 @@ export default function Content() {
 
     const [persons, setPersons] = useState([])
     const [searchString, setSearchString] = useState("");
+    const [refreshes, setRefreshes] = useState(0);
 
     const addPerson = (name, address, phone) => setPersons((current) =>
         [...current, { name: name, id: persons.length, address: address, phone: phone }])
+
+    const refreshList = () => setRefreshes((count) => count + 1)
+
+
     const removePerson = (id) => setPersons(() => persons.filter(item => item.id !== id))
 
     const search = (input) => setSearchString(() => input)
@@ -21,7 +26,7 @@ export default function Content() {
         setPersons(() => temp)
     }
 
-    useEffect(() => fetchRecords(), [])
+    useEffect(() => fetchRecords(), [refreshes])
 
     function getMatches() {
         let arr = []
@@ -47,7 +52,7 @@ export default function Content() {
 
     return (
         <div id="content">
-            <ActionBar addPerson={addPerson} search={search} />
+            <ActionBar addPerson={addPerson} search={search} requestRefresh={refreshList} />
             <div className="content-container">
                 {getMatches()[0] ? getMatches() : "No Records found"}
             </div>
