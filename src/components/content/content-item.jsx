@@ -10,9 +10,10 @@ import { MiniLoader } from "../misc/loader"
 
 export default function ContentItem({ name, address, phone, id, requestRefresh, remove }) {
     const [updating, setUpdating] = useState(false)
-    const [deleting, setDeleting] = useState(false)
+    const [archiving, setArchiving] = useState(false)
 
     async function submit(values) {
+        setUpdating(() => true)
         if (await editRecord("marriage", id, values)) {
             customAlert("Record Updated!", "success")
             requestRefresh()
@@ -23,7 +24,7 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
     }
 
     async function confirmArchive() {
-
+        setArchiving(() => true)
         if (await archiveRecord("marriage", "marriage_archive", id, {
             name: name,
             address: address,
@@ -34,7 +35,7 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
         } else {
             customAlert("Failed to Archive record", "error")
         }
-        setDeleting(false)
+        setArchiving(() => false)
 
     }
 
@@ -94,7 +95,6 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
                                             let newphone = inputGetter("phone")
 
                                             submit({ name: newname, address: newaddress, phone: newphone })
-                                            setUpdating(() => true)
                                         }
                                     })
                                 }} />
@@ -102,7 +102,7 @@ export default function ContentItem({ name, address, phone, id, requestRefresh, 
                     </div>
                     <div className="icon-container">
                         {
-                            deleting ?
+                            archiving ?
                                 <MiniLoader /> :
                                 <img src={archive} title="archive" alt="archive" className="icon" onClick={() =>
                                     Swal.fire({
