@@ -30,14 +30,7 @@ export default function ContentItem({
   async function confirmArchive() {
     setArchiving(() => true);
     if (
-      await archiveRecord(selected, `${selected}_archive`, person.id, {
-        name: person.name,
-        dayOfDeath: person.dayOfDeath,
-        dayOfBirth: person.dayOfBirth,
-        dateOfMass: person.dateOfMass,
-        age: person.age,
-        address: person.address,
-      })
+      await archiveRecord(selected, `${selected}_archive`, person.id, person)
     ) {
       customAlert("Record Archived!", "success");
       requestRefresh();
