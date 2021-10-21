@@ -2,7 +2,7 @@ import "./navbar.scss";
 import hamburger from "../../assets/hamburger.svg";
 import SideBar from "../sidebar/sidebar";
 import { getById } from "../../helpers";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect } from "react";
 
 export default function NavBar({ select, selected }) {
   function showSidebar() {
