@@ -3,24 +3,24 @@ import Swal from "sweetalert2"
 import { addRecord } from "../../api/FirebaseHelper"
 import { MiniLoader } from "../misc/loader"
 import { useState } from "react"
-import { getById } from "../../helpers"
+import { customAlert, getById, inputGetter } from "../../helpers"
 
-export default function ActionBar({ requestRefresh, search, show }) {
+export default function ActionBar({ requestRefresh, search, show, selected }) {
     const [addingRecord, setAddingRecord] = useState(false)
 
     async function submit(name, address, phone) {
-        if (await addRecord("marriage", {
+        setAddingRecord(true)
+        if (await addRecord(selected, {
             name: name,
             address: address,
             phone: phone,
         })) {
-            setAddingRecord(false)
+            customAlert("Record Added!", "success")
             requestRefresh()
+        } else {
+            customAlert("Failed to add record", "error")
         }
-    }
-
-    function inputGetter(id) {
-        return document.getElementById(id).value;
+        setAddingRecord(false)
     }
 
     return show ? (
@@ -56,7 +56,6 @@ export default function ActionBar({ requestRefresh, search, show }) {
                 }).then((value) => {
                     if (value.isConfirmed) {
                         submit(inputGetter("fullname"), inputGetter("address"), inputGetter("phone"))
-                        setAddingRecord(true)
                     }
                 })
             }}>

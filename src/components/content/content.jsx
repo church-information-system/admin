@@ -13,9 +13,6 @@ export default function Content({ selected }) {
     const [fetchingCollection, setFetchingCollection] = useState(false)
     const [refereshes, setRefreshes] = useState(0)
 
-    const addPerson = (name, address, phone) => setPersons((current) =>
-        [...current, { name: name, id: persons.length, address: address, phone: phone }])
-
     const refreshList = () => setRefreshes((value) => value + 1)
 
     const search = (input) => setSearchString(() => input)
@@ -53,7 +50,7 @@ export default function Content({ selected }) {
 
     return (
         <div id="content">
-            <ActionBar addPerson={addPerson} search={search} requestRefresh={refreshList} show={selected !== ""} />
+            <ActionBar search={search} requestRefresh={refreshList} show={selected !== ""} selected={selected} />
             {
                 selected === "" ?
                     <h3 className="content-message">Nothing Selected</h3> :
