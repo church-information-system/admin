@@ -58,11 +58,146 @@ export default function ContentItem({
       default:
     }
     return (
-      <div className="key-value-pair">
+      <div className="key-value-pair" key={key}>
         <span className="key">{key}:</span>
         <span className="value">{value}</span>
       </div>
     )
+  }
+
+  function marriageDialog() {
+    Swal.fire({
+      title: "Enter Details",
+      html:
+        '<span id="empty" class="error-text"> </span>' +
+        '<span id="nothingChanged" class="error-text"> </span>' +
+        '<span class="swal2-input-label">Fullname</span>' +
+        '<input id="fullname" class="swal2-input">' +
+        '<span class="swal2-input-label">Address</span>' +
+        '<input id="address" class="swal2-input">' +
+        '<span class="swal2-input-label">Phone</span>' +
+        '<input id="phone" class="swal2-input">',
+      didOpen: () => {
+        getById("fullname").value = person.name;
+        getById("address").value = person.address;
+        getById("phone").value = person.phone;
+      },
+      preConfirm: () => {
+        let newname = inputGetter("fullname");
+        let newaddress = inputGetter("address");
+        let newphone = inputGetter("phone");
+        let noempty =
+          newname.length > 0 &&
+          newaddress.length > 0 &&
+          newphone.length > 0;
+        if (!noempty)
+          getById("empty").innerHTML = "Complete all fields";
+        let nothingChanged =
+          newname === person.name &&
+          newaddress === person.address &&
+          newphone === person.phone;
+        console.log(noempty);
+        console.log(nothingChanged);
+        if (nothingChanged)
+          getById("nothingChanged").innerHTML =
+            "Change atleast one value";
+        return noempty && !nothingChanged;
+      },
+      showCancelButton: true,
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let newname = inputGetter("fullname");
+        let newaddress = inputGetter("address");
+        let newphone = inputGetter("phone");
+
+        submit({
+          name: newname,
+          address: newaddress,
+          phone: newphone,
+        });
+      }
+    });
+  }
+
+  function deathDialog() {
+    Swal.fire({
+      title: "Edit Details",
+      html:
+        '<span class="swal2-input-label">Fullname</span>' +
+        '<input id="fullname" class="swal2-input">' +
+        '<span class="swal2-input-label">Address</span>' +
+        '<input id="address" class="swal2-input">' +
+        '<span class="swal2-input-label">Day Of Death</span>' +
+        '<input id="dayOfDeath" class="swal2-input">' +
+        '<span class="swal2-input-label">Day Of Birth</span>' +
+        '<input id="dayOfBirth" class="swal2-input">' +
+        '<span class="swal2-input-label">Date Of Mass</span>' +
+        '<input id="dateOfMass" class="swal2-input">' +
+        '<span class="swal2-input-label">Age</span>' +
+        '<input id="age" class="swal2-input">' +
+        '<span id="empty" class="error-text"> </span>' +
+        '<span id="nothingChanged" class="error-text"> </span>',
+      didOpen: () => {
+        getById("fullname").value = person.name;
+        getById("dayOfDeath").value = person.dayOfDeath;
+        getById("dayOfBirth").value = person.dayOfBirth;
+        getById("dateOfMass").value = person.dateOfMass;
+        getById("age").value = person.age;
+        getById("address").value = person.address;
+      },
+      preConfirm: () => {
+        let newName = inputGetter("fullname");
+        let newDayOfBirth = inputGetter("dayOfBirth");
+        let newDayOfDeath = inputGetter("dayOfDeath");
+        let newDateOfMass = inputGetter("dateOfMass");
+        let newAddress = inputGetter("address");
+        let newAge = inputGetter("age");
+
+        let noempty =
+          newName.length > 0 &&
+          newDayOfBirth.length > 0 &&
+          newDayOfDeath.length > 0 &&
+          newDateOfMass.length > 0 &&
+          newAddress.length > 0 &&
+          newAge.length > 0
+
+        if (!noempty)
+          getById("empty").innerHTML = "Complete all fields";
+
+        let nothingChanged =
+          newName === person.name &&
+          newDayOfBirth === person.dayOfBirth &&
+          newDayOfDeath === person.dayOfDeath &&
+          newDateOfMass === person.dateOfMass &&
+          newAddress === person.address &&
+          newAge === person.age
+
+        if (nothingChanged)
+          getById("nothingChanged").innerHTML =
+            "Change atleast one value";
+
+        return noempty && !nothingChanged;
+      },
+      showCancelButton: true,
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let newName = inputGetter("fullname");
+        let newDayOfBirth = inputGetter("dayOfBirth");
+        let newDayOfDeath = inputGetter("dayOfDeath");
+        let newDateOfMass = inputGetter("dateOfMass");
+        let newAddress = inputGetter("address");
+        let newAge = inputGetter("age");
+
+        submit({
+          name: newName,
+          dayOfDeath: newDayOfDeath,
+          dayOfBirth: newDayOfBirth,
+          dateOfMass: newDateOfMass,
+          age: newAge,
+          address: newAddress,
+        });
+      }
+    });
   }
 
   return (
@@ -97,60 +232,16 @@ export default function ContentItem({
                 alt=""
                 className="icon"
                 onClick={() => {
-                  Swal.fire({
-                    title: "Enter Details",
-                    html:
-                      '<span id="empty" class="error-text"> </span>' +
-                      '<span id="nothingChanged" class="error-text"> </span>' +
-                      '<span class="swal2-input-label">Fullname</span>' +
-                      '<input id="fullname" class="swal2-input">' +
-                      '<span class="swal2-input-label">Address</span>' +
-                      '<input id="address" class="swal2-input">' +
-                      '<span class="swal2-input-label">Phone</span>' +
-                      '<input id="phone" class="swal2-input">',
-                    didOpen: () => {
-                      getById("fullname").value = person.name;
-                      getById("address").value = person.address;
-                      getById("phone").value = person.phone;
-                    },
-                    preConfirm: () => {
-                      let newname = inputGetter("fullname");
-                      let newaddress = inputGetter("address");
-                      let newphone = inputGetter("phone");
-
-                      let noempty =
-                        newname.length > 0 &&
-                        newaddress.length > 0 &&
-                        newphone.length > 0;
-                      if (!noempty)
-                        getById("empty").innerHTML = "Complete all fields";
-
-                      let nothingChanged =
-                        newname === person.name &&
-                        newaddress === person.address &&
-                        newphone === person.phone;
-                      console.log(noempty);
-                      console.log(nothingChanged);
-                      if (nothingChanged)
-                        getById("nothingChanged").innerHTML =
-                          "Change atleast one value";
-
-                      return noempty && !nothingChanged;
-                    },
-                    showCancelButton: true,
-                  }).then((value) => {
-                    if (value.isConfirmed) {
-                      let newname = inputGetter("fullname");
-                      let newaddress = inputGetter("address");
-                      let newphone = inputGetter("phone");
-
-                      submit({
-                        name: newname,
-                        address: newaddress,
-                        phone: newphone,
-                      });
-                    }
-                  });
+                  switch (selected) {
+                    case "marriage":
+                      marriageDialog()
+                      break
+                    case "death":
+                      deathDialog()
+                      break
+                    default:
+                      marriageDialog()
+                  }
                 }}
               />
             )}
