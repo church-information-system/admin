@@ -48,36 +48,37 @@ export default function Content({ selected }) {
   }
 
   function createItem(person) {
-    switch (selected) {
-      case "death":
-        return (
-          <ContentItem
-            name={person.name}
-            address={person.address}
-            key={person.id}
-            id={person.id}
-            selected={person.selected}
-            age={person.age}
-            dayOfBirth={person.dayOfBirth}
-            dayOfDeath={person.dayOfDeath}
-            dateOfMass={person.dateOfMass}
-            requestRefresh={refreshList}
-          />
-        );
-      case "marriage":
-      default:
-        return (
-          <ContentItem
-            name={person.name}
-            address={person.address}
-            phone={person.phone}
-            key={person.id}
-            id={person.id}
-            selected={person.selected}
-            requestRefresh={refreshList}
-          />
-        );
-    }
+    // switch (selected) {
+    //   case "death":
+    //     return (
+    //       <ContentItem
+    //         name={person.name}
+    //         age={person.age}
+    //         address={person.address}
+    //         dayOfBirth={person.dayOfBirth}
+    //         dayOfDeath={person.dayOfDeath}
+    //         dateOfMass={person.dateOfMass}
+    //         key={person.id}
+    //         id={person.id}
+    //         selected={selected}
+    //         requestRefresh={refreshList}
+    //       />
+    //     );
+    //   case "marriage":
+    //   default:
+    //     return (
+    //       <ContentItem
+    //         name={person.name}
+    //         address={person.address}
+    //         phone={person.phone}
+    //         key={person.id}
+    //         id={person.id}
+    //         selected={selected}
+    //         requestRefresh={refreshList}
+    //       />
+    //     );
+    // }
+    return <ContentItem person={person} key={person.id} selected={selected} />
   }
 
   return (

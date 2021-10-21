@@ -65,6 +65,21 @@
       @extend .box-shadow;
       @extend .rounded-border;
 
+      .person-datas {
+        .key-value-pair {
+          display: flex;
+          justify-content: space-between;
+
+          .key {
+            font-weight: bold;
+          }
+
+          .value {
+            margin-left: 20px;
+          }
+        }
+      }
+
       .icons-container {
         display: flex;
 

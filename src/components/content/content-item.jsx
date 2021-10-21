@@ -9,10 +9,7 @@ import { useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
 export default function ContentItem({
-  name,
-  address,
-  phone,
-  id,
+  person,
   selected,
   requestRefresh,
 }) {
@@ -21,7 +18,7 @@ export default function ContentItem({
 
   async function submit(values) {
     setUpdating(() => true);
-    if (await editRecord(selected, id, values)) {
+    if (await editRecord(selected, person.id, values)) {
       customAlert("Record Updated!", "success");
       requestRefresh();
     } else {
@@ -33,10 +30,10 @@ export default function ContentItem({
   async function confirmArchive() {
     setArchiving(() => true);
     if (
-      await archiveRecord(selected, `${selected}_archive`, id, {
-        name: name,
-        address: address,
-        phone: phone,
+      await archiveRecord(selected, `${selected}_archive`, person.id, {
+        name: person.name,
+        address: person.address,
+        phone: person.phone,
       })
     ) {
       customAlert("Record Archived!", "success");
@@ -47,12 +44,37 @@ export default function ContentItem({
     setArchiving(() => false);
   }
 
+  function personDetail(key, value) {
+    switch (key) {
+      case "dateOfMass":
+        key = "Date Of Mass"
+        break
+      case "dayOfDeath":
+        key = "Day Of Death"
+        break
+      case "dayOfBirth":
+        key = "Day Of Birth"
+        break
+      default:
+    }
+    return (
+      <div className="key-value-pair">
+        <span className="key">{key}:</span>
+        <span className="value">{value}</span>
+      </div>
+    )
+  }
+
   return (
     <div className="content-item">
-      <div>
-        <h3>{name}</h3>
-        <p>{address}</p>
-        <small>{phone}</small>
+      <div className="person-datas">
+        {
+          Object.keys(person).sort((a, b) => a < b).map((key) => {
+            if (key !== "id")
+              return personDetail(key, person[key])
+            else return null
+          })
+        }
       </div>
       <span>
         <div className="icons-container">
@@ -87,9 +109,9 @@ export default function ContentItem({
                       '<span class="swal2-input-label">Phone</span>' +
                       '<input id="phone" class="swal2-input">',
                     didOpen: () => {
-                      getById("fullname").value = name;
-                      getById("address").value = address;
-                      getById("phone").value = phone;
+                      getById("fullname").value = person.name;
+                      getById("address").value = person.address;
+                      getById("phone").value = person.phone;
                     },
                     preConfirm: () => {
                       let newname = inputGetter("fullname");
@@ -104,9 +126,9 @@ export default function ContentItem({
                         getById("empty").innerHTML = "Complete all fields";
 
                       let nothingChanged =
-                        newname === name &&
-                        newaddress === address &&
-                        newphone === phone;
+                        newname === person.name &&
+                        newaddress === person.address &&
+                        newphone === person.phone;
                       console.log(noempty);
                       console.log(nothingChanged);
                       if (nothingChanged)
