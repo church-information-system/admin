@@ -1,0 +1,19 @@
+@import "./mixins";
+.swal2-input {
+    @include mobile {
+        max-width: 400px;
+        width: 60vw !important;
+    }
+}
+
+.swal2-html-container {
+    @include mobile {
+        margin: 4px !important;
+    }
+}
+
+.swal2-actions {
+    @include mobile {
+        margin: 4px !important;
+    }
+}
