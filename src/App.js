@@ -4,8 +4,8 @@ import NavBar from './components/navbar/navbar';
 import SideBar from './components/sidebar/sidebar';
 
 import { initializeApp } from "firebase/app";
-
 import { getFirestore } from "firebase/firestore";
+import { useState } from 'react';
 
 
 initializeApp({
@@ -21,11 +21,16 @@ initializeApp({
 export const firestore = getFirestore();
 
 function App() {
+  const [selected, setSelected] = useState("death");
+
+  const select = (item) => setSelected(() => item)
+
+
   return (
     <div id="app">
       <NavBar />
       <main>
-        <SideBar />
+        <SideBar selected={selected} select={select} />
         <Content />
       </main>
     </div>

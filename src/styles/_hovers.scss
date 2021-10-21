@@ -9,6 +9,17 @@
 }
 
 // individual
+
+.hover-highlight:hover {
+    @include desktop {
+        background-color: $secondaryLight;
+    }
+}
+
+.hover-highlight:active {
+    background-color: $secondary;
+}
+
 .subtle-hover-grow:hover {
     @include desktop {
         transition: 100ms;

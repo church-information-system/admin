@@ -1,8 +1,8 @@
-export default function SidebarItem(props) {
+export default function SidebarItem({ imagesrc, label, isSelected }) {
     return (
-        <div className="sidebar-item">
-            <img src={props.imagesrc} alt="icon" className="icon" />
-            <div >{props.label}</div>
+        <div className={`sidebar-item ${isSelected ? "active" : ""}`}>
+            <img src={imagesrc} alt="icon" className="icon" />
+            <div >{label}</div>
         </div>
     )
 }
