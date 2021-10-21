@@ -23,7 +23,6 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
   function marriageDialog() {
     Swal.fire({
       title: "Enter Name",
-      width: "500px",
       html:
         '<span id="empty" class="error-text"> </span>' +
         '<span class="swal2-input-label">Fullname</span>' +
@@ -64,17 +63,17 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         '<span class="swal2-input-label">Fullname</span>' +
         '<input id="fullname" class="swal2-input">' +
         '<span class="swal2-input-label">Day Of Death</span>' +
-        '<input id="dayOfDeath" class="swal2-input">' +
+        '<input id="dayOfDeath" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Day Of Birth</span>' +
-        '<input id="dayOfBirth" class="swal2-input">' +
+        '<input id="dayOfBirth" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Date Of Mass</span>' +
-        '<input id="dateOfMass" class="swal2-input">' +
+        '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
         '<input id="age" class="swal2-input">' +
-        '<span id="empty" class="error-text"> </span>' +
-        '<span id="nothingChanged" class="error-text"> </span>' +
         '<span class="swal2-input-label">Address</span>' +
-        '<input id="address" class="swal2-input">',
+        '<input id="address" class="swal2-input">' +
+        '<span id="empty" class="error-text"> </span>' +
+        '<span id="nothingChanged" class="error-text"> </span>',
       preConfirm: () => {
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");

@@ -123,12 +123,12 @@ export default function ContentItem({
         '<input id="fullname" class="swal2-input">' +
         '<span class="swal2-input-label">Address</span>' +
         '<input id="address" class="swal2-input">' +
-        '<span class="swal2-input-label">Day Of Death</span>' +
-        '<input id="dayOfDeath" class="swal2-input">' +
+        '<span class="swal2-input-label" type="date">Day Of Death</span>' +
+        '<input id="dayOfDeath" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Day Of Birth</span>' +
-        '<input id="dayOfBirth" class="swal2-input">' +
+        '<input id="dayOfBirth" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Date Of Mass</span>' +
-        '<input id="dateOfMass" class="swal2-input">' +
+        '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
         '<input id="age" class="swal2-input">' +
         '<span id="empty" class="error-text"> </span>' +

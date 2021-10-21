@@ -1,12 +1,12 @@
 @import "./mixins";
 .swal2-input {
-    @include mobile {
-        max-width: 400px;
-        width: 60vw !important;
-    }
+    max-width: 400px;
+    text-align: center;
+    width: 60vw !important;
 }
 
 .swal2-html-container {
+    padding-bottom: 20px;
     @include mobile {
         margin: 4px !important;
     }
@@ -15,5 +15,13 @@
 .swal2-actions {
     @include mobile {
         margin: 4px !important;
+    }
+}
+
+.swal2-popup {
+    max-width: 700px;
+    width: 60vw !important;
+    @include mobile {
+        min-width: 90vw;
     }
 }
