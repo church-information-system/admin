@@ -21,17 +21,16 @@ initializeApp({
 export const firestore = getFirestore();
 
 function App() {
-  const [selected, setSelected] = useState("death");
+  const [selected, setSelected] = useState("");
 
   const select = (item) => setSelected(() => item)
-
 
   return (
     <div id="app">
       <NavBar />
       <main>
         <SideBar selected={selected} select={select} />
-        <Content />
+        <Content selected={selected} />
       </main>
     </div>
   );

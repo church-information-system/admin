@@ -4,23 +4,35 @@ import ContentItem from "./content-item"
 import ActionBar from "./action-bar"
 import { useEffect, useState } from "react"
 import { fetchCollection } from "../../api/FirebaseHelper"
+import { Loader } from "../misc/loader"
+import { useCallback } from "react/cjs/react.development"
 
-export default function Content() {
+export default function Content({ selected }) {
 
     const [persons, setPersons] = useState([])
     const [searchString, setSearchString] = useState("");
-    const [refreshes, setRefreshes] = useState(0);
+    const [fetchingCollection, setFetchingCollection] = useState(false)
 
     const addPerson = (name, address, phone) => setPersons((current) =>
         [...current, { name: name, id: persons.length, address: address, phone: phone }])
 
-    const refreshList = () => setRefreshes((count) => count + 1)
+    const refreshList = () => fetchData()
 
     const removePerson = (id) => setPersons(() => persons.filter(item => item.id !== id))
 
     const search = (input) => setSearchString(() => input)
 
-    useEffect(() => fetchRecords(), [refreshes])
+
+    const fetchData = useCallback(async () => {
+        if (selected !== "") {
+            console.log("fetch")
+            setFetchingCollection(() => true)
+            setPersons(await fetchCollection(selected))
+            setFetchingCollection(() => false)
+        }
+    }, [selected])
+
+    useEffect(() => fetchData(), [fetchData, selected])
 
     function getMatches() {
         let arr = []
@@ -39,17 +51,20 @@ export default function Content() {
         return <ContentItem name={name} address={address} phone={phone} key={id} id={id} remove={removePerson} requestRefresh={refreshList} />
     }
 
-    async function fetchRecords() {
-        console.log("fetching")
-        setPersons(await fetchCollection("marriage"))
-    }
+
 
     return (
         <div id="content">
             <ActionBar addPerson={addPerson} search={search} requestRefresh={refreshList} />
-            <div className="content-container">
-                {getMatches()[0] ? getMatches() : "No Records found"}
-            </div>
+            {
+                selected === "" ?
+                    <h3 className="content-message">Nothing Selected</h3> :
+                    fetchingCollection ?
+                        <Loader /> :
+                        <div className="content-container">
+                            {getMatches()[0] ? getMatches() : <h3 className="content-message">No Records found</h3>}
+                        </div>
+            }
         </div>
     )
 }

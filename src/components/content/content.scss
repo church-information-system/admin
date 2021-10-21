@@ -37,6 +37,11 @@
         }
     }
 
+    .content-message {
+        text-align: center;
+        color: $secondary;
+    }
+
     .content-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
