@@ -20,7 +20,7 @@ initializeApp({
 export const firestore = getFirestore();
 
 function App() {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("death");
 
   const select = (item) => setSelected(() => item);
 

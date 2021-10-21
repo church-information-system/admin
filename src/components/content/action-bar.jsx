@@ -23,6 +23,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
   function marriageDialog() {
     Swal.fire({
       title: "Enter Name",
+      width: "500px",
       html:
         '<span id="empty" class="error-text"> </span>' +
         '<span class="swal2-input-label">Fullname</span>' +
@@ -130,7 +131,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         </div>
       </span>
       <span
-        className="action-button"
+        className="action-button add-record"
         title="Add"
         onClick={() => {
           switch (selected) {

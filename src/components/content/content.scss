@@ -7,9 +7,15 @@
   overflow-y: auto;
 
   .action-bar {
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
+    @include desktop {
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @include mobile {
+      flex-direction: column;
+    }
 
     @extend .default-padding;
 
@@ -18,8 +24,17 @@
       display: flex;
 
       .search-field {
-        margin-right: 8px;
+        @include desktop {
+          margin-right: 8px;
+        }
+
         @extend .rounded-border;
+
+        @include mobile {
+          margin: 10px;
+          padding: 4px;
+          height: 40px;
+        }
       }
     }
 
@@ -29,6 +44,12 @@
       display: flex;
       align-items: center;
       color: white;
+
+      @include mobile {
+        margin: 10px;
+        padding: 4px;
+        height: 40px;
+      }
 
       @extend .button-primary;
       @extend .clickable;
@@ -46,6 +67,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 16px;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
 
     max-height: inherit;
 
@@ -88,6 +113,10 @@
           // filter: invert(62%) sepia(78%) saturate(3342%) hue-rotate(219deg) brightness(77%) contrast(84%);
           margin: 8px;
           background-color: $primary;
+
+          @include mobile {
+            margin: 4px;
+          }
 
           @extend .rounded-border;
           @extend .clickable;

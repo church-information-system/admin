@@ -1,11 +1,16 @@
 @import "../../styles/presets";
 @import "../../styles/hovers";
+@import "../../styles/mixins";
 
 #sidebar {
   padding-top: 10vh;
   flex-grow: 1;
   background-color: $primary;
   color: white;
+
+  @include mobile {
+    display: none;
+  }
 
   @extend .default-padding;
   @extend .box-shadow;
