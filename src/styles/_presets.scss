@@ -1,50 +1,51 @@
 @import "./variables.scss";
 
 .bg-white {
-    background-color: $white;
+  background-color: $white;
 }
 
 .rounded-border {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 .box-shadow {
-    box-shadow: 0em 0em 1em $blackLight;
+  box-shadow: 0em 0em 1em $blackLight;
 }
 
 .box-shadow-darker {
-    box-shadow: 0em 0em 1em $black;
+  box-shadow: 0em 0em 1em $black;
 }
 
 .default-padding {
-    padding: 16px;
+  padding: 16px;
 }
 
 .default-margin {
-    margin: 16px;
+  margin: 16px;
 }
 
 .error-text {
-    color: $red;
+  color: $red;
 }
 
 .button-primary {
-    background-color: $primary;
+  background-color: $primary;
 }
 
 .icon {
-    filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(216deg) brightness(101%) contrast(102%);
-    padding: 8px;
-    height: 24px;
-    width: 24px;
+  filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(216deg)
+    brightness(101%) contrast(102%);
+  padding: 8px;
+  height: 24px;
+  width: 24px;
 }
 
 .no-select {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

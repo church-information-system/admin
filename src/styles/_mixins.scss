@@ -1,13 +1,13 @@
 @import "variables.scss";
 
 @mixin desktop {
-    @media (min-width: #{$desktop}) {
-        @content;
-    }
+  @media (min-width: #{$desktop}) {
+    @content;
+  }
 }
 
 @mixin mobile {
-    @media (max-width: #{$desktop}) {
-        @content;
-    }
+  @media (max-width: #{$desktop}) {
+    @content;
+  }
 } ;

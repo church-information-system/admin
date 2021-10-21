@@ -1,15 +1,13 @@
-import "./misc.scss"
+import "./misc.scss";
 
 export function MiniLoader() {
-    return (
-        <div className="loader-container">
-            <div className='mini-loader' />
-        </div>
-    )
+  return (
+    <div className="loader-container">
+      <div className="mini-loader" />
+    </div>
+  );
 }
 
 export function Loader() {
-    return (
-        <div className='loader' />
-    )
+  return <div className="loader" />;
 }

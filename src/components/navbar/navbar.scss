@@ -2,17 +2,17 @@
 @import "../../styles/variables";
 
 #navbar {
-    height: 6vh;
-    width: 98%;
-    z-index: 8;
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: "Dancing Script", cursive;
-    background-color: $secondary;
-    color: white;
+  height: 6vh;
+  width: 98%;
+  z-index: 8;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Dancing Script", cursive;
+  background-color: $secondary;
+  color: white;
 
-    @extend .box-shadow-darker;
-    @extend .default-padding;
+  @extend .box-shadow-darker;
+  @extend .default-padding;
 }

@@ -2,30 +2,30 @@
 @import "../../styles/hovers";
 
 #sidebar {
-    padding-top: 10vh;
-    flex-grow: 1;
-    background-color: $primary;
-    color: white;
+  padding-top: 10vh;
+  flex-grow: 1;
+  background-color: $primary;
+  color: white;
 
+  @extend .default-padding;
+  @extend .box-shadow;
+
+  .divider {
+    border-bottom: 0.4px solid $blackLight;
+  }
+
+  .active {
+    background-color: $secondary;
+  }
+
+  .sidebar-item {
+    display: flex;
+    flex-wrap: expand;
+    align-items: center;
+
+    @extend .clickable;
+    @extend .rounded-border;
     @extend .default-padding;
-    @extend .box-shadow;
-
-    .divider {
-        border-bottom: 0.4px solid $blackLight;
-    }
-
-    .active {
-        background-color: $secondary;
-    }
-
-    .sidebar-item {
-        display: flex;
-        flex-wrap: expand;
-        align-items: center;
-
-        @extend .clickable;
-        @extend .rounded-border;
-        @extend .default-padding;
-        @extend .hover-highlight;
-    }
+    @extend .hover-highlight;
+  }
 }

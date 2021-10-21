@@ -2,43 +2,43 @@
 
 // compound
 .clickable:hover {
-    @extend .no-select;
-    @extend .hover-grow;
-    @extend .hover-pointer;
-    @extend .active-shrink;
+  @extend .no-select;
+  @extend .hover-grow;
+  @extend .hover-pointer;
+  @extend .active-shrink;
 }
 
 // individual
 
 .hover-highlight:hover {
-    @include desktop {
-        background-color: $secondaryLight;
-    }
+  @include desktop {
+    background-color: $secondaryLight;
+  }
 }
 
 .hover-highlight:active {
-    background-color: $secondary;
+  background-color: $secondary;
 }
 
 .subtle-hover-grow:hover {
-    @include desktop {
-        transition: 100ms;
-        transform: scale(1.02);
-    }
+  @include desktop {
+    transition: 100ms;
+    transform: scale(1.02);
+  }
 }
 
 .hover-grow:hover {
-    @include desktop {
-        transition: 200ms;
-        transform: scale(1.05);
-    }
+  @include desktop {
+    transition: 200ms;
+    transform: scale(1.05);
+  }
 }
 
 .hover-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .active-shrink:active {
-    transform: scale(0.9);
-    box-shadow: 0 0 0 0 #fff;
+  transform: scale(0.9);
+  box-shadow: 0 0 0 0 #fff;
 }
