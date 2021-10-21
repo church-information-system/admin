@@ -8,13 +8,13 @@ import { customAlert, getById, inputGetter } from "../../helpers"
 import { useState } from "react"
 import { MiniLoader } from "../misc/loader"
 
-export default function ContentItem({ name, address, phone, id, requestRefresh }) {
+export default function ContentItem({ name, address, phone, id, selected, requestRefresh }) {
     const [updating, setUpdating] = useState(false)
     const [archiving, setArchiving] = useState(false)
 
     async function submit(values) {
         setUpdating(() => true)
-        if (await editRecord("marriage", id, values)) {
+        if (await editRecord(selected, id, values)) {
             customAlert("Record Updated!", "success")
             requestRefresh()
         } else {

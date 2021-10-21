@@ -5,31 +5,32 @@ import ActionBar from "./action-bar"
 import { useEffect, useState } from "react"
 import { fetchCollection } from "../../api/FirebaseHelper"
 import { Loader } from "../misc/loader"
-import { useCallback } from "react/cjs/react.development"
 
 export default function Content({ selected }) {
 
     const [persons, setPersons] = useState([])
     const [searchString, setSearchString] = useState("");
     const [fetchingCollection, setFetchingCollection] = useState(false)
+    const [refereshes, setRefreshes] = useState(0)
 
     const addPerson = (name, address, phone) => setPersons((current) =>
         [...current, { name: name, id: persons.length, address: address, phone: phone }])
 
-    const refreshList = () => fetchData()
+    const refreshList = () => setRefreshes((value) => value + 1)
 
     const search = (input) => setSearchString(() => input)
 
-    const fetchData = useCallback(async () => {
+    const fetchData = async () => {
         if (selected !== "") {
             console.log("fetch")
             setFetchingCollection(() => true)
             setPersons(await fetchCollection(selected))
             setFetchingCollection(() => false)
         }
-    }, [selected])
+    }
 
-    useEffect(() => fetchData(), [fetchData, selected])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => fetchData(), [refereshes, selected])
 
     function getMatches() {
         let arr = []
@@ -45,7 +46,7 @@ export default function Content({ selected }) {
     }
 
     function createItem(name, id, address, phone) {
-        return <ContentItem name={name} address={address} phone={phone} key={id} id={id} requestRefresh={refreshList} />
+        return <ContentItem name={name} address={address} phone={phone} key={id} id={id} selected={selected} requestRefresh={refreshList} />
     }
 
 
