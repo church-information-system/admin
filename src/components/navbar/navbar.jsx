@@ -1,18 +1,40 @@
 import "./navbar.scss";
-import settings from "../../assets/settings.svg";
-import Swal from "sweetalert2";
+import hamburger from "../../assets/hamburger.svg";
+import SideBar from "../sidebar/sidebar";
+import { getById } from "../../helpers";
+import { useEffect } from "react/cjs/react.development";
 
-export default function NavBar() {
+export default function NavBar({ select, selected }) {
+  function showSidebar() {
+    getById("sidebar").style.width = "80vw";
+    getById("overlay").style.width = "100vw";
+  }
+
+  function hideSidebar() {
+    getById("sidebar").style.width = "0vw";
+    getById("overlay").style.width = "0vw";
+  }
+
+  useEffect(() =>
+    document.querySelectorAll(".sidebar-item-container").forEach(element => {
+      element.addEventListener("click", () => {
+        hideSidebar()
+      })
+    }), [])
+
   return (
     <div id="navbar">
       <h2>National Shrine of Our Lady of sorrows</h2>
       <img
-        src={settings}
-        title="settings"
-        alt="Settings"
-        className="icon clickable"
-        onClick={() => Swal.fire({ title: "Settings" })}
+        src={hamburger}
+        title="nav"
+        alt="nav"
+        className="icon clickable hamburger"
+        // onClick={() => Swal.fire({ title: "Settings" })}
+        onClick={() => showSidebar()}
       />
+      <div id="overlay" onClick={() => hideSidebar()}></div>
+      <SideBar selected={selected} select={select} />
     </div>
   );
 }

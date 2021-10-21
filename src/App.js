@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div id="app">
-      <NavBar />
+      <NavBar selected={selected} select={select} />
       <main>
         <SideBar selected={selected} select={select} />
         <Content selected={selected} />
