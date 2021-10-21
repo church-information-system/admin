@@ -32,8 +32,11 @@ export default function ContentItem({
     if (
       await archiveRecord(selected, `${selected}_archive`, person.id, {
         name: person.name,
+        dayOfDeath: person.dayOfDeath,
+        dayOfBirth: person.dayOfBirth,
+        dateOfMass: person.dateOfMass,
+        age: person.age,
         address: person.address,
-        phone: person.phone,
       })
     ) {
       customAlert("Record Archived!", "success");
