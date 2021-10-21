@@ -25,7 +25,7 @@ export default function ContentItem({ name, address, phone, id, selected, reques
 
     async function confirmArchive() {
         setArchiving(() => true)
-        if (await archiveRecord("marriage", "marriage_archive", id, {
+        if (await archiveRecord(selected, `${selected}_archive`, id, {
             name: name,
             address: address,
             phone: phone,

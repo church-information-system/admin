@@ -9,7 +9,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
     const [addingRecord, setAddingRecord] = useState(false)
 
     async function submit(name, address, phone) {
-        setAddingRecord(true)
+        setAddingRecord(() => true)
         if (await addRecord(selected, {
             name: name,
             address: address,
@@ -20,7 +20,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         } else {
             customAlert("Failed to add record", "error")
         }
-        setAddingRecord(false)
+        setAddingRecord(() => false)
     }
 
     return show ? (
