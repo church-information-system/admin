@@ -55,7 +55,7 @@ export default function Content({ selected }) {
 
     return (
         <div id="content">
-            <ActionBar addPerson={addPerson} search={search} requestRefresh={refreshList} />
+            <ActionBar addPerson={addPerson} search={search} requestRefresh={refreshList} show={selected !== ""} />
             {
                 selected === "" ?
                     <h3 className="content-message">Nothing Selected</h3> :

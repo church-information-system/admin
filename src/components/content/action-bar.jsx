@@ -3,10 +3,10 @@ import Swal from "sweetalert2"
 import { addRecord } from "../../api/FirebaseHelper"
 import { MiniLoader } from "../misc/loader"
 import { useState } from "react"
+import { getById } from "../../helpers"
 
-export default function ActionBar({ requestRefresh, search }) {
+export default function ActionBar({ requestRefresh, search, show }) {
     const [addingRecord, setAddingRecord] = useState(false)
-
 
     async function submit(name, address, phone) {
         if (await addRecord("marriage", {
@@ -23,7 +23,7 @@ export default function ActionBar({ requestRefresh, search }) {
         return document.getElementById(id).value;
     }
 
-    return (
+    return show ? (
         <div className="action-bar">
             <span className="search-bar">
                 <input type="text" className="search-field" id="search-field" />
@@ -35,6 +35,7 @@ export default function ActionBar({ requestRefresh, search }) {
                 Swal.fire({
                     title: "Enter Name",
                     html:
+                        '<span id="empty" class="error-text"> </span>' +
                         '<span class="swal2-input-label">Fullname</span>' +
                         '<input id="fullname" class="swal2-input">' +
                         '<span class="swal2-input-label">Address</span>' +
@@ -42,6 +43,16 @@ export default function ActionBar({ requestRefresh, search }) {
                         '<span class="swal2-input-label">Phone</span>' +
                         '<input id="phone" class="swal2-input">',
                     showCancelButton: true,
+                    preConfirm: () => {
+                        let newname = inputGetter("fullname")
+                        let newaddress = inputGetter("address")
+                        let newphone = inputGetter("phone")
+
+                        let noempty = (newname.length > 0 && newaddress.length > 0 && newphone.length > 0)
+                        if (!noempty) getById("empty").innerHTML = "Complete all fields"
+
+                        return noempty
+                    },
                 }).then((value) => {
                     if (value.isConfirmed) {
                         submit(inputGetter("fullname"), inputGetter("address"), inputGetter("phone"))
@@ -53,5 +64,5 @@ export default function ActionBar({ requestRefresh, search }) {
                 <h4>Add Record</h4>
             </span>
         </div >
-    )
+    ) : ""
 }
