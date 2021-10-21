@@ -18,10 +18,7 @@ export default function Content({ selected }) {
 
     const refreshList = () => fetchData()
 
-    const removePerson = (id) => setPersons(() => persons.filter(item => item.id !== id))
-
     const search = (input) => setSearchString(() => input)
-
 
     const fetchData = useCallback(async () => {
         if (selected !== "") {
@@ -48,7 +45,7 @@ export default function Content({ selected }) {
     }
 
     function createItem(name, id, address, phone) {
-        return <ContentItem name={name} address={address} phone={phone} key={id} id={id} remove={removePerson} requestRefresh={refreshList} />
+        return <ContentItem name={name} address={address} phone={phone} key={id} id={id} requestRefresh={refreshList} />
     }
 
 

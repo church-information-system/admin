@@ -8,7 +8,7 @@ import { customAlert, getById, inputGetter } from "../../helpers"
 import { useState } from "react"
 import { MiniLoader } from "../misc/loader"
 
-export default function ContentItem({ name, address, phone, id, requestRefresh, remove }) {
+export default function ContentItem({ name, address, phone, id, requestRefresh }) {
     const [updating, setUpdating] = useState(false)
     const [archiving, setArchiving] = useState(false)
 
