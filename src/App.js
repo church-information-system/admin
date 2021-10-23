@@ -7,6 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { useState } from "react";
 import Login from "./components/misc/login";
+import { getCookie } from "./helpers";
 
 initializeApp({
   apiKey: "AIzaSyCDZTLgld2lnDQfqwfWekAu-kq3uXEYKAk",
@@ -22,9 +23,10 @@ export const firestore = getFirestore();
 
 export default function App() {
   const [selected, setSelected] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(getCookie("authenticated") === "true");
 
   const login = () => setAuthenticated(() => true)
+
 
 
 
