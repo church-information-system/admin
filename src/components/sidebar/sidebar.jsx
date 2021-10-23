@@ -5,6 +5,7 @@ import marriage from "../../assets/marriage.svg";
 import donation from "../../assets/donation.svg";
 import settings from "../../assets/settings.svg";
 import logout from "../../assets/logout.svg";
+import post from "../../assets/post.svg";
 import { customAlert } from "../../helpers";
 
 export default function SideBar({ selected, select }) {
@@ -30,6 +31,13 @@ export default function SideBar({ selected, select }) {
           label="Donation Record"
           imagesrc={donation}
           isSelected={selected === "donation"}
+        />
+      </span>
+      <span onClick={() => select("post")} className="sidebar-item-container">
+        <SidebarItem
+          label="Post"
+          imagesrc={post}
+          isSelected={selected === "post"}
         />
       </span>
       <span onClick={() => customAlert("Settings")}>

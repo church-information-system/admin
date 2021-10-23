@@ -117,6 +117,41 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
     });
   }
 
+  function postDialog() {
+    Swal.fire({
+      title: "Enter Name",
+      html:
+        '<span id="empty" class="error-text"> </span>' +
+        '<span class="swal2-input-label">Title</span>' +
+        '<input id="title" class="swal2-input">' +
+        '<span class="swal2-input-label">Content</span>' +
+        '<textarea id="post-content" class="swal2-input"></textarea>',
+      showCancelButton: true,
+      preConfirm: () => {
+        let title = inputGetter("title");
+        let content = inputGetter("post-content");
+
+        let noempty =
+          title.length > 0 &&
+          content.length > 0
+
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        console.log()
+
+        return noempty;
+      },
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let now = new Date()
+        submit({
+          title: inputGetter("title"),
+          date: `${now.getFullYear()}-${now.getMonth().toString().padStart(2, 0)}-${now.getDate()}`,
+          content: inputGetter("post-content"),
+        });
+      }
+    });
+  }
+
   return show ? (
     <div className="action-bar">
       <span className="search-bar">
@@ -139,6 +174,9 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
               break
             case "death":
               deathDialog()
+              break
+            case "post":
+              postDialog()
               break
             default:
               marriageDialog()

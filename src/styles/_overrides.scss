@@ -12,6 +12,10 @@
     }
 }
 
+textarea.swal2-input {
+    height: 20em !important;
+}
+
 .swal2-actions {
     @include mobile {
         margin: 4px !important;

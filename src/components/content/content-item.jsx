@@ -196,6 +196,53 @@ export default function ContentItem({
     });
   }
 
+  function postDialog() {
+    Swal.fire({
+      title: "Enter Name",
+      html:
+        '<span id="empty" class="error-text"> </span>' +
+        '<span class="swal2-input-label">Title</span>' +
+        '<input id="title" class="swal2-input">' +
+        '<span class="swal2-input-label">Content</span>' +
+        '<textarea id="post-content" class="swal2-input"></textarea>' +
+        '<span id="nothingChanged" class="error-text"> </span>',
+      showCancelButton: true,
+      didOpen: () => {
+        getById("title").value = person.title;
+        getById("post-content").value = person.content;
+      },
+      preConfirm: () => {
+        let title = inputGetter("title");
+        let content = inputGetter("post-content");
+
+        let noempty =
+          title.length > 0 &&
+          content.length > 0
+
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
+
+        let nothingChanged =
+          title === person.title &&
+          content === person.content
+
+        if (nothingChanged)
+          getById("nothingChanged").innerHTML =
+            "Change atleast one value";
+
+        return noempty && !nothingChanged;
+      },
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let now = new Date()
+        submit({
+          title: inputGetter("title"),
+          date: `${now.getFullYear()}-${now.getMonth().toString().padStart(2, 0)}-${now.getDate()}`,
+          content: inputGetter("post-content"),
+        });
+      }
+    });
+  }
+
   return (
     <div className="content-item">
       <div className="person-datas">
@@ -234,6 +281,9 @@ export default function ContentItem({
                       break
                     case "death":
                       deathDialog()
+                      break
+                    case "post":
+                      postDialog()
                       break
                     default:
                       marriageDialog()
