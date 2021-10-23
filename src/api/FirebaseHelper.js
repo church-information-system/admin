@@ -21,8 +21,6 @@ export async function fetchCollection(collectionName) {
 
 export async function addRecord(collectionName, record) {
   let success;
-  console.log("adding record")
-  console.log(record)
   try {
     await addDoc(collection(firestore, collectionName), record);
     success = true;

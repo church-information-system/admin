@@ -9,7 +9,7 @@ import { useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
 export default function ContentItem({
-  person,
+  record,
   selected,
   requestRefresh,
 }) {
@@ -18,7 +18,7 @@ export default function ContentItem({
 
   async function submit(values) {
     setUpdating(() => true);
-    if (await editRecord(selected, person.id, values)) {
+    if (await editRecord(selected, record.id, values)) {
       customAlert("Record Updated!", "success");
       requestRefresh();
     } else {
@@ -30,7 +30,7 @@ export default function ContentItem({
   async function confirmArchive() {
     setArchiving(() => true);
     if (
-      await archiveRecord(selected, `${selected}_archive`, person.id, person)
+      await archiveRecord(selected, `${selected}_archive`, record.id, record)
     ) {
       customAlert("Record Archived!", "success");
       requestRefresh();
@@ -40,7 +40,7 @@ export default function ContentItem({
     setArchiving(() => false);
   }
 
-  function personDetail(key, value) {
+  function recordDetail(key, value) {
     switch (key) {
       case "dateOfMass":
         key = "Date Of Mass"
@@ -74,9 +74,9 @@ export default function ContentItem({
         '<span class="swal2-input-label">Phone</span>' +
         '<input id="phone" class="swal2-input">',
       didOpen: () => {
-        getById("fullname").value = person.name;
-        getById("address").value = person.address;
-        getById("phone").value = person.phone;
+        getById("fullname").value = record.name;
+        getById("address").value = record.address;
+        getById("phone").value = record.phone;
       },
       preConfirm: () => {
         let newname = inputGetter("fullname");
@@ -89,9 +89,9 @@ export default function ContentItem({
         if (!noempty)
           getById("empty").innerHTML = "Complete all fields";
         let nothingChanged =
-          newname === person.name &&
-          newaddress === person.address &&
-          newphone === person.phone;
+          newname === record.name &&
+          newaddress === record.address &&
+          newphone === record.phone;
         console.log(noempty);
         console.log(nothingChanged);
         if (nothingChanged)
@@ -134,12 +134,12 @@ export default function ContentItem({
         '<span id="empty" class="error-text"> </span>' +
         '<span id="nothingChanged" class="error-text"> </span>',
       didOpen: () => {
-        getById("fullname").value = person.name;
-        getById("dayOfDeath").value = person.dayOfDeath;
-        getById("dayOfBirth").value = person.dayOfBirth;
-        getById("dateOfMass").value = person.dateOfMass;
-        getById("age").value = person.age;
-        getById("address").value = person.address;
+        getById("fullname").value = record.name;
+        getById("dayOfDeath").value = record.dayOfDeath;
+        getById("dayOfBirth").value = record.dayOfBirth;
+        getById("dateOfMass").value = record.dateOfMass;
+        getById("age").value = record.age;
+        getById("address").value = record.address;
       },
       preConfirm: () => {
         let newName = inputGetter("fullname");
@@ -161,12 +161,12 @@ export default function ContentItem({
           getById("empty").innerHTML = "Complete all fields";
 
         let nothingChanged =
-          newName === person.name &&
-          newDayOfBirth === person.dayOfBirth &&
-          newDayOfDeath === person.dayOfDeath &&
-          newDateOfMass === person.dateOfMass &&
-          newAddress === person.address &&
-          newAge === person.age
+          newName === record.name &&
+          newDayOfBirth === record.dayOfBirth &&
+          newDayOfDeath === record.dayOfDeath &&
+          newDateOfMass === record.dateOfMass &&
+          newAddress === record.address &&
+          newAge === record.age
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML =
@@ -208,8 +208,8 @@ export default function ContentItem({
         '<span id="nothingChanged" class="error-text"> </span>',
       showCancelButton: true,
       didOpen: () => {
-        getById("title").value = person.title;
-        getById("post-content").value = person.content;
+        getById("title").value = record.title;
+        getById("post-content").value = record.content;
       },
       preConfirm: () => {
         let title = inputGetter("title");
@@ -222,8 +222,8 @@ export default function ContentItem({
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
         let nothingChanged =
-          title === person.title &&
-          content === person.content
+          title === record.title &&
+          content === record.content
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML =
@@ -245,11 +245,11 @@ export default function ContentItem({
 
   return (
     <div className="content-item">
-      <div className="person-datas">
+      <div className="record-datas">
         {
-          Object.keys(person).sort((a, b) => a < b).map((key) => {
+          Object.keys(record).sort((a, b) => a < b).map((key) => {
             if (key !== "id")
-              return personDetail(key, person[key])
+              return recordDetail(key, record[key])
             else return null
           })
         }

@@ -3,10 +3,14 @@
 @import "../../styles/mixins";
 
 #sidebar {
-  padding-top: 10vh;
+  padding-top: 14vh;
   flex-grow: 1;
   background-color: $primary;
   color: white;
+
+  @include desktop {
+    min-width: 16vw;
+  }
 
   @include mobile {
     display: none;

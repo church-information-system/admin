@@ -7,7 +7,7 @@ import { fetchCollection } from "../../api/FirebaseHelper";
 import { Loader } from "../misc/loader";
 
 export default function Content({ selected }) {
-  const [persons, setPersons] = useState([]);
+  const [records, setRecords] = useState([]);
   const [searchString, setSearchString] = useState("");
   const [fetchingCollection, setFetchingCollection] = useState(false);
   const [refereshes, setRefreshes] = useState(0);
@@ -20,7 +20,7 @@ export default function Content({ selected }) {
     if (selected !== "") {
       console.log("fetch");
       setFetchingCollection(() => true);
-      setPersons(await fetchCollection(selected));
+      setRecords(await fetchCollection(selected));
       setFetchingCollection(() => false);
     }
   };
@@ -31,24 +31,24 @@ export default function Content({ selected }) {
   function getMatches() {
     let arr = [];
     if (searchString !== "") {
-      persons.forEach((person) => {
+      records.forEach((record) => {
         if (
-          person.name
+          (record.name || record.title)
             .trim()
             .toLowerCase()
             .includes(searchString.trim().toLowerCase())
         ) {
-          arr.push(createItem(person));
+          arr.push(createItem(record));
         }
       });
     } else {
-      arr = persons.map((person) => createItem(person));
+      arr = records.map((record) => createItem(record));
     }
     return arr;
   }
 
-  function createItem(person) {
-    return <ContentItem person={person} key={person.id} selected={selected} requestRefresh={refreshList} />
+  function createItem(record) {
+    return <ContentItem record={record} key={record.id} selected={selected} requestRefresh={refreshList} />
   }
 
   return (

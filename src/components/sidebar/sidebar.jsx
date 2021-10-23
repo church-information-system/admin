@@ -11,24 +11,23 @@ import { customAlert } from "../../helpers";
 export default function SideBar({ selected, select }) {
   return (
     <div id="sidebar">
-      <h2>Records</h2>
       <span onClick={() => select("marriage")} className="sidebar-item-container">
         <SidebarItem
-          label="Marriage Record"
+          label="Marriage"
           imagesrc={marriage}
           isSelected={selected === "marriage"}
         />
       </span>
       <span onClick={() => select("death")} className="sidebar-item-container">
         <SidebarItem
-          label="Death Record"
+          label="Death"
           imagesrc={death}
           isSelected={selected === "death"}
         />
       </span>
       <span onClick={() => select("donation")} className="sidebar-item-container">
         <SidebarItem
-          label="Donation Record"
+          label="Donation"
           imagesrc={donation}
           isSelected={selected === "donation"}
         />
