@@ -15,12 +15,17 @@ export default function NavBar({ select, selected }) {
     getById("overlay").style.width = "0vw";
   }
 
-  useEffect(() =>
-    document.querySelectorAll(".sidebar-item-container").forEach(element => {
-      element.addEventListener("click", () => {
-        hideSidebar()
-      })
-    }), [])
+  useEffect(
+    () =>
+      document
+        .querySelectorAll(".sidebar-item-container")
+        .forEach((element) => {
+          element.addEventListener("click", () => {
+            hideSidebar();
+          });
+        }),
+    []
+  );
 
   return (
     <div id="navbar">

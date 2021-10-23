@@ -48,7 +48,14 @@ export default function Content({ selected }) {
   }
 
   function createItem(record) {
-    return <ContentItem record={record} key={record.id} selected={selected} requestRefresh={refreshList} />
+    return (
+      <ContentItem
+        record={record}
+        key={record.id}
+        selected={selected}
+        requestRefresh={refreshList}
+      />
+    );
   }
 
   return (

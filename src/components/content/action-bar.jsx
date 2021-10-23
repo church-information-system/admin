@@ -10,8 +10,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
 
   async function submit(values) {
     setAddingRecord(() => true);
-    if (
-      await addRecord(selected, values)) {
+    if (await addRecord(selected, values)) {
       customAlert("Record Added!", "success");
       requestRefresh();
     } else {
@@ -38,9 +37,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         let newphone = inputGetter("phone");
 
         let noempty =
-          newname.length > 0 &&
-          newaddress.length > 0 &&
-          newphone.length > 0;
+          newname.length > 0 && newaddress.length > 0 && newphone.length > 0;
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
         return noempty;
@@ -50,7 +47,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         submit({
           name: inputGetter("fullname"),
           address: inputGetter("address"),
-          phone: inputGetter("phone")
+          phone: inputGetter("phone"),
         });
       }
     });
@@ -88,12 +85,11 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
           newAddress.length > 0 &&
-          newAge.length > 0
+          newAge.length > 0;
 
-        if (!noempty)
-          getById("empty").innerHTML = "Complete all fields";
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
-        return noempty
+        return noempty;
       },
       showCancelButton: true,
     }).then((value) => {
@@ -131,21 +127,22 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         let title = inputGetter("title");
         let content = inputGetter("post-content");
 
-        let noempty =
-          title.length > 0 &&
-          content.length > 0
+        let noempty = title.length > 0 && content.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        console.log()
+        console.log();
 
         return noempty;
       },
     }).then((value) => {
       if (value.isConfirmed) {
-        let now = new Date()
+        let now = new Date();
         submit({
           title: inputGetter("title"),
-          date: `${now.getFullYear()}-${now.getMonth().toString().padStart(2, 0)}-${now.getDate()}`,
+          date: `${now.getFullYear()}-${now
+            .getMonth()
+            .toString()
+            .padStart(2, 0)}-${now.getDate()}`,
           content: inputGetter("post-content"),
         });
       }
@@ -170,16 +167,16 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         onClick={() => {
           switch (selected) {
             case "marriage":
-              marriageDialog()
-              break
+              marriageDialog();
+              break;
             case "death":
-              deathDialog()
-              break
+              deathDialog();
+              break;
             case "post":
-              postDialog()
-              break
+              postDialog();
+              break;
             default:
-              marriageDialog()
+              marriageDialog();
           }
         }}
       >

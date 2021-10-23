@@ -23,20 +23,22 @@ export const firestore = getFirestore();
 
 export default function App() {
   const [selected, setSelected] = useState("");
-  const [authenticated, setAuthenticated] = useState(getCookie("admin").length > 0);
+  const [authenticated, setAuthenticated] = useState(
+    getCookie("admin").length > 0
+  );
 
-  const login = () => setAuthenticated(() => true)
+  const login = () => setAuthenticated(() => true);
   const select = (item) => setSelected(() => item);
 
-  return authenticated ?
-    (
-      <div id="app">
-        <NavBar selected={selected} select={select} />
-        <main>
-          <SideBar selected={selected} select={select} />
-          <Content selected={selected} />
-        </main>
-      </div>
-    )
-    : <Login authenticate={login} />
+  return authenticated ? (
+    <div id="app">
+      <NavBar selected={selected} select={select} />
+      <main>
+        <SideBar selected={selected} select={select} />
+        <Content selected={selected} />
+      </main>
+    </div>
+  ) : (
+    <Login authenticate={login} />
+  );
 }

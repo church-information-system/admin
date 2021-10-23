@@ -16,11 +16,10 @@ export default function SideBar({ selected, select }) {
       title: "Are you sure you want to logout?",
       icon: "question",
       showCancelButton: true,
-
-    }).then(value => {
+    }).then((value) => {
       if (value.isConfirmed) {
         document.cookie = `admin=; expires=${new Date()}`;
-        window.location.reload()
+        window.location.reload();
       }
     });
   }
@@ -39,7 +38,6 @@ export default function SideBar({ selected, select }) {
         '<div id="empty" class="error-text"> </div>' +
         '<div id="notMatched" class="error-text"> </div>',
       preConfirm: () => {
-
         let oldPassword = inputGetter("oldPassword");
         let newPassword = inputGetter("newPassword");
         let newPassword1 = inputGetter("newPassword1");
@@ -49,36 +47,39 @@ export default function SideBar({ selected, select }) {
           newPassword.length > 0 &&
           newPassword1.length > 0;
 
-        if (!noempty)
-          getById("empty").innerHTML = "Complete all fields";
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
-        let matched = newPassword === newPassword1
+        let matched = newPassword === newPassword1;
 
         if (!matched)
           getById("notMatched").innerHTML = "New Password doesn't match";
 
-        return noempty && matched
-      }
+        return noempty && matched;
+      },
     }).then(async (value) => {
       if (value.isConfirmed) {
-        let changeResult = await changePassword(getCookie("admin"), inputGetter("oldPassword"), inputGetter("newPassword"))
+        let changeResult = await changePassword(
+          getCookie("admin"),
+          inputGetter("oldPassword"),
+          inputGetter("newPassword")
+        );
         if (changeResult.success) {
-          await customAlert(changeResult.message, "success")
+          await customAlert(changeResult.message, "success");
           document.cookie = `admin=; expires=${new Date()}`;
-          window.location.reload()
+          window.location.reload();
         } else {
-          customAlert(changeResult.message, "error")
+          customAlert(changeResult.message, "error");
         }
       }
     });
-
-
-
   }
 
   return (
     <div id="sidebar">
-      <span onClick={() => select("marriage")} className="sidebar-item-container">
+      <span
+        onClick={() => select("marriage")}
+        className="sidebar-item-container"
+      >
         <SidebarItem
           label="Marriage"
           imagesrc={marriage}
@@ -92,7 +93,10 @@ export default function SideBar({ selected, select }) {
           isSelected={selected === "death"}
         />
       </span>
-      <span onClick={() => select("donation")} className="sidebar-item-container">
+      <span
+        onClick={() => select("donation")}
+        className="sidebar-item-container"
+      >
         <SidebarItem
           label="Donation"
           imagesrc={donation}
@@ -107,16 +111,10 @@ export default function SideBar({ selected, select }) {
         />
       </span>
       <span onClick={() => passwordDialog()}>
-        <SidebarItem
-          label="Change Password"
-          imagesrc={password}
-        />
+        <SidebarItem label="Change Password" imagesrc={password} />
       </span>
       <span onClick={() => logoutDialog()}>
-        <SidebarItem
-          label="Logout"
-          imagesrc={logout}
-        />
+        <SidebarItem label="Logout" imagesrc={logout} />
       </span>
     </div>
   );

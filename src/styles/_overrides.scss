@@ -1,31 +1,31 @@
 @import "./mixins";
 .swal2-input {
-    max-width: 400px;
-    text-align: center;
-    width: 60vw !important;
+  max-width: 400px;
+  text-align: center;
+  width: 60vw !important;
 }
 
 .swal2-html-container {
-    padding-bottom: 20px;
-    @include mobile {
-        margin: 4px !important;
-    }
+  padding-bottom: 20px;
+  @include mobile {
+    margin: 4px !important;
+  }
 }
 
 textarea.swal2-input {
-    height: 20em !important;
+  height: 20em !important;
 }
 
 .swal2-actions {
-    @include mobile {
-        margin: 4px !important;
-    }
+  @include mobile {
+    margin: 4px !important;
+  }
 }
 
 .swal2-popup {
-    max-width: 700px;
-    width: 60vw !important;
-    @include mobile {
-        min-width: 90vw;
-    }
+  max-width: 700px;
+  width: 60vw !important;
+  @include mobile {
+    min-width: 90vw;
+  }
 }

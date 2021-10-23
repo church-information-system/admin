@@ -8,11 +8,7 @@ import { customAlert, getById, inputGetter } from "../../helpers";
 import { useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
-export default function ContentItem({
-  record,
-  selected,
-  requestRefresh,
-}) {
+export default function ContentItem({ record, selected, requestRefresh }) {
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
 
@@ -43,14 +39,14 @@ export default function ContentItem({
   function recordDetail(key, value) {
     switch (key) {
       case "dateOfMass":
-        key = "Date Of Mass"
-        break
+        key = "Date Of Mass";
+        break;
       case "dayOfDeath":
-        key = "Day Of Death"
-        break
+        key = "Day Of Death";
+        break;
       case "dayOfBirth":
-        key = "Day Of Birth"
-        break
+        key = "Day Of Birth";
+        break;
       default:
     }
     return (
@@ -58,7 +54,7 @@ export default function ContentItem({
         <span className="key">{key}:</span>
         <span className="value">{value}</span>
       </div>
-    )
+    );
   }
 
   function marriageDialog() {
@@ -83,11 +79,8 @@ export default function ContentItem({
         let newaddress = inputGetter("address");
         let newphone = inputGetter("phone");
         let noempty =
-          newname.length > 0 &&
-          newaddress.length > 0 &&
-          newphone.length > 0;
-        if (!noempty)
-          getById("empty").innerHTML = "Complete all fields";
+          newname.length > 0 && newaddress.length > 0 && newphone.length > 0;
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
         let nothingChanged =
           newname === record.name &&
           newaddress === record.address &&
@@ -95,8 +88,7 @@ export default function ContentItem({
         console.log(noempty);
         console.log(nothingChanged);
         if (nothingChanged)
-          getById("nothingChanged").innerHTML =
-            "Change atleast one value";
+          getById("nothingChanged").innerHTML = "Change atleast one value";
         return noempty && !nothingChanged;
       },
       showCancelButton: true,
@@ -155,10 +147,9 @@ export default function ContentItem({
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
           newAddress.length > 0 &&
-          newAge.length > 0
+          newAge.length > 0;
 
-        if (!noempty)
-          getById("empty").innerHTML = "Complete all fields";
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
         let nothingChanged =
           newName === record.name &&
@@ -166,11 +157,10 @@ export default function ContentItem({
           newDayOfDeath === record.dayOfDeath &&
           newDateOfMass === record.dateOfMass &&
           newAddress === record.address &&
-          newAge === record.age
+          newAge === record.age;
 
         if (nothingChanged)
-          getById("nothingChanged").innerHTML =
-            "Change atleast one value";
+          getById("nothingChanged").innerHTML = "Change atleast one value";
 
         return noempty && !nothingChanged;
       },
@@ -215,28 +205,27 @@ export default function ContentItem({
         let title = inputGetter("title");
         let content = inputGetter("post-content");
 
-        let noempty =
-          title.length > 0 &&
-          content.length > 0
+        let noempty = title.length > 0 && content.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
         let nothingChanged =
-          title === record.title &&
-          content === record.content
+          title === record.title && content === record.content;
 
         if (nothingChanged)
-          getById("nothingChanged").innerHTML =
-            "Change atleast one value";
+          getById("nothingChanged").innerHTML = "Change atleast one value";
 
         return noempty && !nothingChanged;
       },
     }).then((value) => {
       if (value.isConfirmed) {
-        let now = new Date()
+        let now = new Date();
         submit({
           title: inputGetter("title"),
-          date: `${now.getFullYear()}-${now.getMonth().toString().padStart(2, 0)}-${now.getDate()}`,
+          date: `${now.getFullYear()}-${now
+            .getMonth()
+            .toString()
+            .padStart(2, 0)}-${now.getDate()}`,
           content: inputGetter("post-content"),
         });
       }
@@ -246,13 +235,12 @@ export default function ContentItem({
   return (
     <div className="content-item">
       <div className="record-datas">
-        {
-          Object.keys(record).sort((a, b) => a < b).map((key) => {
-            if (key !== "id")
-              return recordDetail(key, record[key])
-            else return null
-          })
-        }
+        {Object.keys(record)
+          .sort((a, b) => a < b)
+          .map((key) => {
+            if (key !== "id") return recordDetail(key, record[key]);
+            else return null;
+          })}
       </div>
       <span>
         <div className="icons-container">
@@ -277,16 +265,16 @@ export default function ContentItem({
                 onClick={() => {
                   switch (selected) {
                     case "marriage":
-                      marriageDialog()
-                      break
+                      marriageDialog();
+                      break;
                     case "death":
-                      deathDialog()
-                      break
+                      deathDialog();
+                      break;
                     case "post":
-                      postDialog()
-                      break
+                      postDialog();
+                      break;
                     default:
-                      marriageDialog()
+                      marriageDialog();
                   }
                 }}
               />
