@@ -75,9 +75,25 @@ export async function login(username, password) {
   let admins = await fetchCollection("admins")
   for (let i = 0; i < admins.length; i++) {
     if (admins[i].username === username && admins[i].password === password) {
-      return true
+      return admins[i].id
     }
   }
   return false
+}
+
+export async function changePassword(id, oldPassword, newPassword) {
+  let admins = await fetchCollection("admins")
+  let loggedIn = admins.find(o => o.id = id)
+
+  if (loggedIn.password === oldPassword) {
+    loggedIn.password = newPassword
+    if (await editRecord("admins", id, loggedIn)) {
+      return { success: true, message: "Password Changed, Please login again" }
+    } else {
+      return { success: false, message: "Failed to Update password" }
+    }
+  } else {
+    return { success: false, message: "Old password didn't match" }
+  }
 
 }

@@ -3,11 +3,12 @@ import "./sidebar.scss";
 import death from "../../assets/death.svg";
 import marriage from "../../assets/marriage.svg";
 import donation from "../../assets/donation.svg";
-import settings from "../../assets/settings.svg";
+import password from "../../assets/password.svg";
 import logout from "../../assets/logout.svg";
 import post from "../../assets/post.svg";
-import { customAlert } from "../../helpers";
 import Swal from "sweetalert2";
+import { customAlert, getById, getCookie, inputGetter } from "../../helpers";
+import { changePassword } from "../../api/FirebaseHelper";
 
 export default function SideBar({ selected, select }) {
   function logoutDialog() {
@@ -18,10 +19,61 @@ export default function SideBar({ selected, select }) {
 
     }).then(value => {
       if (value.isConfirmed) {
-        document.cookie = `authenticated=; expires=${new Date()}`;
+        document.cookie = `admin=; expires=${new Date()}`;
         window.location.reload()
       }
     });
+  }
+
+  function passwordDialog() {
+    Swal.fire({
+      title: "Change Your Password",
+      showCancelButton: true,
+      html:
+        '<span class="swal2-input-label">Old Password</span>' +
+        '<input id="oldPassword" class="swal2-input" type="password">' +
+        '<span class="swal2-input-label">New Password</span>' +
+        '<input id="newPassword" class="swal2-input" type="password">' +
+        '<span class="swal2-input-label">Re-Enter New Password</span>' +
+        '<input id="newPassword1" class="swal2-input" type="password">' +
+        '<span id="empty" class="error-text"> </span>' +
+        '<span id="notMatched" class="error-text"> </span>',
+      preConfirm: () => {
+
+        let oldPassword = inputGetter("oldPassword");
+        let newPassword = inputGetter("newPassword");
+        let newPassword1 = inputGetter("newPassword1");
+
+        let noempty =
+          oldPassword.length > 0 &&
+          newPassword.length > 0 &&
+          newPassword1.length > 0;
+
+        if (!noempty)
+          getById("empty").innerHTML = "Complete all fields";
+
+        let matched = newPassword === newPassword1
+
+        if (!matched)
+          getById("notMatched").innerHTML = "New Password doesn't match";
+
+        return noempty && matched
+      }
+    }).then(async (value) => {
+      if (value.isConfirmed) {
+        let changeResult = await changePassword(getCookie("admin"), inputGetter("oldPassword"), inputGetter("newPassword"))
+        if (changeResult.success) {
+          await customAlert(changeResult.message, "success")
+          document.cookie = `admin=; expires=${new Date()}`;
+          window.location.reload()
+        } else {
+          customAlert(changeResult.message, "error")
+        }
+      }
+    });
+
+
+
   }
 
   return (
@@ -54,10 +106,10 @@ export default function SideBar({ selected, select }) {
           isSelected={selected === "post"}
         />
       </span>
-      <span onClick={() => customAlert("Settings")}>
+      <span onClick={() => passwordDialog()}>
         <SidebarItem
-          label="Settings"
-          imagesrc={settings}
+          label="Change Password"
+          imagesrc={password}
         />
       </span>
       <span onClick={() => logoutDialog()}>

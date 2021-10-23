@@ -19,12 +19,14 @@ export default function Login({ authenticate }) {
             password.length > 0
 
         if (noempty) {
-            if (await login(username, password)) {
+            let loginResult = await login(username, password)
+            if (loginResult) {
+                setSubmitting(() => false)
                 customAlert("Success", "success")
                 if (rememberMe) {
                     let expiry = new Date()
                     expiry.setDate(expiry.getDate() + 3)
-                    document.cookie = `authenticated=true; expires=${expiry}; SameSite=Lax`
+                    document.cookie = `admin=${loginResult}; expires=${expiry}; SameSite=Lax`
                 }
                 authenticate()
             } else {

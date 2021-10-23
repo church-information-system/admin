@@ -23,13 +23,9 @@ export const firestore = getFirestore();
 
 export default function App() {
   const [selected, setSelected] = useState("");
-  const [authenticated, setAuthenticated] = useState(getCookie("authenticated") === "true");
+  const [authenticated, setAuthenticated] = useState(getCookie("admin").length > 0);
 
   const login = () => setAuthenticated(() => true)
-
-
-
-
   const select = (item) => setSelected(() => item);
 
   return authenticated ?
