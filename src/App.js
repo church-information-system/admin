@@ -6,6 +6,7 @@ import SideBar from "./components/sidebar/sidebar";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { useState } from "react";
+import Login from "./components/misc/login";
 
 initializeApp({
   apiKey: "AIzaSyCDZTLgld2lnDQfqwfWekAu-kq3uXEYKAk",
@@ -19,20 +20,23 @@ initializeApp({
 
 export const firestore = getFirestore();
 
-function App() {
+export default function App() {
   const [selected, setSelected] = useState("");
+  // const [authenticated, setAuthenticated] = useState(false);
+  const authenticated = false
+
 
   const select = (item) => setSelected(() => item);
 
-  return (
-    <div id="app">
-      <NavBar selected={selected} select={select} />
-      <main>
-        <SideBar selected={selected} select={select} />
-        <Content selected={selected} />
-      </main>
-    </div>
-  );
+  return authenticated ?
+    (
+      <div id="app">
+        <NavBar selected={selected} select={select} />
+        <main>
+          <SideBar selected={selected} select={select} />
+          <Content selected={selected} />
+        </main>
+      </div>
+    )
+    : <Login />
 }
-
-export default App;

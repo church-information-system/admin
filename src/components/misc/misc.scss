@@ -1,4 +1,6 @@
 @import "../../styles/variables";
+@import "../../styles/presets";
+@import "../../styles/hovers";
 
 .loader-container {
   margin: 0.6em;
@@ -29,5 +31,59 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+#login {
+  display: flex;
+  background-color: $bg;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+
+  .login-form {
+    background-color: white;
+    max-width: 600px;
+    width: 80vw;
+    padding-bottom: 100px;
+
+    @extend .rounded-border;
+    @extend .default-padding;
+    @extend .box-shadow;
+
+    .login-title {
+      text-align: center;
+      color: $primary;
+    }
+
+    .form {
+      text-align: center;
+      .label {
+        color: $primary;
+      }
+
+      .input {
+        margin: auto;
+      }
+
+      .checkbox {
+        margin: 16px;
+
+        .label {
+          margin-right: 8px;
+        }
+      }
+
+      .login-button {
+        display: inline-block;
+        color: white;
+
+        @extend .swal2-input;
+        @extend .button-primary;
+        @extend .clickable;
+        @extend .rounded-border;
+        @extend .box-shadow;
+      }
+    }
   }
 }
