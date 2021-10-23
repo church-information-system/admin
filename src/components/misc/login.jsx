@@ -1,23 +1,48 @@
 import { useState } from "react"
+import { login } from "../../api/FirebaseHelper"
+import { customAlert, inputGetter } from "../../helpers"
+import { MiniLoader } from "./loader"
 import "./misc.scss"
 
-export default function Login() {
+export default function Login({ authenticate }) {
     const [showPassword, setShowPassword] = useState(false)
+    const [submitting, setSubmitting] = useState(false)
+
+    async function submitLogin() {
+        setSubmitting(() => true)
+        let username = inputGetter("username")
+        let password = inputGetter("password")
+
+        let noempty =
+            username.length > 0 &&
+            password.length > 0
+
+        if (noempty) {
+            if (await login(username, password)) {
+                customAlert("Success", "success")
+                authenticate()
+            } else {
+                customAlert("Wrong username or Password", "error")
+            }
+        } else {
+            customAlert("Please Fill All Fields", "info")
+        }
+        setSubmitting(() => false)
+    }
 
     return (
         <div id="login">
             <div className="login-form">
-                <h1 className="login-title">Login</h1>
+                <h1 className="login-title">Admin Login</h1>
                 <div className="form">
                     <h4 className="label">Username</h4>
-                    <input type="text" className="swal2-input input" />
+                    <input id="username" type="text" className="swal2-input input" />
                     <h4 className="label">Password</h4>
-                    <input className="swal2-input input" type={showPassword ? "text" : "password"} />
+                    <input id="password" className="swal2-input input" type={showPassword ? "text" : "password"} />
 
                     <div className="checkbox">
                         <strong className="label">Show Password</strong>
                         <input className="input" type="checkbox" onChange={(value) => {
-                            console.log(value.target.checked)
                             setShowPassword(() => value.target.checked)
                         }} />
                     </div>
@@ -27,8 +52,14 @@ export default function Login() {
                         <input className="input" type="checkbox" />
                     </div>
 
-                    <div className="login-button">
-                        <h3>LOGIN</h3>
+                    <div className="login-button" onClick={() => submitLogin()}>
+                        {
+                            submitting ?
+                                <h3>
+                                    <MiniLoader />
+                                </h3> :
+                                <h3>LOGIN</h3>
+                        }
                     </div>
                 </div>
             </div>

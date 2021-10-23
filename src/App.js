@@ -22,8 +22,10 @@ export const firestore = getFirestore();
 
 export default function App() {
   const [selected, setSelected] = useState("");
-  // const [authenticated, setAuthenticated] = useState(false);
-  const authenticated = false
+  const [authenticated, setAuthenticated] = useState(false);
+
+  const login = () => setAuthenticated(() => true)
+
 
 
   const select = (item) => setSelected(() => item);
@@ -38,5 +40,5 @@ export default function App() {
         </main>
       </div>
     )
-    : <Login />
+    : <Login authenticate={login} />
 }

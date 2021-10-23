@@ -70,3 +70,14 @@ export async function archiveRecord(
   }
   return success;
 }
+
+export async function login(username, password) {
+  let admins = await fetchCollection("admins")
+  for (let i = 0; i < admins.length; i++) {
+    if (admins[i].username === username && admins[i].password === password) {
+      return true
+    }
+  }
+  return false
+
+}
