@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { login } from "../../api/FirebaseHelper"
-import { customAlert, inputGetter } from "../../helpers"
+import { customAlert, inputGetter, } from "../../helpers"
 import { MiniLoader } from "./loader"
 import "./misc.scss"
 

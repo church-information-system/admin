@@ -36,8 +36,8 @@ export default function SideBar({ selected, select }) {
         '<input id="newPassword" class="swal2-input" type="password">' +
         '<span class="swal2-input-label">Re-Enter New Password</span>' +
         '<input id="newPassword1" class="swal2-input" type="password">' +
-        '<span id="empty" class="error-text"> </span>' +
-        '<span id="notMatched" class="error-text"> </span>',
+        '<div id="empty" class="error-text"> </div>' +
+        '<div id="notMatched" class="error-text"> </div>',
       preConfirm: () => {
 
         let oldPassword = inputGetter("oldPassword");

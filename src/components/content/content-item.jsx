@@ -65,8 +65,8 @@ export default function ContentItem({
     Swal.fire({
       title: "Enter Details",
       html:
-        '<span id="empty" class="error-text"> </span>' +
-        '<span id="nothingChanged" class="error-text"> </span>' +
+        '<div id="empty" class="error-text"> </div>' +
+        '<div id="nothingChanged" class="error-text"> </div>' +
         '<span class="swal2-input-label">Fullname</span>' +
         '<input id="fullname" class="swal2-input">' +
         '<span class="swal2-input-label">Address</span>' +
@@ -131,8 +131,8 @@ export default function ContentItem({
         '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
         '<input id="age" class="swal2-input">' +
-        '<span id="empty" class="error-text"> </span>' +
-        '<span id="nothingChanged" class="error-text"> </span>',
+        '<div id="empty" class="error-text"> </div>' +
+        '<div id="nothingChanged" class="error-text"> </div>',
       didOpen: () => {
         getById("fullname").value = record.name;
         getById("dayOfDeath").value = record.dayOfDeath;
@@ -200,12 +200,12 @@ export default function ContentItem({
     Swal.fire({
       title: "Enter Name",
       html:
-        '<span id="empty" class="error-text"> </span>' +
+        '<div id="empty" class="error-text"> </div>' +
         '<span class="swal2-input-label">Title</span>' +
         '<input id="title" class="swal2-input">' +
         '<span class="swal2-input-label">Content</span>' +
         '<textarea id="post-content" class="swal2-input"></textarea>' +
-        '<span id="nothingChanged" class="error-text"> </span>',
+        '<div id="nothingChanged" class="error-text"> </div>',
       showCancelButton: true,
       didOpen: () => {
         getById("title").value = record.title;

@@ -24,7 +24,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
     Swal.fire({
       title: "Enter Name",
       html:
-        '<span id="empty" class="error-text"> </span>' +
+        '<div id="empty" class="error-text"> </div>' +
         '<span class="swal2-input-label">Fullname</span>' +
         '<input id="fullname" class="swal2-input">' +
         '<span class="swal2-input-label">Address</span>' +
@@ -72,8 +72,8 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         '<input id="age" class="swal2-input">' +
         '<span class="swal2-input-label">Address</span>' +
         '<input id="address" class="swal2-input">' +
-        '<span id="empty" class="error-text"> </span>' +
-        '<span id="nothingChanged" class="error-text"> </span>',
+        '<div id="empty" class="error-text"> </div>' +
+        '<div id="nothingChanged" class="error-text"> </div>',
       preConfirm: () => {
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
@@ -121,7 +121,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
     Swal.fire({
       title: "Enter Name",
       html:
-        '<span id="empty" class="error-text"> </span>' +
+        '<div id="empty" class="error-text"> </div>' +
         '<span class="swal2-input-label">Title</span>' +
         '<input id="title" class="swal2-input">' +
         '<span class="swal2-input-label">Content</span>' +
