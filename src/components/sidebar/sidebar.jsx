@@ -7,8 +7,23 @@ import settings from "../../assets/settings.svg";
 import logout from "../../assets/logout.svg";
 import post from "../../assets/post.svg";
 import { customAlert } from "../../helpers";
+import Swal from "sweetalert2";
 
 export default function SideBar({ selected, select }) {
+  function logoutDialog() {
+    Swal.fire({
+      title: "Are you sure you want to logout?",
+      icon: "question",
+      showCancelButton: true,
+
+    }).then(value => {
+      if (value.isConfirmed) {
+        document.cookie = `authenticated=; expires=${new Date()}`;
+        window.location.reload()
+      }
+    });
+  }
+
   return (
     <div id="sidebar">
       <span onClick={() => select("marriage")} className="sidebar-item-container">
@@ -45,7 +60,7 @@ export default function SideBar({ selected, select }) {
           imagesrc={settings}
         />
       </span>
-      <span onClick={() => customAlert("Are you sure you want to Logout?", "Question")}>
+      <span onClick={() => logoutDialog()}>
         <SidebarItem
           label="Logout"
           imagesrc={logout}
