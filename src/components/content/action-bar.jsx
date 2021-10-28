@@ -67,8 +67,6 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
         '<input id="age" class="swal2-input">' +
-        '<span class="swal2-input-label">Address</span>' +
-        '<input id="address" class="swal2-input">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>',
       preConfirm: () => {
@@ -76,7 +74,6 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAddress = inputGetter("address");
         let newAge = inputGetter("age");
 
         let noempty =
@@ -84,7 +81,6 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
           newDayOfBirth.length > 0 &&
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
-          newAddress.length > 0 &&
           newAge.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
@@ -98,7 +94,6 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAddress = inputGetter("address");
         let newAge = inputGetter("age");
 
         submit({
@@ -107,7 +102,6 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
           dayOfBirth: newDayOfBirth,
           dateOfMass: newDateOfMass,
           age: newAge,
-          address: newAddress,
         });
       }
     });

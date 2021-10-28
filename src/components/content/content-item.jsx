@@ -113,8 +113,6 @@ export default function ContentItem({ record, selected, requestRefresh }) {
       html:
         '<span class="swal2-input-label">Fullname</span>' +
         '<input id="fullname" class="swal2-input">' +
-        '<span class="swal2-input-label">Address</span>' +
-        '<input id="address" class="swal2-input">' +
         '<span class="swal2-input-label" type="date">Day Of Death</span>' +
         '<input id="dayOfDeath" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Day Of Birth</span>' +
@@ -131,14 +129,12 @@ export default function ContentItem({ record, selected, requestRefresh }) {
         getById("dayOfBirth").value = record.dayOfBirth;
         getById("dateOfMass").value = record.dateOfMass;
         getById("age").value = record.age;
-        getById("address").value = record.address;
       },
       preConfirm: () => {
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAddress = inputGetter("address");
         let newAge = inputGetter("age");
 
         let noempty =
@@ -146,7 +142,6 @@ export default function ContentItem({ record, selected, requestRefresh }) {
           newDayOfBirth.length > 0 &&
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
-          newAddress.length > 0 &&
           newAge.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
@@ -156,7 +151,6 @@ export default function ContentItem({ record, selected, requestRefresh }) {
           newDayOfBirth === record.dayOfBirth &&
           newDayOfDeath === record.dayOfDeath &&
           newDateOfMass === record.dateOfMass &&
-          newAddress === record.address &&
           newAge === record.age;
 
         if (nothingChanged)
@@ -171,7 +165,6 @@ export default function ContentItem({ record, selected, requestRefresh }) {
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAddress = inputGetter("address");
         let newAge = inputGetter("age");
 
         submit({
@@ -180,7 +173,6 @@ export default function ContentItem({ record, selected, requestRefresh }) {
           dayOfBirth: newDayOfBirth,
           dateOfMass: newDateOfMass,
           age: newAge,
-          address: newAddress,
         });
       }
     });
