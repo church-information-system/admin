@@ -1,5 +1,5 @@
 {
-  "homepage": "https://grrom.github.io/church_information_system/",
+  "homepage": "https://church-information-system.github.io/church-information-system",
   "name": "church_information_system",
   "version": "0.1.0",
   "private": true,
@@ -23,17 +23,10 @@
     "deploy": "npm run build; gh-pages -d build"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
