@@ -37,18 +37,12 @@ export default function ContentItem({ record, selected, requestRefresh }) {
   }
 
   function recordDetail(key, value) {
-    switch (key) {
-      case "dateOfMass":
-        key = "Date Of Mass";
-        break;
-      case "dayOfDeath":
-        key = "Day Of Death";
-        break;
-      case "dayOfBirth":
-        key = "Day Of Birth";
-        break;
-      default:
-    }
+
+    try {
+      key = key.charAt(0).toUpperCase() + key.slice(1)
+      key = key.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
+    } catch { }
+
     return (
       <div className="key-value-pair" key={key}>
         <span className="key">{key}:</span>
@@ -61,47 +55,102 @@ export default function ContentItem({ record, selected, requestRefresh }) {
     Swal.fire({
       title: "Enter Details",
       html:
+        '<h3>Enter Husband details:</h4>' +
+        '<span class="swal2-input-label">Name</span>' +
+        '<input id="husbandName" class="swal2-input">' +
+        '<span class="swal2-input-label">Age</span>' +
+        '<input id="husbandAge" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Birthday</span>' +
+        '<input id="husbandBirthday" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Place of Birth</span>' +
+        '<input id="husbandPlaceOfBirth" class="swal2-input">' +
+        '<span class="swal2-input-label">Religion</span>' +
+        '<input id="husbandReligion" class="swal2-input">' +
+        '<br></br>' +
+        '<h3>Enter Wife details:</h4>' +
+        '<span class="swal2-input-label">Name</span>' +
+        '<input id="wifeName" class="swal2-input">' +
+        '<span class="swal2-input-label">Age</span>' +
+        '<input id="wifeAge" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Birthday</span>' +
+        '<input id="wifeBirthday" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Place of Birth</span>' +
+        '<input id="wifePlaceOfBirth" class="swal2-input">' +
+        '<span class="swal2-input-label">Religion</span>' +
+        '<input id="wifeReligion" class="swal2-input">' +
         '<div id="empty" class="error-text"> </div>' +
-        '<div id="nothingChanged" class="error-text"> </div>' +
-        '<span class="swal2-input-label">Fullname</span>' +
-        '<input id="fullname" class="swal2-input">' +
-        '<span class="swal2-input-label">Address</span>' +
-        '<input id="address" class="swal2-input">' +
-        '<span class="swal2-input-label">Phone</span>' +
-        '<input id="phone" class="swal2-input">',
+        '<div id="nothingChanged" class="error-text"> </div>',
       didOpen: () => {
-        getById("fullname").value = record.name;
-        getById("address").value = record.address;
-        getById("phone").value = record.phone;
+        getById("husbandName").value = record.husbandName;
+        getById("husbandAge").value = record.husbandAge;
+        getById("husbandBirthday").value = record.husbandBirthday;
+        getById("husbandPlaceOfBirth").value = record.husbandPlaceOfBirth;
+        getById("husbandReligion").value = record.husbandReligion;
+        getById("wifeName").value = record.wifeName;
+        getById("wifeAge").value = record.wifeAge;
+        getById("wifeBirthday").value = record.wifeBirthday;
+        getById("wifePlaceOfBirth").value = record.wifePlaceOfBirth;
+        getById("wifeReligion").value = record.wifeReligion;
       },
       preConfirm: () => {
-        let newname = inputGetter("fullname");
-        let newaddress = inputGetter("address");
-        let newphone = inputGetter("phone");
+        let husbandName = inputGetter("husbandName");
+        let husbandAge = inputGetter("husbandAge");
+        let husbandBirthday = inputGetter("husbandBirthday");
+        let husbandPlaceOfBirth = inputGetter("husbandPlaceOfBirth");
+        let husbandReligion = inputGetter("husbandReligion");
+
+        let wifeName = inputGetter("wifeName");
+        let wifeAge = inputGetter("wifeAge");
+        let wifeBirthday = inputGetter("wifeBirthday");
+        let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
+        let wifeReligion = inputGetter("wifeReligion");
+
         let noempty =
-          newname.length > 0 && newaddress.length > 0 && newphone.length > 0;
+          husbandName.length > 0 &&
+          husbandAge.length > 0 &&
+          husbandBirthday.length > 0 &&
+          husbandPlaceOfBirth.length > 0 &&
+          husbandReligion.length > 0 &&
+          wifeName.length > 0 &&
+          wifeAge.length > 0 &&
+          wifeBirthday.length > 0 &&
+          wifePlaceOfBirth.length > 0 &&
+          wifeReligion.length > 0
+
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
+
         let nothingChanged =
-          newname === record.name &&
-          newaddress === record.address &&
-          newphone === record.phone;
-        console.log(noempty);
-        console.log(nothingChanged);
+          husbandName === record.husbandName &&
+          husbandAge === record.husbandAge &&
+          husbandBirthday === record.husbandBirthday &&
+          husbandPlaceOfBirth === record.husbandPlaceOfBirth &&
+          husbandReligion === record.husbandReligion &&
+          wifeName === record.wifeName &&
+          wifeAge === record.wifeAge &&
+          wifeBirthday === record.wifeBirthday &&
+          wifePlaceOfBirth === record.wifePlaceOfBirth &&
+          wifeReligion === record.wifeReligion
+
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
+
         return noempty && !nothingChanged;
       },
       showCancelButton: true,
     }).then((value) => {
       if (value.isConfirmed) {
-        let newname = inputGetter("fullname");
-        let newaddress = inputGetter("address");
-        let newphone = inputGetter("phone");
 
         submit({
-          name: newname,
-          address: newaddress,
-          phone: newphone,
+          husbandName: inputGetter("husbandName"),
+          husbandAge: inputGetter("husbandAge"),
+          husbandBirthday: inputGetter("husbandBirthday"),
+          husbandPlaceOfBirth: inputGetter("husbandPlaceOfBirth"),
+          husbandReligion: inputGetter("husbandReligion"),
+          wifeName: inputGetter("wifeName"),
+          wifeAge: inputGetter("wifeAge"),
+          wifeBirthday: inputGetter("wifeBirthday"),
+          wifePlaceOfBirth: inputGetter("wifePlaceOfBirth"),
+          wifeReligion: inputGetter("wifeReligion"),
         });
       }
     });
