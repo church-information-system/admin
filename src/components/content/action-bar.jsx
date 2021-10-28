@@ -46,7 +46,8 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         '<input id="wifePlaceOfBirth" class="swal2-input">' +
         '<span class="swal2-input-label">Religion</span>' +
         '<input id="wifeReligion" class="swal2-input">' +
-        '<div id="empty" class="error-text"> </div>',
+        '<div id="empty" class="error-text"> </div>' +
+        '<div id="invalidAge" class="error-text"> </div>',
       showCancelButton: true,
       preConfirm: () => {
         let husbandName = inputGetter("husbandName");
@@ -60,6 +61,9 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         let wifeBirthday = inputGetter("wifeBirthday");
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
+
+        let ageValid = husbandAge.length > 0 && wifeAge.length > 0
+        if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
 
         let noempty =
           husbandName.length > 0 &&
@@ -75,7 +79,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
-        return noempty;
+        return noempty && ageValid;
       },
     }).then((value) => {
       if (value.isConfirmed) {
