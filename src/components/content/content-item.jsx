@@ -173,9 +173,10 @@ export default function ContentItem({ record, selected, requestRefresh }) {
         '<span class="swal2-input-label">Date Of Mass</span>' +
         '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
-        '<input id="age" class="swal2-input">' +
+        '<input id="age" class="swal2-input" type="number">' +
         '<div id="empty" class="error-text"> </div>' +
-        '<div id="nothingChanged" class="error-text"> </div>',
+        '<div id="nothingChanged" class="error-text"> </div>' +
+        '<div id="invalidAge" class="error-text"> </div>',
       didOpen: () => {
         getById("fullname").value = record.name;
         getById("dayOfDeath").value = record.dayOfDeath;
@@ -189,6 +190,9 @@ export default function ContentItem({ record, selected, requestRefresh }) {
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
+
+        let ageValid = newAge.length > 0
+        if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
 
         let noempty =
           newName.length > 0 &&
@@ -209,7 +213,7 @@ export default function ContentItem({ record, selected, requestRefresh }) {
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
 
-        return noempty && !nothingChanged;
+        return noempty && !nothingChanged && ageValid;
       },
       showCancelButton: true,
     }).then((value) => {

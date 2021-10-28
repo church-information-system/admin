@@ -112,15 +112,19 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         '<span class="swal2-input-label">Date Of Mass</span>' +
         '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
-        '<input id="age" class="swal2-input">' +
+        '<input id="age" class="swal2-input" type="number">' +
         '<div id="empty" class="error-text"> </div>' +
-        '<div id="nothingChanged" class="error-text"> </div>',
+        '<div id="nothingChanged" class="error-text"> </div>' +
+        '<div id="invalidAge" class="error-text"> </div>',
       preConfirm: () => {
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
+
+        let ageValid = newAge.length > 0
+        if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
 
         let noempty =
           newName.length > 0 &&
@@ -131,7 +135,7 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
-        return noempty;
+        return noempty && ageValid;
       },
       showCancelButton: true,
     }).then((value) => {

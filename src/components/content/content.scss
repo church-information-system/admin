@@ -108,9 +108,11 @@
 
       .icons-container {
         display: flex;
+        @include mobile {
+          flex-direction: column;
+        }
 
         .icon-container {
-          // filter: invert(62%) sepia(78%) saturate(3342%) hue-rotate(219deg) brightness(77%) contrast(84%);
           margin: 8px;
           background-color: $primary;
 
