@@ -6,12 +6,12 @@ import { useState } from "react";
 import { customAlert, getById, inputGetter } from "../../helpers";
 import ToggleSwitch from "../misc/toggle-switch";
 
-export default function ActionBar({ requestRefresh, search, show, selected, toggleArchive }) {
+export default function ActionBar({ requestRefresh, search, show, selected, toggleArchive, isArchive }) {
   const [addingRecord, setAddingRecord] = useState(false);
 
   async function submit(values) {
     setAddingRecord(() => true);
-    if (await addRecord(selected, values)) {
+    if (await addRecord(selected + (isArchive ? "_archive" : ""), values)) {
       customAlert("Record Added!", "success");
       requestRefresh();
     } else {

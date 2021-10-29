@@ -73,6 +73,7 @@ export default function Content({ selected }) {
         show={selected !== ""}
         selected={selected}
         toggleArchive={toggleArchive}
+        isArchive={isArchive}
       />
       {selected === "" ? (
         <h3 className="content-message">Nothing Selected</h3>
