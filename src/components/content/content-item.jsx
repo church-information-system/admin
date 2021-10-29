@@ -284,12 +284,13 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
   return (
     <div className="content-item">
       <div className="record-datas">
-        {Object.keys(record)
-          .sort((a, b) => a < b)
-          .map((key) => {
-            if (key !== "id") return recordDetail(key, record[key]);
-            else return null;
-          })}
+        {
+          Object.keys(record)
+            .sort((a, b) => a > b)
+            .map((key) => {
+              if (key !== "id") return recordDetail(key, record[key]);
+              else return null;
+            })}
       </div>
       <span>
         <div className="icons-container">
