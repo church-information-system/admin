@@ -8,13 +8,13 @@ import { customAlert, getById, inputGetter } from "../../helpers";
 import { useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
-export default function ContentItem({ record, selected, requestRefresh }) {
+export default function ContentItem({ record, selected, requestRefresh, isArchive }) {
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
 
   async function submit(values) {
     setUpdating(() => true);
-    if (await editRecord(selected, record.id, values)) {
+    if (await editRecord(selected + (isArchive ? "_archive" : ""), record.id, values)) {
       customAlert("Record Updated!", "success");
       requestRefresh();
     } else {

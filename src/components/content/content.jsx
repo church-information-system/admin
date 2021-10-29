@@ -60,6 +60,7 @@ export default function Content({ selected }) {
         key={record.id}
         selected={selected}
         requestRefresh={refreshList}
+        isArchive={isArchive}
       />
     );
   }
