@@ -293,15 +293,18 @@ export default function ContentItem({ record, selected, requestRefresh }) {
       </div>
       <span>
         <div className="icons-container">
-          <div className="icon-container">
-            <img
-              src={print}
-              title="print"
-              alt=""
-              className="icon"
-              onClick={() => Swal.fire({ title: "print" })}
-            />
-          </div>
+          {
+            selected !== "post" ?
+              <div className="icon-container">
+                <img
+                  src={print}
+                  title="print"
+                  alt=""
+                  className="icon"
+                  onClick={() => Swal.fire({ title: "print" })}
+                />
+              </div> : ""
+          }
           <div className="icon-container">
             {updating ? (
               <MiniLoader />
@@ -329,30 +332,34 @@ export default function ContentItem({ record, selected, requestRefresh }) {
               />
             )}
           </div>
-          <div className="icon-container">
-            {archiving ? (
-              <MiniLoader />
-            ) : (
-              <img
-                src={archive}
-                title="archive"
-                alt="archive"
-                className="icon"
-                onClick={() =>
-                  Swal.fire({
-                    title: "Are you sure you want to archive this record?",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonText: "archive",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      confirmArchive();
+          {
+            selected !== "post" ?
+
+              <div className="icon-container">
+                {archiving ? (
+                  <MiniLoader />
+                ) : (
+                  <img
+                    src={archive}
+                    title="archive"
+                    alt="archive"
+                    className="icon"
+                    onClick={() =>
+                      Swal.fire({
+                        title: "Are you sure you want to archive this record?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "archive",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          confirmArchive();
+                        }
+                      })
                     }
-                  })
-                }
-              />
-            )}
-          </div>
+                  />
+                )}
+              </div> : ""
+          }
         </div>
       </span>
     </div>

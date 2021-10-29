@@ -196,20 +196,26 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
 
   return show ? (
     <div className="action-bar">
-      <span className="search-bar">
-        <input type="text" className="search-field" id="search-field" />
-        <div
-          className="action-button"
-          title="Search"
-          onClick={() => search(document.getElementById("search-field").value)}
-        >
-          <h4>Search</h4>
-        </div>
-      </span>
-      <span className="archive-bar">
-        <ToggleSwitch toggleArchive={toggleArchive} />
-        <h4>Toggle Archive</h4>
-      </span>
+      {
+        selected !== "post" ?
+          <span className="search-bar">
+            <input type="text" className="search-field" id="search-field" />
+            <div
+              className="action-button"
+              title="Search"
+              onClick={() => search(document.getElementById("search-field").value)}
+            >
+              <h4>Search</h4>
+            </div>
+          </span> : ""
+      }
+      {
+        selected !== "post" ?
+          <span className="archive-bar">
+            <ToggleSwitch toggleArchive={toggleArchive} />
+            <h4>Toggle Archive</h4>
+          </span> : ""
+      }
       <span
         className="action-button add-record"
         title="Add"
