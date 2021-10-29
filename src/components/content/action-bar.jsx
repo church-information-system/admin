@@ -210,7 +210,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
           </span> : ""
       }
       {
-        selected !== "post" ?
+        selected !== "post" && selected !== "donation" ?
           <span className="archive-bar">
             <ToggleSwitch toggleArchive={toggleArchive} />
             <h4>Toggle Archive</h4>

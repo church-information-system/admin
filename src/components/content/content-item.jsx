@@ -294,7 +294,7 @@ export default function ContentItem({ record, selected, requestRefresh }) {
       <span>
         <div className="icons-container">
           {
-            selected !== "post" ?
+            selected !== "post" && selected !== "donation" ?
               <div className="icon-container">
                 <img
                   src={print}
@@ -333,7 +333,7 @@ export default function ContentItem({ record, selected, requestRefresh }) {
             )}
           </div>
           {
-            selected !== "post" ?
+            selected !== "post" && selected !== "donation" ?
 
               <div className="icon-container">
                 {archiving ? (
