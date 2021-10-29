@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/church-information-system/static/css/main.69cc9f05.chunk.css",
-    "main.js": "/church-information-system/static/js/main.4813ff42.chunk.js",
-    "main.js.map": "/church-information-system/static/js/main.4813ff42.chunk.js.map",
-    "runtime-main.js": "/church-information-system/static/js/runtime-main.ff13a9ec.js",
-    "runtime-main.js.map": "/church-information-system/static/js/runtime-main.ff13a9ec.js.map",
+    "main.css": "/church-information-system/static/css/main.1df3581c.chunk.css",
+    "main.js": "/church-information-system/static/js/main.1ac943aa.chunk.js",
+    "main.js.map": "/church-information-system/static/js/main.1ac943aa.chunk.js.map",
+    "runtime-main.js": "/church-information-system/static/js/runtime-main.ebde0511.js",
+    "runtime-main.js.map": "/church-information-system/static/js/runtime-main.ebde0511.js.map",
     "static/js/2.9dcabf7b.chunk.js": "/church-information-system/static/js/2.9dcabf7b.chunk.js",
     "static/js/2.9dcabf7b.chunk.js.map": "/church-information-system/static/js/2.9dcabf7b.chunk.js.map",
-    "static/js/3.67bacbb1.chunk.js": "/church-information-system/static/js/3.67bacbb1.chunk.js",
-    "static/js/3.67bacbb1.chunk.js.map": "/church-information-system/static/js/3.67bacbb1.chunk.js.map",
+    "static/js/3.6ee652d7.chunk.js": "/church-information-system/static/js/3.6ee652d7.chunk.js",
+    "static/js/3.6ee652d7.chunk.js.map": "/church-information-system/static/js/3.6ee652d7.chunk.js.map",
     "index.html": "/church-information-system/index.html",
-    "static/css/main.69cc9f05.chunk.css.map": "/church-information-system/static/css/main.69cc9f05.chunk.css.map",
+    "static/css/main.1df3581c.chunk.css.map": "/church-information-system/static/css/main.1df3581c.chunk.css.map",
     "static/js/2.9dcabf7b.chunk.js.LICENSE.txt": "/church-information-system/static/js/2.9dcabf7b.chunk.js.LICENSE.txt",
     "static/media/add.c687829d.svg": "/church-information-system/static/media/add.c687829d.svg",
     "static/media/archive.899a083e.svg": "/church-information-system/static/media/archive.899a083e.svg",
@@ -25,9 +25,9 @@
     "static/media/print.70b985ba.svg": "/church-information-system/static/media/print.70b985ba.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.ff13a9ec.js",
+    "static/js/runtime-main.ebde0511.js",
     "static/js/2.9dcabf7b.chunk.js",
-    "static/css/main.69cc9f05.chunk.css",
-    "static/js/main.4813ff42.chunk.js"
+    "static/css/main.1df3581c.chunk.css",
+    "static/js/main.1ac943aa.chunk.js"
   ]
 }
