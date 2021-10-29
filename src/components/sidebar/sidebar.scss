@@ -9,6 +9,7 @@
   color: white;
 
   @include desktop {
+    max-width: 16vw;
     min-width: 16vw;
   }
 

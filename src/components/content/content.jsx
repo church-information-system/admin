@@ -11,6 +11,9 @@ export default function Content({ selected }) {
   const [searchString, setSearchString] = useState("");
   const [fetchingCollection, setFetchingCollection] = useState(false);
   const [refereshes, setRefreshes] = useState(0);
+  const [isArchive, setIsArchive] = useState(false);
+
+  const toggleArchive = (value) => setIsArchive(() => value);
 
   const refreshList = () => setRefreshes((value) => value + 1);
 
@@ -20,13 +23,13 @@ export default function Content({ selected }) {
     if (selected !== "") {
       console.log("fetch");
       setFetchingCollection(() => true);
-      setRecords(await fetchCollection(selected));
+      setRecords(await fetchCollection(selected + (isArchive ? "_archive" : "")));
       setFetchingCollection(() => false);
     }
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => fetchData(), [refereshes, selected]);
+  useEffect(() => fetchData(), [refereshes, isArchive, selected]);
 
   function getMatches() {
     let arr = [];
@@ -65,6 +68,7 @@ export default function Content({ selected }) {
         requestRefresh={refreshList}
         show={selected !== ""}
         selected={selected}
+        toggleArchive={toggleArchive}
       />
       {selected === "" ? (
         <h3 className="content-message">Nothing Selected</h3>

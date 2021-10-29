@@ -4,8 +4,9 @@ import { addRecord } from "../../api/FirebaseHelper";
 import { MiniLoader } from "../misc/loader";
 import { useState } from "react";
 import { customAlert, getById, inputGetter } from "../../helpers";
+import ToggleSwitch from "../misc/toggle-switch";
 
-export default function ActionBar({ requestRefresh, search, show, selected }) {
+export default function ActionBar({ requestRefresh, search, show, selected, toggleArchive }) {
   const [addingRecord, setAddingRecord] = useState(false);
 
   async function submit(values) {
@@ -204,6 +205,10 @@ export default function ActionBar({ requestRefresh, search, show, selected }) {
         >
           <h4>Search</h4>
         </div>
+      </span>
+      <span className="archive-bar">
+        <ToggleSwitch toggleArchive={toggleArchive} />
+        <h4>Toggle Archive</h4>
       </span>
       <span
         className="action-button add-record"
