@@ -409,7 +409,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
             )}
           </div>
           {
-            selected !== "post" && selected !== "donation" ?
+            selected !== "post" && selected !== "donation" && !isArchive ?
 
               <div className="icon-container">
                 {archiving ? (
