@@ -128,7 +128,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
 
         let ageValid = newAge.length > 0
         if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
-        else getById("invalid").innerHTML = " "
+        else getById("invalidAge").innerHTML = " "
 
         let noempty =
           newName.length > 0 &&
