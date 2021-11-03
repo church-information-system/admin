@@ -235,6 +235,70 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
     });
   }
 
+  function donationDialog() {
+    Swal.fire({
+      title: "Edit Details",
+      html:
+        '<span class="swal2-input-label">Fullname</span>' +
+        '<input id="fullname" class="swal2-input">' +
+        '<span class="swal2-input-label">Address</span>' +
+        '<input id="address" class="swal2-input">' +
+        '<span class="swal2-input-label">Phone</span>' +
+        '<input id="phone" class="swal2-input" type="tel" pattern="[+]{1}[0-9]{11,14}">' +
+        '<div id="empty" class="error-text"> </div>' +
+        '<div id="nothingChanged" class="error-text"> </div>' +
+        '<div id="invalidPhone" class="error-text"> </div>',
+      didOpen: () => {
+        getById("fullname").value = record.name;
+        getById("address").value = record.address;
+        getById("phone").value = record.phone;
+      },
+      preConfirm: () => {
+        let fullname = inputGetter("fullname");
+        let address = inputGetter("address");
+        let phone = inputGetter("phone");
+
+        inputGetter("phone").replace(/[^0-9]/g, '')
+
+        let phoneValid = phone.length === 11
+        if (!phoneValid) getById("invalidPhone").innerHTML = "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
+        else getById("invalidPhone").innerHTML = ""
+
+        let noempty =
+          fullname.length > 0 &&
+          address.length > 0 &&
+          phone.length > 0
+
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = ""
+
+        let nothingChanged =
+          fullname === record.name &&
+          address === record.address &&
+          phone === record.phone
+
+        if (nothingChanged)
+          getById("nothingChanged").innerHTML = "Change atleast one value";
+        else getById("nothingChanged").innerHTML = ""
+
+        return noempty && !nothingChanged && phoneValid;
+      },
+      showCancelButton: true,
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let fullname = inputGetter("fullname");
+        let address = inputGetter("address");
+        let phone = inputGetter("phone");
+
+        submit({
+          name: fullname,
+          address: address,
+          phone: phone,
+        });
+      }
+    });
+  }
+
   function postDialog() {
     Swal.fire({
       title: "Enter Name",
@@ -322,6 +386,9 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
                       break;
                     case "death":
                       deathDialog();
+                      break;
+                    case "donation":
+                      donationDialog();
                       break;
                     case "post":
                       postDialog();

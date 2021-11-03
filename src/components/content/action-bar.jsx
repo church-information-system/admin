@@ -132,7 +132,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
           newDayOfBirth.length > 0 &&
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
-          newAge.length > 0;
+          newAge.length > 0
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
 
@@ -153,6 +153,56 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
           dayOfBirth: newDayOfBirth,
           dateOfMass: newDateOfMass,
           age: newAge,
+        });
+      }
+    });
+  }
+
+  function donationDialog() {
+    Swal.fire({
+      title: "Edit Details",
+      html:
+        '<span class="swal2-input-label">Fullname</span>' +
+        '<input id="fullname" class="swal2-input">' +
+        '<span class="swal2-input-label">Address</span>' +
+        '<input id="address" class="swal2-input">' +
+        '<span class="swal2-input-label">Phone</span>' +
+        '<input id="phone" class="swal2-input" type="tel"' +
+        '<div id="empty" class="error-text"> </div>' +
+        '<div id="nothingChanged" class="error-text"> </div>' +
+        '<div id="invalidPhone" class="error-text"> </div>',
+      preConfirm: () => {
+        let fullname = inputGetter("fullname");
+        let address = inputGetter("address");
+        let phone = inputGetter("phone");
+
+        let phoneValid = phone.length === 11
+        if (!phoneValid) getById("invalidPhone").innerHTML = "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
+        else getById("invalidPhone").innerHTML = ""
+
+        let noempty =
+          fullname.length > 0 &&
+          address.length > 0 &&
+          phone.length > 0
+
+        console.log(!noempty)
+
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = ""
+
+        return noempty && phoneValid;
+      },
+      showCancelButton: true,
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let fullname = inputGetter("fullname");
+        let address = inputGetter("address");
+        let phone = inputGetter("phone");
+
+        submit({
+          name: fullname,
+          address: address,
+          phone: phone,
         });
       }
     });
@@ -226,6 +276,9 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
               break;
             case "death":
               deathDialog();
+              break;
+            case "donation":
+              donationDialog();
               break;
             case "post":
               postDialog();
