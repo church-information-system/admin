@@ -28,7 +28,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<span class="swal2-input-label">Name</span>' +
         '<input id="husbandName" class="swal2-input">' +
         '<span class="swal2-input-label">Age</span>' +
-        '<input id="husbandAge" class="swal2-input" type="number">' +
+        '<input id="husbandAge" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Birthday</span>' +
         '<input id="husbandBirthday" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
@@ -40,7 +40,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<span class="swal2-input-label">Name</span>' +
         '<input id="wifeName" class="swal2-input">' +
         '<span class="swal2-input-label">Age</span>' +
-        '<input id="wifeAge" class="swal2-input" type="number">' +
+        '<input id="wifeAge" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Birthday</span>' +
         '<input id="wifeBirthday" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
@@ -51,6 +51,9 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<div id="invalidAge" class="error-text"> </div>',
       showCancelButton: true,
       preConfirm: () => {
+        getById("husbandAge").value = getById("husbandAge").value.replace(/[^0-9]/g, '')
+        getById("wifeAge").value = getById("wifeAge").value.replace(/[^0-9]/g, '')
+
         let husbandName = inputGetter("husbandName");
         let husbandAge = inputGetter("husbandAge");
         let husbandBirthday = inputGetter("husbandBirthday");
@@ -63,7 +66,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
 
-        let ageValid = husbandAge.length > 0 && wifeAge.length > 0
+        let ageValid = husbandAge.length > 0 && wifeAge.length > 0 && husbandAge > 0 && wifeAge > 0
         if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
         else getById("invalidAge").innerHTML = " "
 
@@ -115,18 +118,20 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<span class="swal2-input-label">Date Of Mass</span>' +
         '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
-        '<input id="age" class="swal2-input" type="number">' +
+        '<input id="age" class="swal2-input" type="number" min="1">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
       preConfirm: () => {
+        getById("age").value = getById("age").value.replace(/[^0-9]/g, '')
+
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
 
-        let ageValid = newAge.length > 0
+        let ageValid = newAge.length > 0 && newAge > 0
         if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
         else getById("invalidAge").innerHTML = " "
 
