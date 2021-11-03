@@ -176,6 +176,8 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidPhone" class="error-text"> </div>',
       preConfirm: () => {
+        getById("phone").value = getById("phone").value.replace(/[^0-9]/g, '')
+
         let fullname = inputGetter("fullname");
         let address = inputGetter("address");
         let phone = inputGetter("phone");

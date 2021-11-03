@@ -260,11 +260,11 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         getById("phone").value = record.phone;
       },
       preConfirm: () => {
+        getById("phone").value = getById("phone").value.replace(/[^0-9]/g, '')
+
         let fullname = inputGetter("fullname");
         let address = inputGetter("address");
         let phone = inputGetter("phone");
-
-        inputGetter("phone").replace(/[^0-9]/g, '')
 
         let phoneValid = phone.length === 11
         if (!phoneValid) getById("invalidPhone").innerHTML = "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
