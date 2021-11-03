@@ -108,6 +108,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
         let ageValid = husbandAge.length > 0 && wifeAge.length > 0
         if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
+        else getById("invalidAge").innerHTML = " "
 
         let noempty =
           husbandName.length > 0 &&
@@ -122,6 +123,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
           wifeReligion.length > 0
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = " "
 
         let nothingChanged =
           husbandName === record.husbandName &&
@@ -137,6 +139,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
+        else getById("nothingChanged").innerHTML = " "
 
         return noempty && !nothingChanged && ageValid;
       },
@@ -193,6 +196,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
         let ageValid = newAge.length > 0
         if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
+        else getById("invalidAge").innerHTML = " "
 
         let noempty =
           newName.length > 0 &&
@@ -202,6 +206,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
           newAge.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = " "
 
         let nothingChanged =
           newName === record.name &&
@@ -212,6 +217,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
+        else getById("nothingChanged").innerHTML = " "
 
         return noempty && !nothingChanged && ageValid;
       },
@@ -262,7 +268,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
         let phoneValid = phone.length === 11
         if (!phoneValid) getById("invalidPhone").innerHTML = "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
-        else getById("invalidPhone").innerHTML = ""
+        else getById("invalidPhone").innerHTML = " "
 
         let noempty =
           fullname.length > 0 &&
@@ -270,7 +276,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
           phone.length > 0
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = ""
+        else getById("empty").innerHTML = " "
 
         let nothingChanged =
           fullname === record.name &&
@@ -279,7 +285,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
-        else getById("nothingChanged").innerHTML = ""
+        else getById("nothingChanged").innerHTML = " "
 
         return noempty && !nothingChanged && phoneValid;
       },
@@ -321,12 +327,14 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         let noempty = title.length > 0 && content.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = " "
 
         let nothingChanged =
           title === record.title && content === record.content;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
+        else getById("nothingChanged").innerHTML = " "
 
         return noempty && !nothingChanged;
       },

@@ -65,6 +65,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
 
         let ageValid = husbandAge.length > 0 && wifeAge.length > 0
         if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
+        else getById("invalidAge").innerHTML = " "
 
         let noempty =
           husbandName.length > 0 &&
@@ -79,6 +80,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
           wifeReligion.length > 0
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = " "
 
         return noempty && ageValid;
       },
@@ -126,6 +128,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
 
         let ageValid = newAge.length > 0
         if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
+        else getById("invalid").innerHTML = " "
 
         let noempty =
           newName.length > 0 &&
@@ -135,6 +138,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
           newAge.length > 0
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = " "
 
         return noempty && ageValid;
       },
@@ -167,7 +171,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<span class="swal2-input-label">Address</span>' +
         '<input id="address" class="swal2-input">' +
         '<span class="swal2-input-label">Phone</span>' +
-        '<input id="phone" class="swal2-input" type="tel"' +
+        '<input id="phone" class="swal2-input" type="tel">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidPhone" class="error-text"> </div>',
@@ -185,10 +189,8 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
           address.length > 0 &&
           phone.length > 0
 
-        console.log(!noempty)
-
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = ""
+        else getById("empty").innerHTML = " "
 
         return noempty && phoneValid;
       },
@@ -225,7 +227,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         let noempty = title.length > 0 && content.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        console.log();
+        else getById("empty").innerHTML = " "
 
         return noempty;
       },
