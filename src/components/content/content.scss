@@ -5,6 +5,8 @@
   margin-top: 10vh;
   flex-grow: 9;
   overflow-y: auto;
+  background-image: url("../../assets/ngeks.jpg");
+  background-size: contain;
 
   .action-bar {
     @include desktop {
