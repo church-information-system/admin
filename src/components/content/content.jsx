@@ -24,9 +24,11 @@ export default function Content({ selected }) {
       console.log("fetch");
       setFetchingCollection(() => true);
       if (selected === "donation" || selected === "post") {
-        setIsArchive(() => false)
+        setIsArchive(() => false);
       }
-      setRecords(await fetchCollection(selected + (isArchive ? "_archive" : "")));
+      setRecords(
+        await fetchCollection(selected + (isArchive ? "_archive" : ""))
+      );
       setFetchingCollection(() => false);
     }
   };

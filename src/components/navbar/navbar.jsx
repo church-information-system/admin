@@ -2,7 +2,6 @@ import "./navbar.scss";
 import hamburger from "../../assets/hamburger.svg";
 import SideBar from "../sidebar/sidebar";
 import { getById } from "../../helpers";
-import { useEffect } from "react";
 
 export default function NavBar({ select, selected }) {
   function showSidebar() {
@@ -14,18 +13,6 @@ export default function NavBar({ select, selected }) {
     getById("sidebar").style.width = "0vw";
     getById("overlay").style.width = "0vw";
   }
-
-  useEffect(
-    () =>
-      document
-        .querySelectorAll(".sidebar-item-container")
-        .forEach((element) => {
-          element.addEventListener("click", () => {
-            hideSidebar();
-          });
-        }),
-    []
-  );
 
   return (
     <div id="navbar">
@@ -39,7 +26,7 @@ export default function NavBar({ select, selected }) {
         onClick={() => showSidebar()}
       />
       <div id="overlay" onClick={() => hideSidebar()}></div>
-      <SideBar selected={selected} select={select} />
+      <SideBar selected={selected} select={select} hideSidebar={hideSidebar} />
     </div>
   );
 }

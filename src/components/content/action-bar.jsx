@@ -6,7 +6,14 @@ import { useState } from "react";
 import { customAlert, getById, inputGetter } from "../../helpers";
 import ToggleSwitch from "../misc/toggle-switch";
 
-export default function ActionBar({ requestRefresh, search, show, selected, toggleArchive, isArchive }) {
+export default function ActionBar({
+  requestRefresh,
+  search,
+  show,
+  selected,
+  toggleArchive,
+  isArchive,
+}) {
   const [addingRecord, setAddingRecord] = useState(false);
 
   async function submit(values) {
@@ -24,7 +31,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
     Swal.fire({
       title: "Enter Details",
       html:
-        '<h3>Enter Husband details:</h4>' +
+        "<h3>Enter Husband details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="husbandName" class="swal2-input">' +
         '<span class="swal2-input-label">Age</span>' +
@@ -35,8 +42,8 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<input id="husbandPlaceOfBirth" class="swal2-input">' +
         '<span class="swal2-input-label">Religion</span>' +
         '<input id="husbandReligion" class="swal2-input">' +
-        '<br></br>' +
-        '<h3>Enter Wife details:</h4>' +
+        "<br></br>" +
+        "<h3>Enter Wife details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="wifeName" class="swal2-input">' +
         '<span class="swal2-input-label">Age</span>' +
@@ -51,8 +58,14 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<div id="invalidAge" class="error-text"> </div>',
       showCancelButton: true,
       preConfirm: () => {
-        getById("husbandAge").value = getById("husbandAge").value.replace(/[^0-9]/g, '')
-        getById("wifeAge").value = getById("wifeAge").value.replace(/[^0-9]/g, '')
+        getById("husbandAge").value = getById("husbandAge").value.replace(
+          /[^0-9]/g,
+          ""
+        );
+        getById("wifeAge").value = getById("wifeAge").value.replace(
+          /[^0-9]/g,
+          ""
+        );
 
         let husbandName = inputGetter("husbandName");
         let husbandAge = inputGetter("husbandAge");
@@ -66,9 +79,15 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
 
-        let ageValid = husbandAge.length > 0 && wifeAge.length > 0 && husbandAge > 0 && wifeAge > 0
-        if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " "
+        let ageValid =
+          husbandAge.length > 0 &&
+          wifeAge.length > 0 &&
+          husbandAge > 0 &&
+          wifeAge > 0;
+        if (!ageValid)
+          getById("invalidAge").innerHTML =
+            "Please make sure that the age you entered is a valid number";
+        else getById("invalidAge").innerHTML = " ";
 
         let noempty =
           husbandName.length > 0 &&
@@ -80,10 +99,10 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
           wifeAge.length > 0 &&
           wifeBirthday.length > 0 &&
           wifePlaceOfBirth.length > 0 &&
-          wifeReligion.length > 0
+          wifeReligion.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         return noempty && ageValid;
       },
@@ -123,7 +142,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
       preConfirm: () => {
-        getById("age").value = getById("age").value.replace(/[^0-9]/g, '')
+        getById("age").value = getById("age").value.replace(/[^0-9]/g, "");
 
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
@@ -131,19 +150,21 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
 
-        let ageValid = newAge.length > 0 && newAge > 0
-        if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " "
+        let ageValid = newAge.length > 0 && newAge > 0;
+        if (!ageValid)
+          getById("invalidAge").innerHTML =
+            "Please make sure that the age you entered is a valid number";
+        else getById("invalidAge").innerHTML = " ";
 
         let noempty =
           newName.length > 0 &&
           newDayOfBirth.length > 0 &&
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
-          newAge.length > 0
+          newAge.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         return noempty && ageValid;
       },
@@ -181,23 +202,23 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidPhone" class="error-text"> </div>',
       preConfirm: () => {
-        getById("phone").value = getById("phone").value.replace(/[^0-9]/g, '')
+        getById("phone").value = getById("phone").value.replace(/[^0-9]/g, "");
 
         let fullname = inputGetter("fullname");
         let address = inputGetter("address");
         let phone = inputGetter("phone");
 
-        let phoneValid = phone.length === 11
-        if (!phoneValid) getById("invalidPhone").innerHTML = "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
-        else getById("invalidPhone").innerHTML = ""
+        let phoneValid = phone.length === 11;
+        if (!phoneValid)
+          getById("invalidPhone").innerHTML =
+            "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
+        else getById("invalidPhone").innerHTML = "";
 
         let noempty =
-          fullname.length > 0 &&
-          address.length > 0 &&
-          phone.length > 0
+          fullname.length > 0 && address.length > 0 && phone.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         return noempty && phoneValid;
       },
@@ -219,7 +240,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
 
   function postDialog() {
     Swal.fire({
-      title: "Enter Name",
+      title: "Enter Details",
       html:
         '<div id="empty" class="error-text"> </div>' +
         '<span class="swal2-input-label">Title</span>' +
@@ -234,7 +255,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         let noempty = title.length > 0 && content.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         return noempty;
       },
@@ -255,26 +276,30 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
 
   return show ? (
     <div className="action-bar">
-      {
-        selected !== "post" ?
-          <span className="search-bar">
-            <input type="text" className="search-field" id="search-field" />
-            <div
-              className="action-button"
-              title="Search"
-              onClick={() => search(document.getElementById("search-field").value)}
-            >
-              <h4>Search</h4>
-            </div>
-          </span> : ""
-      }
-      {
-        selected !== "post" && selected !== "donation" ?
-          <span className="archive-bar">
-            <ToggleSwitch toggleArchive={toggleArchive} />
-            <h4>Toggle Archive</h4>
-          </span> : ""
-      }
+      {selected !== "post" ? (
+        <span className="search-bar">
+          <input type="text" className="search-field" id="search-field" />
+          <div
+            className="action-button"
+            title="Search"
+            onClick={() =>
+              search(document.getElementById("search-field").value)
+            }
+          >
+            <h4>Search</h4>
+          </div>
+        </span>
+      ) : (
+        ""
+      )}
+      {selected !== "post" && selected !== "donation" ? (
+        <span className="archive-bar">
+          <ToggleSwitch toggleArchive={toggleArchive} />
+          <h4>Toggle Archive</h4>
+        </span>
+      ) : (
+        ""
+      )}
       <span
         className="action-button add-record"
         title="Add"
@@ -302,7 +327,7 @@ export default function ActionBar({ requestRefresh, search, show, selected, togg
         ) : (
           <img src={add} alt="add" className="icon" />
         )}
-        <h4>Add Record</h4>
+        <h4>Add </h4>
       </span>
     </div>
   ) : (

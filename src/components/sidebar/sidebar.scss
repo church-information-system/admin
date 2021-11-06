@@ -28,6 +28,14 @@
     background-color: $secondary;
   }
 
+  .records-container {
+    align-self: flex-end;
+    background-color: $primaryLight;
+    margin-left: 20px;
+
+    @extend .rounded-border;
+  }
+
   .sidebar-item {
     display: flex;
     flex-wrap: expand;

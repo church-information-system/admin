@@ -6,11 +6,13 @@ import donation from "../../assets/donation.svg";
 import password from "../../assets/password.svg";
 import logout from "../../assets/logout.svg";
 import post from "../../assets/post.svg";
+import records from "../../assets/records.svg";
 import Swal from "sweetalert2";
 import { customAlert, getById, getCookie, inputGetter } from "../../helpers";
 import { changePassword } from "../../api/FirebaseHelper";
+import { useState } from "react";
 
-export default function SideBar({ selected, select }) {
+export default function SideBar({ selected, select, hideSidebar }) {
   function logoutDialog() {
     Swal.fire({
       title: "Are you sure you want to logout?",
@@ -74,36 +76,77 @@ export default function SideBar({ selected, select }) {
     });
   }
 
+  function _hideSidebar() {
+    try {
+      hideSidebar();
+    } catch {}
+  }
+  const [recordsShown, setRecordsShown] = useState(false);
+
   return (
     <div id="sidebar">
       <span
-        onClick={() => select("marriage")}
+        onClick={() => setRecordsShown((currentValue) => !currentValue)}
         className="sidebar-item-container"
       >
         <SidebarItem
-          label="Marriage"
-          imagesrc={marriage}
-          isSelected={selected === "marriage"}
+          label="Toggle Records"
+          imagesrc={records}
+          isSelected={recordsShown}
         />
       </span>
-      <span onClick={() => select("death")} className="sidebar-item-container">
-        <SidebarItem
-          label="Death"
-          imagesrc={death}
-          isSelected={selected === "death"}
-        />
-      </span>
+      {recordsShown ? (
+        <div className="records-container">
+          <span
+            onClick={() => {
+              select("marriage");
+              _hideSidebar();
+            }}
+            className="sidebar-item-container"
+          >
+            <SidebarItem
+              label="Marriage"
+              imagesrc={marriage}
+              isSelected={selected === "marriage"}
+            />
+          </span>
+          <span
+            onClick={() => {
+              select("death");
+              _hideSidebar();
+            }}
+            className="sidebar-item-container"
+          >
+            <SidebarItem
+              label="Death"
+              imagesrc={death}
+              isSelected={selected === "death"}
+            />
+          </span>
+          <span
+            onClick={() => {
+              select("donation");
+              _hideSidebar();
+            }}
+            className="sidebar-item-container"
+          >
+            <SidebarItem
+              label="Donation"
+              imagesrc={donation}
+              isSelected={selected === "donation"}
+            />
+          </span>
+        </div>
+      ) : (
+        ""
+      )}
       <span
-        onClick={() => select("donation")}
+        onClick={() => {
+          select("post");
+          _hideSidebar();
+        }}
         className="sidebar-item-container"
       >
-        <SidebarItem
-          label="Donation"
-          imagesrc={donation}
-          isSelected={selected === "donation"}
-        />
-      </span>
-      <span onClick={() => select("post")} className="sidebar-item-container">
         <SidebarItem
           label="Post"
           imagesrc={post}

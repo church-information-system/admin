@@ -8,13 +8,24 @@ import { customAlert, getById, inputGetter } from "../../helpers";
 import { useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
-export default function ContentItem({ record, selected, requestRefresh, isArchive }) {
+export default function ContentItem({
+  record,
+  selected,
+  requestRefresh,
+  isArchive,
+}) {
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
 
   async function submit(values) {
     setUpdating(() => true);
-    if (await editRecord(selected + (isArchive ? "_archive" : ""), record.id, values)) {
+    if (
+      await editRecord(
+        selected + (isArchive ? "_archive" : ""),
+        record.id,
+        values
+      )
+    ) {
       customAlert("Record Updated!", "success");
       requestRefresh();
     } else {
@@ -37,11 +48,10 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
   }
 
   function recordDetail(key, value) {
-
     try {
-      key = key.charAt(0).toUpperCase() + key.slice(1)
-      key = key.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
-    } catch { }
+      key = key.charAt(0).toUpperCase() + key.slice(1);
+      key = key.match(/[A-Z][a-z]+|[0-9]+/g).join(" ");
+    } catch {}
 
     return (
       <div className="key-value-pair" key={key}>
@@ -55,7 +65,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
     Swal.fire({
       title: "Enter Details",
       html:
-        '<h3>Enter Husband details:</h4>' +
+        "<h3>Enter Husband details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="husbandName" class="swal2-input">' +
         '<span class="swal2-input-label">Age</span>' +
@@ -66,8 +76,8 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         '<input id="husbandPlaceOfBirth" class="swal2-input">' +
         '<span class="swal2-input-label">Religion</span>' +
         '<input id="husbandReligion" class="swal2-input">' +
-        '<br></br>' +
-        '<h3>Enter Wife details:</h4>' +
+        "<br></br>" +
+        "<h3>Enter Wife details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="wifeName" class="swal2-input">' +
         '<span class="swal2-input-label">Age</span>' +
@@ -94,8 +104,14 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         getById("wifeReligion").value = record.wifeReligion;
       },
       preConfirm: () => {
-        getById("husbandAge").value = getById("husbandAge").value.replace(/[^0-9]/g, '')
-        getById("wifeAge").value = getById("wifeAge").value.replace(/[^0-9]/g, '')
+        getById("husbandAge").value = getById("husbandAge").value.replace(
+          /[^0-9]/g,
+          ""
+        );
+        getById("wifeAge").value = getById("wifeAge").value.replace(
+          /[^0-9]/g,
+          ""
+        );
 
         let husbandName = inputGetter("husbandName");
         let husbandAge = inputGetter("husbandAge");
@@ -109,9 +125,15 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
 
-        let ageValid = husbandAge.length > 0 && wifeAge.length > 0 && husbandAge > 0 && wifeAge > 0
-        if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " "
+        let ageValid =
+          husbandAge.length > 0 &&
+          wifeAge.length > 0 &&
+          husbandAge > 0 &&
+          wifeAge > 0;
+        if (!ageValid)
+          getById("invalidAge").innerHTML =
+            "Please make sure that the age you entered is a valid number";
+        else getById("invalidAge").innerHTML = " ";
 
         let noempty =
           husbandName.length > 0 &&
@@ -123,10 +145,10 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
           wifeAge.length > 0 &&
           wifeBirthday.length > 0 &&
           wifePlaceOfBirth.length > 0 &&
-          wifeReligion.length > 0
+          wifeReligion.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         let nothingChanged =
           husbandName === record.husbandName &&
@@ -138,18 +160,17 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
           wifeAge === record.wifeAge &&
           wifeBirthday === record.wifeBirthday &&
           wifePlaceOfBirth === record.wifePlaceOfBirth &&
-          wifeReligion === record.wifeReligion
+          wifeReligion === record.wifeReligion;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
-        else getById("nothingChanged").innerHTML = " "
+        else getById("nothingChanged").innerHTML = " ";
 
         return noempty && !nothingChanged && ageValid;
       },
       showCancelButton: true,
     }).then((value) => {
       if (value.isConfirmed) {
-
         submit({
           husbandName: inputGetter("husbandName"),
           husbandAge: inputGetter("husbandAge"),
@@ -191,7 +212,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         getById("age").value = record.age;
       },
       preConfirm: () => {
-        getById("age").value = getById("age").value.replace(/[^0-9]/g, '')
+        getById("age").value = getById("age").value.replace(/[^0-9]/g, "");
 
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
@@ -199,9 +220,11 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
 
-        let ageValid = newAge.length > 0 && newAge > 0
-        if (!ageValid) getById("invalidAge").innerHTML = "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " "
+        let ageValid = newAge.length > 0 && newAge > 0;
+        if (!ageValid)
+          getById("invalidAge").innerHTML =
+            "Please make sure that the age you entered is a valid number";
+        else getById("invalidAge").innerHTML = " ";
 
         let noempty =
           newName.length > 0 &&
@@ -211,7 +234,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
           newAge.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         let nothingChanged =
           newName === record.name &&
@@ -222,7 +245,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
-        else getById("nothingChanged").innerHTML = " "
+        else getById("nothingChanged").innerHTML = " ";
 
         return noempty && !nothingChanged && ageValid;
       },
@@ -265,32 +288,32 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         getById("phone").value = record.phone;
       },
       preConfirm: () => {
-        getById("phone").value = getById("phone").value.replace(/[^0-9]/g, '')
+        getById("phone").value = getById("phone").value.replace(/[^0-9]/g, "");
 
         let fullname = inputGetter("fullname");
         let address = inputGetter("address");
         let phone = inputGetter("phone");
 
-        let phoneValid = phone.length === 11
-        if (!phoneValid) getById("invalidPhone").innerHTML = "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
-        else getById("invalidPhone").innerHTML = " "
+        let phoneValid = phone.length === 11;
+        if (!phoneValid)
+          getById("invalidPhone").innerHTML =
+            "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
+        else getById("invalidPhone").innerHTML = " ";
 
         let noempty =
-          fullname.length > 0 &&
-          address.length > 0 &&
-          phone.length > 0
+          fullname.length > 0 && address.length > 0 && phone.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         let nothingChanged =
           fullname === record.name &&
           address === record.address &&
-          phone === record.phone
+          phone === record.phone;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
-        else getById("nothingChanged").innerHTML = " "
+        else getById("nothingChanged").innerHTML = " ";
 
         return noempty && !nothingChanged && phoneValid;
       },
@@ -312,7 +335,7 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
 
   function postDialog() {
     Swal.fire({
-      title: "Enter Name",
+      title: "Enter Details",
       html:
         '<div id="empty" class="error-text"> </div>' +
         '<span class="swal2-input-label">Title</span>' +
@@ -332,14 +355,14 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
         let noempty = title.length > 0 && content.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
-        else getById("empty").innerHTML = " "
+        else getById("empty").innerHTML = " ";
 
         let nothingChanged =
           title === record.title && content === record.content;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
-        else getById("nothingChanged").innerHTML = " "
+        else getById("nothingChanged").innerHTML = " ";
 
         return noempty && !nothingChanged;
       },
@@ -361,28 +384,28 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
   return (
     <div className="content-item">
       <div className="record-datas">
-        {
-          Object.keys(record)
-            .sort((a, b) => a > b)
-            .map((key) => {
-              if (key !== "id") return recordDetail(key, record[key]);
-              else return null;
-            })}
+        {Object.keys(record)
+          .sort((a, b) => a > b)
+          .map((key) => {
+            if (key !== "id") return recordDetail(key, record[key]);
+            else return null;
+          })}
       </div>
       <span>
         <div className="icons-container">
-          {
-            selected !== "post" && selected !== "donation" ?
-              <div className="icon-container">
-                <img
-                  src={print}
-                  title="print"
-                  alt=""
-                  className="icon"
-                  onClick={() => Swal.fire({ title: "print" })}
-                />
-              </div> : ""
-          }
+          {selected !== "post" && selected !== "donation" ? (
+            <div className="icon-container">
+              <img
+                src={print}
+                title="print"
+                alt=""
+                className="icon"
+                onClick={() => Swal.fire({ title: "print" })}
+              />
+            </div>
+          ) : (
+            ""
+          )}
           <div className="icon-container">
             {updating ? (
               <MiniLoader />
@@ -413,34 +436,34 @@ export default function ContentItem({ record, selected, requestRefresh, isArchiv
               />
             )}
           </div>
-          {
-            selected !== "post" && selected !== "donation" && !isArchive ?
-
-              <div className="icon-container">
-                {archiving ? (
-                  <MiniLoader />
-                ) : (
-                  <img
-                    src={archive}
-                    title="archive"
-                    alt="archive"
-                    className="icon"
-                    onClick={() =>
-                      Swal.fire({
-                        title: "Are you sure you want to archive this record?",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonText: "archive",
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          confirmArchive();
-                        }
-                      })
-                    }
-                  />
-                )}
-              </div> : ""
-          }
+          {selected !== "post" && selected !== "donation" && !isArchive ? (
+            <div className="icon-container">
+              {archiving ? (
+                <MiniLoader />
+              ) : (
+                <img
+                  src={archive}
+                  title="archive"
+                  alt="archive"
+                  className="icon"
+                  onClick={() =>
+                    Swal.fire({
+                      title: "Are you sure you want to archive this record?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: "archive",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        confirmArchive();
+                      }
+                    })
+                  }
+                />
+              )}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </span>
     </div>
