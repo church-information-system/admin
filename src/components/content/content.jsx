@@ -90,6 +90,7 @@ export default function Content({ selected }) {
           )}
         </div>
       )}
+      <div className="background"></div>
     </div>
   );
 }

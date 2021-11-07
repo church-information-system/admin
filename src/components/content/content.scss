@@ -5,11 +5,19 @@
   margin-top: 10vh;
   flex-grow: 9;
   overflow-y: auto;
-  background-image: url("../../assets/ngeks.jpg");
-  background-size: contain;
-  background-position: bottom;
-  background-repeat: no-repeat;
   background-color: $primaryLightest;
+
+  .background {
+    z-index: 0;
+    position: fixed;
+    height: 500px;
+    width: 500px;
+    background-image: url("../../assets/bg.png");
+    opacity: 0.5;
+    background-repeat: no-repeat;
+    bottom: 0;
+    right: 0;
+  }
 
   .action-bar {
     @include desktop {
@@ -97,6 +105,7 @@
     @extend .default-padding;
 
     .content-item {
+      z-index: 1;
       justify-content: space-between;
       display: flex;
       margin-bottom: 16px;
