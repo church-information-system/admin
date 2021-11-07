@@ -8,10 +8,11 @@
   background-color: $primaryLightest;
 
   .background {
-    z-index: 0;
     position: fixed;
-    height: 500px;
-    width: 500px;
+    height: 600px;
+    width: 600px;
+    background-size: contain;
+    background-position: center;
     background-image: url("../../assets/bg.png");
     opacity: 0.5;
     background-repeat: no-repeat;
@@ -20,6 +21,9 @@
   }
 
   .action-bar {
+    z-index: 10;
+    position: relative;
+
     @include desktop {
       height: 40px;
       display: flex;
