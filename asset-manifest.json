@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/admin/static/css/main.1d164c8d.chunk.css",
-    "main.js": "/admin/static/js/main.17922722.chunk.js",
-    "main.js.map": "/admin/static/js/main.17922722.chunk.js.map",
-    "runtime-main.js": "/admin/static/js/runtime-main.f821a344.js",
-    "runtime-main.js.map": "/admin/static/js/runtime-main.f821a344.js.map",
-    "static/js/2.02d5012b.chunk.js": "/admin/static/js/2.02d5012b.chunk.js",
-    "static/js/2.02d5012b.chunk.js.map": "/admin/static/js/2.02d5012b.chunk.js.map",
-    "static/js/3.6ee652d7.chunk.js": "/admin/static/js/3.6ee652d7.chunk.js",
-    "static/js/3.6ee652d7.chunk.js.map": "/admin/static/js/3.6ee652d7.chunk.js.map",
+    "main.css": "/admin/static/css/main.a2ec0023.chunk.css",
+    "main.js": "/admin/static/js/main.cd285346.chunk.js",
+    "main.js.map": "/admin/static/js/main.cd285346.chunk.js.map",
+    "runtime-main.js": "/admin/static/js/runtime-main.37486698.js",
+    "runtime-main.js.map": "/admin/static/js/runtime-main.37486698.js.map",
+    "static/js/2.8343e938.chunk.js": "/admin/static/js/2.8343e938.chunk.js",
+    "static/js/2.8343e938.chunk.js.map": "/admin/static/js/2.8343e938.chunk.js.map",
+    "static/js/3.2edad86c.chunk.js": "/admin/static/js/3.2edad86c.chunk.js",
+    "static/js/3.2edad86c.chunk.js.map": "/admin/static/js/3.2edad86c.chunk.js.map",
     "index.html": "/admin/index.html",
-    "static/css/main.1d164c8d.chunk.css.map": "/admin/static/css/main.1d164c8d.chunk.css.map",
-    "static/js/2.02d5012b.chunk.js.LICENSE.txt": "/admin/static/js/2.02d5012b.chunk.js.LICENSE.txt",
+    "static/css/main.a2ec0023.chunk.css.map": "/admin/static/css/main.a2ec0023.chunk.css.map",
+    "static/js/2.8343e938.chunk.js.LICENSE.txt": "/admin/static/js/2.8343e938.chunk.js.LICENSE.txt",
     "static/media/add.c687829d.svg": "/admin/static/media/add.c687829d.svg",
     "static/media/archive.899a083e.svg": "/admin/static/media/archive.899a083e.svg",
     "static/media/content.scss": "/admin/static/media/bg.f852788a.png",
@@ -27,9 +27,9 @@
     "static/media/records.73186168.svg": "/admin/static/media/records.73186168.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f821a344.js",
-    "static/js/2.02d5012b.chunk.js",
-    "static/css/main.1d164c8d.chunk.css",
-    "static/js/main.17922722.chunk.js"
+    "static/js/runtime-main.37486698.js",
+    "static/js/2.8343e938.chunk.js",
+    "static/css/main.a2ec0023.chunk.css",
+    "static/js/main.cd285346.chunk.js"
   ]
 }
