@@ -6,7 +6,12 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { firestore } from "../App";
+import { ref, getDownloadURL } from "firebase/storage";
+import { firestore, storage } from "../App";
+
+export async function getFile(id) {
+  return await getDownloadURL(ref(storage, `death/${id}.pdf`));
+}
 
 export async function fetchCollection(collectionName) {
   const querySnapshot = await getDocs(collection(firestore, collectionName));

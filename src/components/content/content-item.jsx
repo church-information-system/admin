@@ -3,10 +3,11 @@ import Swal from "sweetalert2";
 import print from "../../assets/print.svg";
 import edit from "../../assets/edit.svg";
 import archive from "../../assets/archive.svg";
-import { archiveRecord, editRecord } from "../../api/FirebaseHelper";
+import { archiveRecord, editRecord, getFile } from "../../api/FirebaseHelper";
 import { customAlert, getById, inputGetter } from "../../helpers";
 import { useState } from "react";
 import { MiniLoader } from "../misc/loader";
+import printJS from "print-js";
 
 export default function ContentItem({
   record,
@@ -400,7 +401,10 @@ export default function ContentItem({
                 title="print"
                 alt=""
                 className="icon"
-                onClick={() => Swal.fire({ title: "print" })}
+                onClick={async () => {
+                  let file = await getFile(record.id);
+                  window.open(file);
+                }}
               />
             </div>
           ) : (
