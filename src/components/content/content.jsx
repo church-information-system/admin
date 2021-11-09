@@ -21,7 +21,6 @@ export default function Content({ selected }) {
 
   const fetchData = async () => {
     if (selected !== "") {
-      console.log("fetch");
       setFetchingCollection(() => true);
       if (selected === "donation" || selected === "post") {
         setIsArchive(() => false);

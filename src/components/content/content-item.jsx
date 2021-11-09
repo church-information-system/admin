@@ -8,10 +8,11 @@ import {
   archiveRecord,
   editRecord,
   getFile,
+  hasCertificate,
   uploadCert,
 } from "../../api/FirebaseHelper";
 import { customAlert, getById, inputGetter } from "../../helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
 export default function ContentItem({
@@ -23,7 +24,21 @@ export default function ContentItem({
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [hasCert, setHasCert] = useState(false);
 
+  useEffect(() => {
+    async function checkCert() {
+      console.log(record.id);
+      let res = await hasCertificate(record.id);
+      console.log(res);
+      setHasCert(() => res);
+    }
+    checkCert();
+  }, [record.id]);
+
+  // useEffect(() => {
+  //   console.log(record.id);
+  // }, []);
   async function submit(values) {
     setUpdating(() => true);
     if (
@@ -398,7 +413,6 @@ export default function ContentItem({
       showLoaderOnConfirm: true,
       allowOutsideClick: () => !Swal.isLoading(),
       preConfirm: (value) => {
-        console.log(value.type);
         let isValid = value.type === "application/pdf";
         if (!isValid) getById("invalid").innerHTML = "choose a pdf file";
         return isValid ? value : false;
@@ -426,6 +440,26 @@ export default function ContentItem({
         <div className="icons-container">
           {selected !== "post" && selected !== "donation" ? (
             <div className="icon-container">
+              {hasCert ? (
+                <img
+                  src={print}
+                  title="print"
+                  alt=""
+                  className="icon"
+                  onClick={async () => {
+                    let file = await getFile(record.id);
+                    window.open(file);
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          ) : (
+            ""
+          )}
+          {selected !== "post" && selected !== "donation" ? (
+            <div className="icon-container">
               {uploading ? (
                 <MiniLoader />
               ) : (
@@ -440,22 +474,6 @@ export default function ContentItem({
                   }}
                 />
               )}
-            </div>
-          ) : (
-            ""
-          )}
-          {selected !== "post" && selected !== "donation" ? (
-            <div className="icon-container">
-              <img
-                src={print}
-                title="print"
-                alt=""
-                className="icon"
-                onClick={async () => {
-                  let file = await getFile(record.id);
-                  window.open(file);
-                }}
-              />
             </div>
           ) : (
             ""

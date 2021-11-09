@@ -14,8 +14,16 @@ export async function getFile(id) {
 }
 
 export async function uploadCert(id, file) {
-  // console.log(new Blob(file., { type: file.type }));
   return await uploadBytes(ref(storage, `death/${id}.pdf`), file);
+}
+
+export async function hasCertificate(id) {
+  try {
+    await getDownloadURL(ref(storage, `death/${id}.pdf`));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function fetchCollection(collectionName) {
