@@ -9,17 +9,17 @@ import {
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "../App";
 
-export async function getFile(id) {
-  return await getDownloadURL(ref(storage, `death/${id}.pdf`));
+export async function getFile(id, directory) {
+  return await getDownloadURL(ref(storage, `${directory}/${id}.pdf`));
 }
 
-export async function uploadCert(id, file) {
-  return await uploadBytes(ref(storage, `death/${id}.pdf`), file);
+export async function uploadCert(id, file, directory) {
+  return await uploadBytes(ref(storage, `${directory}/${id}.pdf`), file);
 }
 
-export async function hasCertificate(id) {
+export async function hasCertificate(id, directory) {
   try {
-    await getDownloadURL(ref(storage, `death/${id}.pdf`));
+    await getDownloadURL(ref(storage, `${directory}/${id}.pdf`));
     return true;
   } catch {
     return false;

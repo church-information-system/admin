@@ -28,13 +28,14 @@ export default function ContentItem({
 
   useEffect(() => {
     async function checkCert() {
-      console.log(record.id);
-      let res = await hasCertificate(record.id);
-      console.log(res);
+      let res = await hasCertificate(
+        record.id,
+        selected + (isArchive ? "_archive" : "")
+      );
       setHasCert(() => res);
     }
     checkCert();
-  }, [record.id]);
+  }, [record.id, isArchive, selected]);
 
   // useEffect(() => {
   //   console.log(record.id);
@@ -54,6 +55,13 @@ export default function ContentItem({
       customAlert("Failed to update record", "error");
     }
     setUpdating(false);
+  }
+
+  async function submitFile(file) {
+    setUploading(() => true);
+    await uploadCert(record.id, file, selected + (isArchive ? "_archive" : ""));
+    setUploading(() => false);
+    requestRefresh();
   }
 
   async function confirmArchive() {
@@ -419,9 +427,7 @@ export default function ContentItem({
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        setUploading(() => true);
-        await uploadCert(record.id, result.value);
-        setUploading(() => false);
+        submitFile(result.value);
       }
     });
   }
@@ -447,7 +453,10 @@ export default function ContentItem({
                   alt=""
                   className="icon"
                   onClick={async () => {
-                    let file = await getFile(record.id);
+                    let file = await getFile(
+                      record.id,
+                      selected + (isArchive ? "_archive" : "")
+                    );
                     window.open(file);
                   }}
                 />
@@ -469,7 +478,6 @@ export default function ContentItem({
                   alt="upload"
                   className="icon"
                   onClick={async () => {
-                    // uploadCert();
                     uploadDialog();
                   }}
                 />
