@@ -4,88 +4,6 @@ object-assign
 @license MIT
 */
 
-/*! ./browser */
-
-/*! ./functions */
-
-/*! ./html */
-
-/*! ./image */
-
-/*! ./js/init */
-
-/*! ./json */
-
-/*! ./modal */
-
-/*! ./pdf */
-
-/*! ./print */
-
-/*! ./raw-html */
-
-/*! ./sass/index.scss */
-
-/*! ./src/index.js */
-
-/*! exports provided: addWrapper, capitalizePrint, collectStyles, addHeader, cleanUp, isRawHTML */
-
-/*! exports provided: default */
-
-/*! no static exports found */
-
-/*!**********************!*\
-        !*** ./src/index.js ***!
-        \**********************/
-
-/*!***********************!*\
-        !*** ./src/js/pdf.js ***!
-        \***********************/
-
-/*!************************!*\
-        !*** ./src/js/html.js ***!
-        \************************/
-
-/*!************************!*\
-        !*** ./src/js/init.js ***!
-        \************************/
-
-/*!************************!*\
-        !*** ./src/js/json.js ***!
-        \************************/
-
-/*!*************************!*\
-        !*** ./src/js/image.js ***!
-        \*************************/
-
-/*!*************************!*\
-        !*** ./src/js/modal.js ***!
-        \*************************/
-
-/*!*************************!*\
-        !*** ./src/js/print.js ***!
-        \*************************/
-
-/*!***************************!*\
-        !*** ./src/js/browser.js ***!
-        \***************************/
-
-/*!****************************!*\
-        !*** ./src/js/raw-html.js ***!
-        \****************************/
-
-/*!****************************!*\
-        !*** multi ./src/index.js ***!
-        \****************************/
-
-/*!*****************************!*\
-        !*** ./src/js/functions.js ***!
-        \*****************************/
-
-/*!*****************************!*\
-        !*** ./src/sass/index.scss ***!
-        \*****************************/
-
 /**
           * @license
           * Copyright 2017 Google LLC
@@ -254,17 +172,6 @@ object-assign
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-
-/**
- * React Router v6.0.1
- *
- * Copyright (c) Remix Software Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.md file in the root directory of this source tree.
- *
- * @license MIT
  */
 
 /** @license React v0.20.2
