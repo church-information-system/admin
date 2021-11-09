@@ -6,11 +6,16 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { ref, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "../App";
 
 export async function getFile(id) {
   return await getDownloadURL(ref(storage, `death/${id}.pdf`));
+}
+
+export async function uploadCert(id, file) {
+  // console.log(new Blob(file., { type: file.type }));
+  return await uploadBytes(ref(storage, `death/${id}.pdf`), file);
 }
 
 export async function fetchCollection(collectionName) {

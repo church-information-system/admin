@@ -3,11 +3,16 @@ import Swal from "sweetalert2";
 import print from "../../assets/print.svg";
 import edit from "../../assets/edit.svg";
 import archive from "../../assets/archive.svg";
-import { archiveRecord, editRecord, getFile } from "../../api/FirebaseHelper";
+import upload from "../../assets/upload.svg";
+import {
+  archiveRecord,
+  editRecord,
+  getFile,
+  uploadCert,
+} from "../../api/FirebaseHelper";
 import { customAlert, getById, inputGetter } from "../../helpers";
 import { useState } from "react";
 import { MiniLoader } from "../misc/loader";
-import printJS from "print-js";
 
 export default function ContentItem({
   record,
@@ -17,6 +22,7 @@ export default function ContentItem({
 }) {
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   async function submit(values) {
     setUpdating(() => true);
@@ -382,6 +388,30 @@ export default function ContentItem({
     });
   }
 
+  function uploadDialog() {
+    Swal.fire({
+      title: "Upload Certificate",
+      input: "file",
+      html: "<span id='invalid' class='error-text'></span>",
+      showCancelButton: true,
+      confirmButtonText: "Upload",
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+      preConfirm: (value) => {
+        console.log(value.type);
+        let isValid = value.type === "application/pdf";
+        if (!isValid) getById("invalid").innerHTML = "choose a pdf file";
+        return isValid ? value : false;
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setUploading(() => true);
+        await uploadCert(record.id, result.value);
+        setUploading(() => false);
+      }
+    });
+  }
+
   return (
     <div className="content-item">
       <div className="record-datas">
@@ -394,6 +424,26 @@ export default function ContentItem({
       </div>
       <span>
         <div className="icons-container">
+          {selected !== "post" && selected !== "donation" ? (
+            <div className="icon-container">
+              {uploading ? (
+                <MiniLoader />
+              ) : (
+                <img
+                  src={upload}
+                  title="upload"
+                  alt="upload"
+                  className="icon"
+                  onClick={async () => {
+                    // uploadCert();
+                    uploadDialog();
+                  }}
+                />
+              )}
+            </div>
+          ) : (
+            ""
+          )}
           {selected !== "post" && selected !== "donation" ? (
             <div className="icon-container">
               <img
