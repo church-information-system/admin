@@ -467,7 +467,9 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "post" && selected !== "donation" ? (
+          {selected !== "post" &&
+          selected !== "donation" &&
+          selected !== "requests" ? (
             <div className="icon-container">
               {uploading ? (
                 <MiniLoader />
@@ -486,36 +488,40 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          <div className="icon-container">
-            {updating ? (
-              <MiniLoader />
-            ) : (
-              <img
-                src={edit}
-                title="edit"
-                alt=""
-                className="icon"
-                onClick={() => {
-                  switch (selected) {
-                    case "marriage":
-                      marriageDialog();
-                      break;
-                    case "death":
-                      deathDialog();
-                      break;
-                    case "donation":
-                      donationDialog();
-                      break;
-                    case "post":
-                      postDialog();
-                      break;
-                    default:
-                      marriageDialog();
-                  }
-                }}
-              />
-            )}
-          </div>
+          {selected !== "requests" ? (
+            <div className="icon-container">
+              {updating ? (
+                <MiniLoader />
+              ) : (
+                <img
+                  src={edit}
+                  title="edit"
+                  alt=""
+                  className="icon"
+                  onClick={() => {
+                    switch (selected) {
+                      case "marriage":
+                        marriageDialog();
+                        break;
+                      case "death":
+                        deathDialog();
+                        break;
+                      case "donation":
+                        donationDialog();
+                        break;
+                      case "post":
+                        postDialog();
+                        break;
+                      default:
+                        marriageDialog();
+                    }
+                  }}
+                />
+              )}
+            </div>
+          ) : (
+            ""
+          )}
           {selected !== "post" && selected !== "donation" && !isArchive ? (
             <div className="icon-container">
               {archiving ? (
