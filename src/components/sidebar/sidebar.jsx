@@ -7,6 +7,7 @@ import password from "../../assets/password.svg";
 import logout from "../../assets/logout.svg";
 import post from "../../assets/post.svg";
 import records from "../../assets/records.svg";
+import requests from "../../assets/request.svg";
 import Swal from "sweetalert2";
 import { customAlert, getById, getCookie, inputGetter } from "../../helpers";
 import { changePassword } from "../../api/FirebaseHelper";
@@ -151,6 +152,19 @@ export default function SideBar({ selected, select, hideSidebar }) {
           label="Post"
           imagesrc={post}
           isSelected={selected === "post"}
+        />
+      </span>
+      <span
+        onClick={() => {
+          select("requests");
+          _hideSidebar();
+        }}
+        className="sidebar-item-container"
+      >
+        <SidebarItem
+          label="Requests"
+          imagesrc={requests}
+          isSelected={selected === "requests"}
         />
       </span>
       <span onClick={() => passwordDialog()}>

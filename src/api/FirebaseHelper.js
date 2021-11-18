@@ -27,12 +27,14 @@ export async function hasCertificate(id, directory) {
 }
 
 export async function fetchCollection(collectionName) {
+  console.log("fetching" + collectionName);
   const querySnapshot = await getDocs(collection(firestore, collectionName));
   let datas = [];
   querySnapshot.forEach((doc) => {
     let data = doc.data();
     data["id"] = doc.id;
     datas.push(data);
+    console.log(data);
   });
   return datas;
 }
