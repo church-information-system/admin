@@ -488,7 +488,7 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "requests" ? (
+          {selected !== "requests" && selected !== "donation" ? (
             <div className="icon-container">
               {updating ? (
                 <MiniLoader />
