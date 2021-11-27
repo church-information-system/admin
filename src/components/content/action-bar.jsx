@@ -300,35 +300,39 @@ export default function ActionBar({
       ) : (
         ""
       )}
-      <span
-        className="action-button add-record"
-        title="Add"
-        onClick={() => {
-          switch (selected) {
-            case "marriage":
-              marriageDialog();
-              break;
-            case "death":
-              deathDialog();
-              break;
-            case "donation":
-              donationDialog();
-              break;
-            case "post":
-              postDialog();
-              break;
-            default:
-              marriageDialog();
-          }
-        }}
-      >
-        {addingRecord ? (
-          <MiniLoader />
-        ) : (
-          <img src={add} alt="add" className="icon" />
-        )}
-        <h4>Add </h4>
-      </span>
+      {selected !== "donation" && selected !== "requests" ? (
+        <span
+          className="action-button add-record"
+          title="Add"
+          onClick={() => {
+            switch (selected) {
+              case "marriage":
+                marriageDialog();
+                break;
+              case "death":
+                deathDialog();
+                break;
+              case "donation":
+                donationDialog();
+                break;
+              case "post":
+                postDialog();
+                break;
+              default:
+                marriageDialog();
+            }
+          }}
+        >
+          {addingRecord ? (
+            <MiniLoader />
+          ) : (
+            <img src={add} alt="add" className="icon" />
+          )}
+          <h4>Add </h4>
+        </span>
+      ) : (
+        <span></span>
+      )}
     </div>
   ) : (
     ""
