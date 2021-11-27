@@ -5,6 +5,7 @@ import ActionBar from "./action-bar";
 import { useEffect, useState } from "react";
 import { fetchCollection } from "../../api/FirebaseHelper";
 import { Loader } from "../misc/loader";
+import { toDateTime } from "../../helpers";
 
 export default function Content({ selected }) {
   const [records, setRecords] = useState([]);
@@ -37,6 +38,11 @@ export default function Content({ selected }) {
 
   function getMatches() {
     let arr = [];
+    records.sort(
+      (a, b) =>
+        toDateTime(a.dateDocumentAdded.seconds) <
+        toDateTime(b.dateDocumentAdded.seconds)
+    );
     if (searchString !== "") {
       records.forEach((record) => {
         if (

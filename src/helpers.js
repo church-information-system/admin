@@ -30,3 +30,9 @@ export function getCookie(cname) {
   }
   return "";
 }
+
+export function toDateTime(secs) {
+  var t = new Date(1970, 0, 1);
+  t.setSeconds(secs);
+  return t;
+}

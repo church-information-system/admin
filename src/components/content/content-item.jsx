@@ -438,7 +438,8 @@ export default function ContentItem({
         {Object.keys(record)
           .sort((a, b) => a > b)
           .map((key) => {
-            if (key !== "id") return recordDetail(key, record[key]);
+            if (key !== "id" && key !== "dateDocumentAdded")
+              return recordDetail(key, record[key]);
             else return null;
           })}
       </div>
