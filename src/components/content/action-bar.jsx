@@ -318,12 +318,9 @@ export default function ActionBar({
       },
     }).then((value) => {
       if (value.isConfirmed) {
-        let timeArr = [];
-
         let record = { day: inputGetter("day") };
 
         document.querySelectorAll("input[type='time']").forEach((element) => {
-          timeArr.push();
           record[`time${Object.keys(record).length}`] = formatTime(
             element.value
           );

@@ -11,7 +11,13 @@ import {
   hasCertificate,
   uploadCert,
 } from "../../api/FirebaseHelper";
-import { customAlert, getById, inputGetter } from "../../helpers";
+import {
+  convertTime12to24,
+  customAlert,
+  formatTime,
+  getById,
+  inputGetter,
+} from "../../helpers";
 import { useEffect, useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
@@ -37,16 +43,14 @@ export default function ContentItem({
     checkCert();
   }, [record.id, isArchive, selected]);
 
-  // useEffect(() => {
-  //   console.log(record.id);
-  // }, []);
-  async function submit(values) {
+  async function submit(values, override = false) {
     setUpdating(() => true);
     if (
       await editRecord(
         selected + (isArchive ? "_archive" : ""),
         record.id,
-        values
+        values,
+        override
       )
     ) {
       customAlert("Record Updated!", "success");
@@ -434,11 +438,97 @@ export default function ContentItem({
     });
   }
 
+  function scheduleDialog() {
+    Swal.fire({
+      title: "Edit the Schedule",
+      html:
+        '<span class="swal2-input-label">Day</span>' +
+        '<input id="day" class="swal2-input" placeholder="sunday">' +
+        `<div id="times">
+        <span class="swal2-input-label">Times</span>
+        </div>` +
+        `<div style="margin: 20px">
+          <button id="add-time" class="action-button">add time</button>
+          <button id="remove-time" class="action-button">remove time</button>
+        <div>` +
+        "" +
+        '<div id="empty" class="error-text"> </div>',
+      showCancelButton: true,
+      didOpen: () => {
+        getById("add-time").onclick = () => {
+          let timeInput = document.createElement("input");
+          timeInput.classList.add("swal2-input");
+          timeInput.type = "time";
+          getById("times").appendChild(timeInput);
+        };
+        getById("remove-time").onclick = () => {
+          let toRemove = getById("times").lastChild;
+          toRemove.remove();
+        };
+
+        getById("day").value = record.day;
+
+        let timeKeys = Object.keys(record).filter((key) =>
+          key.includes("time")
+        );
+        timeKeys.sort((a, b) => {
+          if (a.length !== b.length) {
+            return a.length - b.length;
+          } else {
+            return a > b;
+          }
+        });
+
+        timeKeys.forEach((key) => {
+          let timeInput = document.createElement("input");
+          timeInput.classList.add("swal2-input");
+          timeInput.type = "time";
+          timeInput.value = convertTime12to24(record[key]);
+          getById("times").appendChild(timeInput);
+        });
+      },
+      preConfirm: () => {
+        let day = inputGetter("day");
+
+        let noempty = day.length > 0;
+
+        document.querySelectorAll("input[type='time']").forEach((element) => {
+          if (formatTime(element.value).length < 8) {
+            noempty = false;
+          }
+        });
+
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = " ";
+
+        return noempty;
+      },
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let newRecord = { day: inputGetter("day") };
+
+        document.querySelectorAll("input[type='time']").forEach((element) => {
+          newRecord[`time${Object.keys(newRecord).length}`] = formatTime(
+            element.value
+          );
+        });
+
+        submit(newRecord, true);
+      }
+    });
+  }
+
   return (
     <div className="content-item">
       <div className="record-datas">
         {Object.keys(record)
-          .sort((a, b) => a > b)
+          .sort((a, b) => {
+            if (a.length !== b.length) {
+              return a.length - b.length;
+            } else {
+              return a > b;
+            }
+          })
           .map((key) => {
             if (key !== "id" && key !== "dateDocumentAdded")
               return recordDetail(key, record[key]);
@@ -515,6 +605,9 @@ export default function ContentItem({
                         break;
                       case "events":
                         eventDialog();
+                        break;
+                      case "schedule":
+                        scheduleDialog();
                         break;
                       default:
                         marriageDialog();

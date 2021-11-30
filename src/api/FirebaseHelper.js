@@ -2,6 +2,7 @@ import {
   collection,
   doc,
   getDocs,
+  setDoc,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -49,10 +50,14 @@ export async function addRecord(collectionName, record) {
   return success;
 }
 
-export async function editRecord(collectionName, docId, value) {
+export async function editRecord(collectionName, docId, value, override) {
   let success;
   try {
-    await updateDoc(doc(collection(firestore, collectionName), docId), value);
+    if (override) {
+      await setDoc(doc(collection(firestore, collectionName), docId), value);
+    } else {
+      await updateDoc(doc(collection(firestore, collectionName), docId), value);
+    }
     success = true;
   } catch (e) {
     success = false;
