@@ -363,32 +363,38 @@ export default function ContentItem({
     });
   }
 
-  function postDialog() {
+  function eventDialog() {
     Swal.fire({
       title: "Enter Details",
       html:
-        '<div id="empty" class="error-text"> </div>' +
         '<span class="swal2-input-label">Title</span>' +
         '<input id="title" class="swal2-input">' +
+        '<span class="swal2-input-label">Date</span>' +
+        '<input id="date" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Content</span>' +
         '<textarea id="post-content" class="swal2-input"></textarea>' +
+        '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>',
       showCancelButton: true,
       didOpen: () => {
         getById("title").value = record.title;
         getById("post-content").value = record.content;
+        getById("date").value = record.date;
       },
       preConfirm: () => {
         let title = inputGetter("title");
         let content = inputGetter("post-content");
+        let date = inputGetter("date");
 
-        let noempty = title.length > 0 && content.length > 0;
+        let noempty = title.length > 0 && content.length > 0 && date.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
 
         let nothingChanged =
-          title === record.title && content === record.content;
+          title === record.title &&
+          content === record.content &&
+          date === record.date;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
@@ -398,13 +404,9 @@ export default function ContentItem({
       },
     }).then((value) => {
       if (value.isConfirmed) {
-        let now = new Date();
         submit({
           title: inputGetter("title"),
-          date: `${now.getFullYear()}-${now
-            .getMonth()
-            .toString()
-            .padStart(2, 0)}-${now.getDate()}`,
+          date: inputGetter("date"),
           content: inputGetter("post-content"),
         });
       }
@@ -445,7 +447,7 @@ export default function ContentItem({
       </div>
       <span>
         <div className="icons-container">
-          {selected !== "post" && selected !== "donation" ? (
+          {selected !== "event" && selected !== "donation" ? (
             <div className="icon-container">
               {hasCert ? (
                 <img
@@ -468,7 +470,7 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "post" &&
+          {selected !== "event" &&
           selected !== "donation" &&
           selected !== "requests" ? (
             <div className="icon-container">
@@ -510,8 +512,8 @@ export default function ContentItem({
                       case "donation":
                         donationDialog();
                         break;
-                      case "post":
-                        postDialog();
+                      case "event":
+                        eventDialog();
                         break;
                       default:
                         marriageDialog();
@@ -523,7 +525,7 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "post" && selected !== "donation" && !isArchive ? (
+          {selected !== "event" && selected !== "donation" && !isArchive ? (
             <div className="icon-container">
               {archiving ? (
                 <MiniLoader />

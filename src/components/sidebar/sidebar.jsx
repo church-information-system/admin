@@ -143,15 +143,15 @@ export default function SideBar({ selected, select, hideSidebar }) {
       )}
       <span
         onClick={() => {
-          select("post");
+          select("event");
           _hideSidebar();
         }}
         className="sidebar-item-container"
       >
         <SidebarItem
-          label="Post"
+          label="Events"
           imagesrc={post}
-          isSelected={selected === "post"}
+          isSelected={selected === "event"}
         />
       </span>
       <span

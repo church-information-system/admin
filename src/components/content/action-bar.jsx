@@ -238,21 +238,24 @@ export default function ActionBar({
     });
   }
 
-  function postDialog() {
+  function eventDialog() {
     Swal.fire({
       title: "Enter Details",
       html:
-        '<div id="empty" class="error-text"> </div>' +
         '<span class="swal2-input-label">Title</span>' +
         '<input id="title" class="swal2-input">' +
+        '<span class="swal2-input-label">Date</span>' +
+        '<input id="date" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Content</span>' +
-        '<textarea id="post-content" class="swal2-input"></textarea>',
+        '<textarea id="post-content" class="swal2-input"></textarea>' +
+        '<div id="empty" class="error-text"> </div>',
       showCancelButton: true,
       preConfirm: () => {
         let title = inputGetter("title");
         let content = inputGetter("post-content");
+        let date = inputGetter("date");
 
-        let noempty = title.length > 0 && content.length > 0;
+        let noempty = title.length > 0 && content.length > 0 && date.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
@@ -261,13 +264,9 @@ export default function ActionBar({
       },
     }).then((value) => {
       if (value.isConfirmed) {
-        let now = new Date();
         submit({
           title: inputGetter("title"),
-          date: `${now.getFullYear()}-${now
-            .getMonth()
-            .toString()
-            .padStart(2, 0)}-${now.getDate()}`,
+          date: inputGetter("date"),
           content: inputGetter("post-content"),
         });
       }
@@ -276,7 +275,7 @@ export default function ActionBar({
 
   return show ? (
     <div className="action-bar">
-      {selected !== "post" ? (
+      {selected !== "event" ? (
         <span className="search-bar">
           <input type="text" className="search-field" id="search-field" />
           <div
@@ -292,7 +291,7 @@ export default function ActionBar({
       ) : (
         ""
       )}
-      {selected !== "post" && selected !== "donation" ? (
+      {selected !== "event" && selected !== "donation" ? (
         <span className="archive-bar">
           <ToggleSwitch toggleArchive={toggleArchive} />
           <h4>Toggle Archive</h4>
@@ -315,8 +314,8 @@ export default function ActionBar({
               case "donation":
                 donationDialog();
                 break;
-              case "post":
-                postDialog();
+              case "event":
+                eventDialog();
                 break;
               default:
                 marriageDialog();
