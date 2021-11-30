@@ -23,7 +23,7 @@ export default function Content({ selected }) {
   const fetchData = async () => {
     if (selected !== "") {
       setFetchingCollection(() => true);
-      if (selected === "donation" || selected === "event") {
+      if (selected === "donation" || selected === "events") {
         setIsArchive(() => false);
       }
       setRecords(

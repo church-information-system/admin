@@ -447,7 +447,7 @@ export default function ContentItem({
       </div>
       <span>
         <div className="icons-container">
-          {selected !== "event" && selected !== "donation" ? (
+          {selected !== "events" && selected !== "donation" ? (
             <div className="icon-container">
               {hasCert ? (
                 <img
@@ -470,7 +470,7 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "event" &&
+          {selected !== "events" &&
           selected !== "donation" &&
           selected !== "requests" ? (
             <div className="icon-container">
@@ -512,7 +512,7 @@ export default function ContentItem({
                       case "donation":
                         donationDialog();
                         break;
-                      case "event":
+                      case "events":
                         eventDialog();
                         break;
                       default:
@@ -525,7 +525,7 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "event" && selected !== "donation" && !isArchive ? (
+          {selected !== "events" && selected !== "donation" && !isArchive ? (
             <div className="icon-container">
               {archiving ? (
                 <MiniLoader />

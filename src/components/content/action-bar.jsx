@@ -275,7 +275,7 @@ export default function ActionBar({
 
   return show ? (
     <div className="action-bar">
-      {selected !== "event" ? (
+      {selected !== "events" ? (
         <span className="search-bar">
           <input type="text" className="search-field" id="search-field" />
           <div
@@ -291,7 +291,7 @@ export default function ActionBar({
       ) : (
         ""
       )}
-      {selected !== "event" && selected !== "donation" ? (
+      {selected !== "events" && selected !== "donation" ? (
         <span className="archive-bar">
           <ToggleSwitch toggleArchive={toggleArchive} />
           <h4>Toggle Archive</h4>
@@ -314,7 +314,7 @@ export default function ActionBar({
               case "donation":
                 donationDialog();
                 break;
-              case "event":
+              case "events":
                 eventDialog();
                 break;
               default:
