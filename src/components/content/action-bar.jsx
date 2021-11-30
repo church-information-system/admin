@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { addRecord } from "../../api/FirebaseHelper";
 import { MiniLoader } from "../misc/loader";
 import { useState } from "react";
-import { customAlert, getById, inputGetter } from "../../helpers";
+import { customAlert, formatTime, getById, inputGetter } from "../../helpers";
 import ToggleSwitch from "../misc/toggle-switch";
 
 export default function ActionBar({
@@ -273,6 +273,67 @@ export default function ActionBar({
     });
   }
 
+  function scheduleDialog() {
+    Swal.fire({
+      title: "Create a Schedule",
+      html:
+        '<span class="swal2-input-label">Day</span>' +
+        '<input id="day" class="swal2-input" placeholder="sunday">' +
+        `<div id="times">
+        <span class="swal2-input-label">Times</span>
+        <input class="swal2-input" type="time">
+        </div>` +
+        `<div style="margin: 20px">
+          <button id="add-time" class="action-button">add time</button>
+          <button id="remove-time" class="action-button">remove time</button>
+        <div>` +
+        "" +
+        '<div id="empty" class="error-text"> </div>',
+      showCancelButton: true,
+      didOpen: () => {
+        getById("add-time").onclick = () => {
+          let timeInput = document.createElement("input");
+          timeInput.classList.add("swal2-input");
+          timeInput.type = "time";
+          getById("times").appendChild(timeInput);
+        };
+        getById("remove-time").onclick = () =>
+          getById("times").removeChild(getById("times").lastChild);
+      },
+      preConfirm: () => {
+        let day = inputGetter("day");
+
+        let noempty = day.length > 0;
+
+        document.querySelectorAll("input[type='time']").forEach((element) => {
+          if (formatTime(element.value).length < 8) {
+            noempty = false;
+          }
+        });
+
+        if (!noempty) getById("empty").innerHTML = "Complete all fields";
+        else getById("empty").innerHTML = " ";
+
+        return noempty;
+      },
+    }).then((value) => {
+      if (value.isConfirmed) {
+        let timeArr = [];
+
+        let record = { day: inputGetter("day") };
+
+        document.querySelectorAll("input[type='time']").forEach((element) => {
+          timeArr.push();
+          record[`time${Object.keys(record).length}`] = formatTime(
+            element.value
+          );
+        });
+
+        submit(record);
+      }
+    });
+  }
+
   return show ? (
     <div className="action-bar">
       {selected !== "events" ? (
@@ -316,6 +377,9 @@ export default function ActionBar({
                 break;
               case "events":
                 eventDialog();
+                break;
+              case "schedule":
+                scheduleDialog();
                 break;
               default:
                 marriageDialog();

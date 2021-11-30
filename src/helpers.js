@@ -36,3 +36,15 @@ export function toDateTime(secs) {
   t.setSeconds(secs);
   return t;
 }
+
+export function formatTime(timeStr) {
+  const hours = timeStr.substring(0, 2);
+  const mins = timeStr.substring(3, 5);
+
+  const isTwelve = parseInt(hours) === 0 || parseInt(hours) === 12;
+  const isPM = parseInt(hours) >= 12;
+
+  return `${
+    isTwelve ? "12" : isPM ? `0${parseInt(hours) % 12}` : hours
+  }:${mins} ${isPM ? "PM" : "AM"}`;
+}
