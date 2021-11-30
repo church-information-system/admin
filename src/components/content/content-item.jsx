@@ -472,6 +472,7 @@ export default function ContentItem({
           )}
           {selected !== "events" &&
           selected !== "donation" &&
+          selected !== "schedule" &&
           selected !== "requests" ? (
             <div className="icon-container">
               {uploading ? (
