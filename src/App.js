@@ -31,6 +31,7 @@ export default function App() {
 
   const login = () => setAuthenticated(() => true);
   const select = (item) => setSelected(() => item);
+  //comment
 
   return authenticated ? (
     <div id="app">
