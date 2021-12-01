@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/admin/static/css/main.1d164c8d.chunk.css",
+    "main.js": "/admin/static/js/main.d573aefe.chunk.js",
+    "main.js.map": "/admin/static/js/main.d573aefe.chunk.js.map",
+    "runtime-main.js": "/admin/static/js/runtime-main.ac4b06e7.js",
+    "runtime-main.js.map": "/admin/static/js/runtime-main.ac4b06e7.js.map",
+    "static/js/2.e15fa8ce.chunk.js": "/admin/static/js/2.e15fa8ce.chunk.js",
+    "static/js/2.e15fa8ce.chunk.js.map": "/admin/static/js/2.e15fa8ce.chunk.js.map",
+    "static/js/3.05364004.chunk.js": "/admin/static/js/3.05364004.chunk.js",
+    "static/js/3.05364004.chunk.js.map": "/admin/static/js/3.05364004.chunk.js.map",
+    "index.html": "/admin/index.html",
+    "static/css/main.1d164c8d.chunk.css.map": "/admin/static/css/main.1d164c8d.chunk.css.map",
+    "static/js/2.e15fa8ce.chunk.js.LICENSE.txt": "/admin/static/js/2.e15fa8ce.chunk.js.LICENSE.txt",
+    "static/media/add.c687829d.svg": "/admin/static/media/add.c687829d.svg",
+    "static/media/archive.899a083e.svg": "/admin/static/media/archive.899a083e.svg",
+    "static/media/content.scss": "/admin/static/media/bg.f852788a.png",
+    "static/media/church.ab21ef53.svg": "/admin/static/media/church.ab21ef53.svg",
+    "static/media/death.e4a73ec5.svg": "/admin/static/media/death.e4a73ec5.svg",
+    "static/media/donation.ee1bf972.svg": "/admin/static/media/donation.ee1bf972.svg",
+    "static/media/edit.640a02d0.svg": "/admin/static/media/edit.640a02d0.svg",
+    "static/media/hamburger.2a7fc546.svg": "/admin/static/media/hamburger.2a7fc546.svg",
+    "static/media/logout.cadd8c56.svg": "/admin/static/media/logout.cadd8c56.svg",
+    "static/media/marriage.2e506062.svg": "/admin/static/media/marriage.2e506062.svg",
+    "static/media/password.0fbccfa5.svg": "/admin/static/media/password.0fbccfa5.svg",
+    "static/media/post.3769af97.svg": "/admin/static/media/post.3769af97.svg",
+    "static/media/print.70b985ba.svg": "/admin/static/media/print.70b985ba.svg",
+    "static/media/records.73186168.svg": "/admin/static/media/records.73186168.svg",
+    "static/media/request.bd30798a.svg": "/admin/static/media/request.bd30798a.svg",
+    "static/media/upload.2a69f0ee.svg": "/admin/static/media/upload.2a69f0ee.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ac4b06e7.js",
+    "static/js/2.e15fa8ce.chunk.js",
+    "static/css/main.1d164c8d.chunk.css",
+    "static/js/main.d573aefe.chunk.js"
+  ]
+}
