@@ -54,6 +54,7 @@ export async function editRecord(collectionName, docId, value, override) {
   let success;
   try {
     if (override) {
+      value["dateDocumentAdded"] = new Date();
       await setDoc(doc(collection(firestore, collectionName), docId), value);
     } else {
       await updateDoc(doc(collection(firestore, collectionName), docId), value);
