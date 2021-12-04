@@ -71,7 +71,12 @@ export default function ContentItem({
   async function confirmArchive() {
     setArchiving(() => true);
     if (
-      await archiveRecord(selected, `${selected}_archive`, record.id, record)
+      await archiveRecord(
+        isArchive ? `${selected}_archive` : selected,
+        isArchive ? selected : `${selected}_archive`,
+        record.id,
+        record
+      )
     ) {
       customAlert("Record Archived!", "success");
       requestRefresh();
@@ -619,7 +624,7 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "events" && selected !== "donation" && !isArchive ? (
+          {selected !== "events" && selected !== "donation" ? (
             <div className="icon-container">
               {archiving ? (
                 <MiniLoader />
@@ -631,10 +636,12 @@ export default function ContentItem({
                   className="icon"
                   onClick={() =>
                     Swal.fire({
-                      title: "Are you sure you want to archive this record?",
+                      title: `Are you sure you want to ${
+                        isArchive ? "un-archive" : "archive"
+                      } this record?`,
                       icon: "warning",
                       showCancelButton: true,
-                      confirmButtonText: "archive",
+                      confirmButtonText: isArchive ? "un-archive" : "archive",
                     }).then((result) => {
                       if (result.isConfirmed) {
                         confirmArchive();
