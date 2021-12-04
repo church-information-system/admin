@@ -5,6 +5,7 @@ import {
   setDoc,
   addDoc,
   updateDoc,
+  onSnapshot,
   deleteDoc,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
@@ -36,6 +37,12 @@ export async function fetchCollection(collectionName) {
     datas.push(data);
   });
   return datas;
+}
+
+export async function recordCounter(collectionName, countCallback) {
+  onSnapshot(collection(firestore, collectionName), (data) => {
+    countCallback(data);
+  });
 }
 
 export async function addRecord(collectionName, record) {
