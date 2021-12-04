@@ -3,6 +3,8 @@ import {
   doc,
   getDocs,
   setDoc,
+  query,
+  where,
   addDoc,
   updateDoc,
   onSnapshot,
@@ -40,9 +42,12 @@ export async function fetchCollection(collectionName) {
 }
 
 export async function recordCounter(collectionName, countCallback) {
-  onSnapshot(collection(firestore, collectionName), (data) => {
-    countCallback(data);
-  });
+  onSnapshot(
+    query(collection(firestore, collectionName), where("seen", "==", false)),
+    (data) => {
+      countCallback(data);
+    }
+  );
 }
 
 export async function addRecord(collectionName, record) {

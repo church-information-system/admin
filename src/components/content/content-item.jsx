@@ -41,9 +41,17 @@ export default function ContentItem({
       setHasCert(() => res);
     }
     checkCert();
-  }, [record.id, isArchive, selected]);
 
-  async function submit(values, override = false) {
+    function markSeen() {
+      record["seen"] = true;
+      editRecord(selected, record.id, record);
+    }
+    if (selected === "requests" && record["seen"] === false) {
+      markSeen();
+    }
+  }, [record.id, isArchive, selected, record]);
+
+  async function submit(values, override = false, silent = false) {
     setUpdating(() => true);
     if (
       await editRecord(
@@ -535,7 +543,7 @@ export default function ContentItem({
             }
           })
           .map((key) => {
-            if (key !== "id" && key !== "dateDocumentAdded")
+            if (key !== "id" && key !== "dateDocumentAdded" && key !== "seen")
               return recordDetail(key, record[key]);
             else return null;
           })}
