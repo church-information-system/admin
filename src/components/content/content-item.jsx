@@ -43,15 +43,20 @@ export default function ContentItem({
     checkCert();
 
     function markSeen() {
+      console.log("marking seen");
       record["seen"] = true;
       editRecord(selected, record.id, record);
     }
-    if (selected === "requests" && record["seen"] === false) {
+
+    if (
+      ["requests", "donation"].includes(selected.toLowerCase()) &&
+      record["seen"] !== true
+    ) {
       markSeen();
     }
   }, [record.id, isArchive, selected, record]);
 
-  async function submit(values, override = false, silent = false) {
+  async function submit(values, override = false) {
     setUpdating(() => true);
     if (
       await editRecord(

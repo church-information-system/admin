@@ -6,12 +6,13 @@ export default function SidebarItem({ imagesrc, label, isSelected }) {
 
   useEffect(() => {
     async function countRecords() {
-      recordCounter("requests", function (data) {
+      console.log(label);
+      recordCounter(label.toLowerCase(), function (data) {
         setNotifCount(() => data.size);
       });
     }
 
-    if (label === "Requests") {
+    if (["requests", "donation"].includes(label.toLowerCase())) {
       countRecords();
     }
   }, [label]);

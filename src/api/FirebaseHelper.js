@@ -43,8 +43,9 @@ export async function fetchCollection(collectionName) {
 
 export async function recordCounter(collectionName, countCallback) {
   onSnapshot(
-    query(collection(firestore, collectionName), where("seen", "==", false)),
+    query(collection(firestore, collectionName), where("seen", "!=", true)),
     (data) => {
+      console.log(data.size);
       countCallback(data);
     }
   );
