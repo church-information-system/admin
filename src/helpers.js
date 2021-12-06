@@ -64,3 +64,66 @@ export function convertTime12to24(time12h) {
 
   return `${hours}:${minutes}`;
 }
+
+export function attributeSorter(selected, obj) {
+  let sortingArray = [];
+
+  switch (selected) {
+    case "marriage":
+      sortingArray = [
+        "wifeName",
+        "wifeAge",
+        "wifeBirthday",
+        "wifeReligion",
+        "wifePlaceOfBirth",
+        "husbandName",
+        "husbandAge",
+        "husbandBirthday",
+        "husbandReligion",
+        "husbandPlaceOfBirth",
+      ];
+      break;
+    case "death":
+      sortingArray = ["name", "dayOfBirth", "dayOfDeath", "dateOfMass", "age"];
+      break;
+    case "requests":
+      sortingArray = [
+        "firstName",
+        "lastName",
+        "address",
+        "requestedDocument",
+        "requestMethod",
+        "wifeName",
+        "husbandName",
+        "fullname",
+      ];
+      break;
+    case "donation":
+      sortingArray = [
+        "firstName",
+        "lastName",
+        "gender",
+        "address",
+        "city",
+        "country",
+        "phoneNumber",
+        "amount",
+        "gcashNumber",
+        "email",
+      ];
+      break;
+
+    default:
+      return Object.keys(obj).sort((a, b) => {
+        if (a.length !== b.length) {
+          return a.length - b.length;
+        } else {
+          return a > b;
+        }
+      });
+  }
+
+  return Object.keys(obj).sort(
+    (a, b) => sortingArray.indexOf(a) - sortingArray.indexOf(b)
+  );
+}

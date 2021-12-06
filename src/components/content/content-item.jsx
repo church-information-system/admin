@@ -12,6 +12,7 @@ import {
   uploadFile,
 } from "../../api/FirebaseHelper";
 import {
+  attributeSorter,
   convertTime12to24,
   customAlert,
   formatTime,
@@ -583,18 +584,10 @@ export default function ContentItem({
     <div className="content-item">
       <div className="content-details">
         <div className="record-datas">
-          {Object.keys(record)
-            .sort((a, b) => {
-              if (a.length !== b.length) {
-                return a.length - b.length;
-              } else {
-                return a > b;
-              }
-            })
-            .map((key) => {
-              if (showProperty(key)) return recordDetail(key, record[key]);
-              else return null;
-            })}
+          {attributeSorter(selected, record).map((key) => {
+            if (showProperty(key)) return recordDetail(key, record[key]);
+            else return null;
+          })}
         </div>
         <span>
           <div className="icons-container">
