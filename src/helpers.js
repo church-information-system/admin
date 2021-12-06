@@ -81,6 +81,7 @@ export function attributeSorter(selected, obj) {
         "husbandBirthday",
         "husbandReligion",
         "husbandPlaceOfBirth",
+        "marriageDate",
       ];
       break;
     case "death":

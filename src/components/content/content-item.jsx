@@ -138,18 +138,6 @@ export default function ContentItem({
     Swal.fire({
       title: "Enter Details",
       html:
-        "<h3>Enter Husband details:</h4>" +
-        '<span class="swal2-input-label">Name</span>' +
-        '<input id="husbandName" class="swal2-input">' +
-        '<span class="swal2-input-label">Age</span>' +
-        '<input id="husbandAge" class="swal2-input" type="number" min="1">' +
-        '<span class="swal2-input-label">Birthday</span>' +
-        '<input id="husbandBirthday" class="swal2-input" type="date">' +
-        '<span class="swal2-input-label">Place of Birth</span>' +
-        '<input id="husbandPlaceOfBirth" class="swal2-input">' +
-        '<span class="swal2-input-label">Religion</span>' +
-        '<input id="husbandReligion" class="swal2-input">' +
-        "<br></br>" +
         "<h3>Enter Wife details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="wifeName" class="swal2-input">' +
@@ -157,10 +145,24 @@ export default function ContentItem({
         '<input id="wifeAge" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Birthday</span>' +
         '<input id="wifeBirthday" class="swal2-input" type="date">' +
-        '<span class="swal2-input-label">Place of Birth</span>' +
-        '<input id="wifePlaceOfBirth" class="swal2-input">' +
         '<span class="swal2-input-label">Religion</span>' +
         '<input id="wifeReligion" class="swal2-input">' +
+        '<span class="swal2-input-label">Place of Birth</span>' +
+        '<input id="wifePlaceOfBirth" class="swal2-input">' +
+        "<br></br>" +
+        "<h3>Enter Husband details:</h4>" +
+        '<span class="swal2-input-label">Name</span>' +
+        '<input id="husbandName" class="swal2-input">' +
+        '<span class="swal2-input-label">Age</span>' +
+        '<input id="husbandAge" class="swal2-input" type="number" min="1">' +
+        '<span class="swal2-input-label">Birthday</span>' +
+        '<input id="husbandBirthday" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Religion</span>' +
+        '<input id="husbandReligion" class="swal2-input">' +
+        '<span class="swal2-input-label">Place of Birth</span>' +
+        '<input id="husbandPlaceOfBirth" class="swal2-input">' +
+        "<h3>Date Of Marriage</h3>" +
+        '<input id="marriageDate" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
@@ -175,6 +177,7 @@ export default function ContentItem({
         getById("wifeBirthday").value = record.wifeBirthday;
         getById("wifePlaceOfBirth").value = record.wifePlaceOfBirth;
         getById("wifeReligion").value = record.wifeReligion;
+        getById("marriageDate").value = record.marriageDate;
       },
       preConfirm: () => {
         getById("husbandAge").value = getById("husbandAge").value.replace(
@@ -198,6 +201,8 @@ export default function ContentItem({
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
 
+        let marriageDate = inputGetter("marriageDate");
+
         let ageValid =
           husbandAge.length > 0 &&
           wifeAge.length > 0 &&
@@ -218,7 +223,8 @@ export default function ContentItem({
           wifeAge.length > 0 &&
           wifeBirthday.length > 0 &&
           wifePlaceOfBirth.length > 0 &&
-          wifeReligion.length > 0;
+          wifeReligion.length > 0 &&
+          marriageDate.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
@@ -233,7 +239,8 @@ export default function ContentItem({
           wifeAge === record.wifeAge &&
           wifeBirthday === record.wifeBirthday &&
           wifePlaceOfBirth === record.wifePlaceOfBirth &&
-          wifeReligion === record.wifeReligion;
+          wifeReligion === record.wifeReligion &&
+          marriageDate === record.marriageDate;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
@@ -255,6 +262,7 @@ export default function ContentItem({
           wifeBirthday: inputGetter("wifeBirthday"),
           wifePlaceOfBirth: inputGetter("wifePlaceOfBirth"),
           wifeReligion: inputGetter("wifeReligion"),
+          marriageDate: inputGetter("marriageDate"),
         });
       }
     });
