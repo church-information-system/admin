@@ -13,11 +13,11 @@ import {
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "../App";
 
-export async function getFile(id, directory) {
-  return await getDownloadURL(ref(storage, `${directory}/${id}.pdf`));
+export async function getFile(id, directory, type) {
+  return await getDownloadURL(ref(storage, `${directory}/${id}.${type}`));
 }
 
-export async function uploadCert(id, file, directory) {
+export async function uploadFile(id, file, directory) {
   return await uploadBytes(ref(storage, `${directory}/${id}.pdf`), file);
 }
 

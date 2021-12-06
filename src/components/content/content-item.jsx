@@ -9,7 +9,7 @@ import {
   editRecord,
   getFile,
   hasCertificate,
-  uploadCert,
+  uploadFile,
 } from "../../api/FirebaseHelper";
 import {
   convertTime12to24,
@@ -76,7 +76,7 @@ export default function ContentItem({
 
   async function submitFile(file) {
     setUploading(() => true);
-    await uploadCert(record.id, file, selected + (isArchive ? "_archive" : ""));
+    await uploadFile(record.id, file, selected + (isArchive ? "_archive" : ""));
     setUploading(() => false);
     requestRefresh();
   }
@@ -443,10 +443,33 @@ export default function ContentItem({
       showCancelButton: true,
       confirmButtonText: "Upload",
       showLoaderOnConfirm: true,
+      backdrop: true,
       allowOutsideClick: () => !Swal.isLoading(),
       preConfirm: (value) => {
         let isValid = value.type === "application/pdf";
         if (!isValid) getById("invalid").innerHTML = "choose a pdf file";
+        return isValid ? value : false;
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        submitFile(result.value);
+      }
+    });
+  }
+
+  function uploadImage() {
+    Swal.fire({
+      title: "Upload Image",
+      input: "file",
+      html: "<span id='invalid' class='error-text'></span>",
+      showCancelButton: true,
+      confirmButtonText: "Upload",
+      showLoaderOnConfirm: true,
+      backdrop: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+      preConfirm: (value) => {
+        let isValid = value.type.includes("image");
+        if (!isValid) getById("invalid").innerHTML = "choose an image";
         return isValid ? value : false;
       },
     }).then(async (result) => {
@@ -566,7 +589,8 @@ export default function ContentItem({
                   onClick={async () => {
                     let file = await getFile(
                       record.id,
-                      selected + (isArchive ? "_archive" : "")
+                      selected + (isArchive ? "_archive" : ""),
+                      "pdf"
                     );
                     window.open(file);
                   }}
@@ -578,8 +602,7 @@ export default function ContentItem({
           ) : (
             ""
           )}
-          {selected !== "events" &&
-          selected !== "donation" &&
+          {selected !== "donation" &&
           selected !== "schedule" &&
           selected !== "requests" ? (
             <div className="icon-container">
@@ -592,7 +615,11 @@ export default function ContentItem({
                   alt="upload"
                   className="icon"
                   onClick={async () => {
-                    uploadDialog();
+                    if (selected === "events") {
+                      uploadImage();
+                    } else {
+                      uploadDialog();
+                    }
                   }}
                 />
               )}
