@@ -110,12 +110,10 @@
 
     .content-item {
       z-index: 1;
-      justify-content: space-between;
-      display: flex;
       margin-bottom: 16px;
-      align-items: center;
-
       border-left: 8px solid $secondary;
+      align-items: center;
+      text-align: center;
 
       @extend .subtle-hover-grow;
       @extend .bg-white;
@@ -123,40 +121,52 @@
       @extend .box-shadow;
       @extend .rounded-border;
 
-      .record-datas {
-        .key-value-pair {
-          display: flex;
-          justify-content: space-between;
+      .content-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-          .key {
-            font-weight: bold;
-            text-transform: capitalize;
+        .record-datas {
+          .key-value-pair {
+            display: flex;
+            justify-content: space-between;
+
+            .key {
+              font-weight: bold;
+              text-transform: capitalize;
+            }
+
+            .value {
+              margin-left: 20px;
+            }
+          }
+        }
+
+        .icons-container {
+          display: flex;
+          @include mobile {
+            flex-direction: column;
           }
 
-          .value {
-            margin-left: 20px;
+          .icon-container {
+            margin: 8px;
+            background-color: $primary;
+
+            @include mobile {
+              margin: 4px;
+            }
+
+            @extend .rounded-border;
+            @extend .clickable;
+            @extend .box-shadow;
           }
         }
       }
 
-      .icons-container {
-        display: flex;
-        @include mobile {
-          flex-direction: column;
-        }
-
-        .icon-container {
-          margin: 8px;
-          background-color: $primary;
-
-          @include mobile {
-            margin: 4px;
-          }
-
-          @extend .rounded-border;
-          @extend .clickable;
-          @extend .box-shadow;
-        }
+      .event-image {
+        height: 10vw;
+        max-height: 160px;
+        min-height: 120px;
       }
     }
   }

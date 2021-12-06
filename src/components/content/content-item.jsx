@@ -31,19 +31,16 @@ export default function ContentItem({
   const [archiving, setArchiving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [hasCert, setHasCert] = useState(false);
+  const [image, setImage] = useState(false);
 
   useEffect(() => {
     async function checkCert() {
-      let res = await hasCertificate(
-        record.id,
-        selected + (isArchive ? "_archive" : "")
-      );
+      let res = await hasCertificate(record.id, selected);
       setHasCert(() => res);
     }
     checkCert();
 
     function markSeen() {
-      console.log("marking seen");
       record["seen"] = true;
       editRecord(selected, record.id, record);
     }
@@ -53,6 +50,16 @@ export default function ContentItem({
       record["seen"] !== true
     ) {
       markSeen();
+    }
+
+    async function getImage() {
+      let imgSrc = await getFile(record.id, "events", "jpg");
+      console.log(imgSrc);
+      setImage(() => imgSrc);
+    }
+
+    if (selected === "events") {
+      getImage();
     }
   }, [record.id, isArchive, selected, record]);
 
@@ -74,9 +81,14 @@ export default function ContentItem({
     setUpdating(false);
   }
 
-  async function submitFile(file) {
+  async function submitFile(file, type) {
     setUploading(() => true);
-    await uploadFile(record.id, file, selected + (isArchive ? "_archive" : ""));
+    await uploadFile(
+      record.id,
+      file,
+      selected + (isArchive ? "_archive" : ""),
+      type
+    );
     setUploading(() => false);
     requestRefresh();
   }
@@ -452,7 +464,7 @@ export default function ContentItem({
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        submitFile(result.value);
+        submitFile(result.value, "pdf");
       }
     });
   }
@@ -474,7 +486,7 @@ export default function ContentItem({
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
-        submitFile(result.value);
+        submitFile(result.value, "jpg");
       }
     });
   }
@@ -561,141 +573,148 @@ export default function ContentItem({
 
   return (
     <div className="content-item">
-      <div className="record-datas">
-        {Object.keys(record)
-          .sort((a, b) => {
-            if (a.length !== b.length) {
-              return a.length - b.length;
-            } else {
-              return a > b;
-            }
-          })
-          .map((key) => {
-            if (key !== "id" && key !== "dateDocumentAdded" && key !== "seen")
-              return recordDetail(key, record[key]);
-            else return null;
-          })}
-      </div>
-      <span>
-        <div className="icons-container">
-          {selected !== "events" && selected !== "donation" ? (
-            <div className="icon-container">
-              {hasCert ? (
-                <img
-                  src={print}
-                  title="print"
-                  alt=""
-                  className="icon"
-                  onClick={async () => {
-                    let file = await getFile(
-                      record.id,
-                      selected + (isArchive ? "_archive" : ""),
-                      "pdf"
-                    );
-                    window.open(file);
-                  }}
-                />
-              ) : (
-                ""
-              )}
-            </div>
-          ) : (
-            ""
-          )}
-          {selected !== "donation" &&
-          selected !== "schedule" &&
-          selected !== "requests" ? (
-            <div className="icon-container">
-              {uploading ? (
-                <MiniLoader />
-              ) : (
-                <img
-                  src={upload}
-                  title="upload"
-                  alt="upload"
-                  className="icon"
-                  onClick={async () => {
-                    if (selected === "events") {
-                      uploadImage();
-                    } else {
-                      uploadDialog();
-                    }
-                  }}
-                />
-              )}
-            </div>
-          ) : (
-            ""
-          )}
-          {selected !== "requests" && selected !== "donation" ? (
-            <div className="icon-container">
-              {updating ? (
-                <MiniLoader />
-              ) : (
-                <img
-                  src={edit}
-                  title="edit"
-                  alt=""
-                  className="icon"
-                  onClick={() => {
-                    switch (selected) {
-                      case "marriage":
-                        marriageDialog();
-                        break;
-                      case "death":
-                        deathDialog();
-                        break;
-                      case "donation":
-                        donationDialog();
-                        break;
-                      case "events":
-                        eventDialog();
-                        break;
-                      case "schedule":
-                        scheduleDialog();
-                        break;
-                      default:
-                        marriageDialog();
-                    }
-                  }}
-                />
-              )}
-            </div>
-          ) : (
-            ""
-          )}
-          {selected !== "events" && selected !== "donation" ? (
-            <div className="icon-container">
-              {archiving ? (
-                <MiniLoader />
-              ) : (
-                <img
-                  src={archive}
-                  title="archive"
-                  alt="archive"
-                  className="icon"
-                  onClick={() =>
-                    Swal.fire({
-                      title: `Are you sure you want to ${
-                        isArchive ? "un-archive" : "archive"
-                      } this record?`,
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonText: isArchive ? "un-archive" : "archive",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        confirmArchive();
-                      }
-                    })
-                  }
-                />
-              )}
-            </div>
-          ) : (
-            ""
-          )}
+      <div className="content-details">
+        <div className="record-datas">
+          {Object.keys(record)
+            .sort((a, b) => {
+              if (a.length !== b.length) {
+                return a.length - b.length;
+              } else {
+                return a > b;
+              }
+            })
+            .map((key) => {
+              if (key !== "id" && key !== "dateDocumentAdded" && key !== "seen")
+                return recordDetail(key, record[key]);
+              else return null;
+            })}
         </div>
-      </span>
+        <span>
+          <div className="icons-container">
+            {selected !== "events" && selected !== "donation" ? (
+              <div className="icon-container">
+                {hasCert ? (
+                  <img
+                    src={print}
+                    title="print"
+                    alt=""
+                    className="icon"
+                    onClick={async () => {
+                      let file = await getFile(
+                        record.id,
+                        selected + (isArchive ? "_archive" : ""),
+                        "pdf"
+                      );
+                      window.open(file);
+                    }}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            {selected !== "donation" &&
+            selected !== "schedule" &&
+            selected !== "requests" ? (
+              <div className="icon-container">
+                {uploading ? (
+                  <MiniLoader />
+                ) : (
+                  <img
+                    src={upload}
+                    title="upload"
+                    alt="upload"
+                    className="icon"
+                    onClick={async () => {
+                      if (selected === "events") {
+                        uploadImage();
+                      } else {
+                        uploadDialog();
+                      }
+                    }}
+                  />
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            {selected !== "requests" && selected !== "donation" ? (
+              <div className="icon-container">
+                {updating ? (
+                  <MiniLoader />
+                ) : (
+                  <img
+                    src={edit}
+                    title="edit"
+                    alt=""
+                    className="icon"
+                    onClick={() => {
+                      switch (selected) {
+                        case "marriage":
+                          marriageDialog();
+                          break;
+                        case "death":
+                          deathDialog();
+                          break;
+                        case "donation":
+                          donationDialog();
+                          break;
+                        case "events":
+                          eventDialog();
+                          break;
+                        case "schedule":
+                          scheduleDialog();
+                          break;
+                        default:
+                          marriageDialog();
+                      }
+                    }}
+                  />
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            {selected !== "events" && selected !== "donation" ? (
+              <div className="icon-container">
+                {archiving ? (
+                  <MiniLoader />
+                ) : (
+                  <img
+                    src={archive}
+                    title="archive"
+                    alt="archive"
+                    className="icon"
+                    onClick={() =>
+                      Swal.fire({
+                        title: `Are you sure you want to ${
+                          isArchive ? "un-archive" : "archive"
+                        } this record?`,
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: isArchive ? "un-archive" : "archive",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          confirmArchive();
+                        }
+                      })
+                    }
+                  />
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </span>
+      </div>
+      {selected === "events" && image !== null ? (
+        <img src={image} alt="" className="event-image" />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

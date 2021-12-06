@@ -14,11 +14,16 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "../App";
 
 export async function getFile(id, directory, type) {
-  return await getDownloadURL(ref(storage, `${directory}/${id}.${type}`));
+  console.log("getting file");
+  try {
+    return await getDownloadURL(ref(storage, `${directory}/${id}.${type}`));
+  } catch (e) {
+    return null;
+  }
 }
 
-export async function uploadFile(id, file, directory) {
-  return await uploadBytes(ref(storage, `${directory}/${id}.pdf`), file);
+export async function uploadFile(id, file, directory, type) {
+  return await uploadBytes(ref(storage, `${directory}/${id}.${type}`), file);
 }
 
 export async function hasCertificate(id, directory) {
