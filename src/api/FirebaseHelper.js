@@ -14,7 +14,6 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "../App";
 
 export async function getFile(id, directory, type) {
-  console.log("getting file");
   try {
     return await getDownloadURL(ref(storage, `${directory}/${id}.${type}`));
   } catch (e) {
@@ -50,7 +49,6 @@ export async function recordCounter(collectionName, countCallback) {
   onSnapshot(
     query(collection(firestore, collectionName), where("seen", "!=", true)),
     (data) => {
-      console.log(data.size);
       countCallback(data);
     }
   );
@@ -101,6 +99,7 @@ export async function archiveRecord(
   docId,
   record
 ) {
+  if (record.referrence === undefined) record["referrence"] = record["id"];
   let success = false;
   try {
     if (await addRecord(targetCollectionName, record)) {

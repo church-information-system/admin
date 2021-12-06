@@ -6,7 +6,6 @@ export default function SidebarItem({ imagesrc, label, isSelected }) {
 
   useEffect(() => {
     async function countRecords() {
-      console.log(label);
       recordCounter(label.toLowerCase(), function (data) {
         setNotifCount(() => data.size);
       });

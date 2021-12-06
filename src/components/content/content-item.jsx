@@ -33,9 +33,18 @@ export default function ContentItem({
   const [hasCert, setHasCert] = useState(false);
   const [image, setImage] = useState(false);
 
+  let showEdit = !["requests", "donation"].includes(selected);
+  let showAchive = !["events", "donation"].includes(selected);
+  let showUpload = !["schedule", "donation", "requests"].includes(selected);
+  const showProperty = (key) =>
+    !["id", "dateDocumentAdded", "seen", "referrence"].includes(key);
+
   useEffect(() => {
     async function checkCert() {
-      let res = await hasCertificate(record.id, selected);
+      let res = await hasCertificate(
+        record.referrence !== undefined ? record.referrence : record.id,
+        selected
+      );
       setHasCert(() => res);
     }
     checkCert();
@@ -54,7 +63,6 @@ export default function ContentItem({
 
     async function getImage() {
       let imgSrc = await getFile(record.id, "events", "jpg");
-      console.log(imgSrc);
       setImage(() => imgSrc);
     }
 
@@ -84,9 +92,9 @@ export default function ContentItem({
   async function submitFile(file, type) {
     setUploading(() => true);
     await uploadFile(
-      record.id,
+      record.referrence !== undefined ? record.referrence : record.id,
       file,
-      selected + (isArchive ? "_archive" : ""),
+      selected,
       type
     );
     setUploading(() => false);
@@ -458,7 +466,7 @@ export default function ContentItem({
       backdrop: true,
       allowOutsideClick: () => !Swal.isLoading(),
       preConfirm: (value) => {
-        let isValid = value.type === "application/pdf";
+        let isValid = value !== null && value.type === "application/pdf";
         if (!isValid) getById("invalid").innerHTML = "choose a pdf file";
         return isValid ? value : false;
       },
@@ -480,7 +488,7 @@ export default function ContentItem({
       backdrop: true,
       allowOutsideClick: () => !Swal.isLoading(),
       preConfirm: (value) => {
-        let isValid = value.type.includes("image");
+        let isValid = value !== null && value.type.includes("image");
         if (!isValid) getById("invalid").innerHTML = "choose an image";
         return isValid ? value : false;
       },
@@ -584,8 +592,7 @@ export default function ContentItem({
               }
             })
             .map((key) => {
-              if (key !== "id" && key !== "dateDocumentAdded" && key !== "seen")
-                return recordDetail(key, record[key]);
+              if (showProperty(key)) return recordDetail(key, record[key]);
               else return null;
             })}
         </div>
@@ -601,8 +608,10 @@ export default function ContentItem({
                     className="icon"
                     onClick={async () => {
                       let file = await getFile(
-                        record.id,
-                        selected + (isArchive ? "_archive" : ""),
+                        record.referrence !== undefined
+                          ? record.referrence
+                          : record.id,
+                        selected,
                         "pdf"
                       );
                       window.open(file);
@@ -615,9 +624,7 @@ export default function ContentItem({
             ) : (
               ""
             )}
-            {selected !== "donation" &&
-            selected !== "schedule" &&
-            selected !== "requests" ? (
+            {showUpload ? (
               <div className="icon-container">
                 {uploading ? (
                   <MiniLoader />
@@ -640,7 +647,7 @@ export default function ContentItem({
             ) : (
               ""
             )}
-            {selected !== "requests" && selected !== "donation" ? (
+            {showEdit ? (
               <div className="icon-container">
                 {updating ? (
                   <MiniLoader />
@@ -677,7 +684,7 @@ export default function ContentItem({
             ) : (
               ""
             )}
-            {selected !== "events" && selected !== "donation" ? (
+            {showAchive ? (
               <div className="icon-container">
                 {archiving ? (
                   <MiniLoader />
