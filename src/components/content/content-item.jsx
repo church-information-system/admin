@@ -4,6 +4,7 @@ import print from "../../assets/print.svg";
 import edit from "../../assets/edit.svg";
 import archive from "../../assets/archive.svg";
 import upload from "../../assets/upload.svg";
+import confirm from "../../assets/confirm.svg";
 import {
   archiveRecord,
   editRecord,
@@ -31,12 +32,16 @@ export default function ContentItem({
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [confirmingDonation, setConfirmingDonation] = useState(false);
+
   const [hasCert, setHasCert] = useState(false);
   const [image, setImage] = useState(false);
 
   let showEdit = !["requests", "donation", ""].includes(selected);
   let showAchive = !["events", "donation", ""].includes(selected);
   let showUpload = !["schedule", "donation", "requests", ""].includes(selected);
+  let showConfirmDonation = selected === "donation";
+
   const showProperty = (key) =>
     !["id", "dateDocumentAdded", "seen", "referrence", ""].includes(key);
 
@@ -620,6 +625,26 @@ export default function ContentItem({
                   />
                 ) : (
                   ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            {showConfirmDonation ? (
+              <div className="icon-container">
+                {confirmingDonation ? (
+                  <MiniLoader />
+                ) : (
+                  <img
+                    src={confirm}
+                    title="confirm donation"
+                    alt="confirm"
+                    className="icon"
+                    onClick={async () => {
+                      setConfirmingDonation(() => true);
+                      console.log("confirm");
+                    }}
+                  />
                 )}
               </div>
             ) : (
