@@ -20,7 +20,8 @@ import {
   getById,
   inputGetter,
 } from "../../helpers";
-import { useEffect, useState } from "react";
+import emailJS from "emailjs-com";
+import { useEffect, useRef, useState } from "react";
 import { MiniLoader } from "../misc/loader";
 
 export default function ContentItem({
@@ -43,7 +44,11 @@ export default function ContentItem({
   let showConfirmDonation = selected === "donation";
 
   const showProperty = (key) =>
-    !["id", "dateDocumentAdded", "seen", "referrence", ""].includes(key);
+    !["id", "dateDocumentAdded", "seen", "referrence", "verified"].includes(
+      key
+    );
+
+  const form = useRef();
 
   useEffect(() => {
     async function checkCert() {
@@ -593,6 +598,40 @@ export default function ContentItem({
     });
   }
 
+  const sendEmail = () => {
+    emailJS
+      .sendForm(
+        "service_iredyvh",
+        "template_cf0wjy5",
+        form.current,
+        "user_NRZC9vjUaHFQ7n72dO765"
+      )
+      .then(
+        () => {
+          customAlert("Email has been sent", "success");
+          setVerified();
+          setConfirmingDonation(false);
+        },
+        (error) => {
+          console.log(error.text);
+          customAlert("Something went wrong", "error");
+          setConfirmingDonation(false);
+        }
+      );
+
+    emailJS.sendForm(
+      "service_iredyvh",
+      "template_tpwuinn",
+      form.current,
+      "user_NRZC9vjUaHFQ7n72dO765"
+    );
+  };
+
+  async function setVerified() {
+    record.verified = true;
+    console.log(await editRecord("donation", record.id, record));
+  }
+
   return (
     <div className="content-item">
       <div className="content-details">
@@ -630,8 +669,12 @@ export default function ContentItem({
             ) : (
               ""
             )}
-            {showConfirmDonation ? (
+            {showConfirmDonation && record.verified !== true ? (
               <div className="icon-container">
+                <form ref={form} className="no-display">
+                  <input type="email" name="user_email" value={record.email} />
+                  <input type="text" name="donor" value={record.firstName} />
+                </form>
                 {confirmingDonation ? (
                   <MiniLoader />
                 ) : (
@@ -642,7 +685,7 @@ export default function ContentItem({
                     className="icon"
                     onClick={async () => {
                       setConfirmingDonation(() => true);
-                      console.log("confirm");
+                      sendEmail();
                     }}
                   />
                 )}

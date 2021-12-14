@@ -34,6 +34,10 @@
   background-color: $primary;
 }
 
+.no-display {
+  display: none;
+}
+
 .icon {
   filter: invert(100%) sepia(0%) saturate(7500%) hue-rotate(216deg)
     brightness(101%) contrast(102%);
