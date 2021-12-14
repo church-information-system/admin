@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { recordCounter } from "../../api/FirebaseHelper";
+import { notificationCounter } from "../../api/FirebaseHelper";
 
 export default function SidebarItem({ imagesrc, label, isSelected }) {
   const [notifCount, setNotifCount] = useState(0);
 
   useEffect(() => {
     async function countRecords() {
-      recordCounter(label.toLowerCase(), function (data) {
+      notificationCounter(label.toLowerCase(), function (data) {
         setNotifCount(() => data.size);
       });
     }

@@ -3,7 +3,7 @@ import "./content.scss";
 import ContentItem from "./content-item";
 import ActionBar from "./action-bar";
 import { useEffect, useState } from "react";
-import { fetchCollection } from "../../api/FirebaseHelper";
+import { fetchCollection, recordCounter } from "../../api/FirebaseHelper";
 import { Loader } from "../misc/loader";
 import { toDateTime } from "../../helpers";
 
@@ -13,6 +13,7 @@ export default function Content({ selected }) {
   const [fetchingCollection, setFetchingCollection] = useState(false);
   const [refereshes, setRefreshes] = useState(0);
   const [isArchive, setIsArchive] = useState(false);
+  const [recordCounts, setRecordCounts] = useState([]);
 
   const toggleArchive = (value) => setIsArchive(() => value);
 
@@ -30,6 +31,30 @@ export default function Content({ selected }) {
         await fetchCollection(selected + (isArchive ? "_archive" : ""))
       );
       setFetchingCollection(() => false);
+    } else {
+      setFetchingCollection(() => true);
+      let records = [
+        "marriage",
+        "death",
+        "donation",
+        "events",
+        "requests",
+        "schedule",
+      ];
+
+      let _recordCounts = [];
+      records.forEach(async (record, index) => {
+        await recordCounter(record, (data) => {
+          _recordCounts.push({
+            name: record,
+            countOfRecords: data.size,
+          });
+          if (index === records.length - 1) {
+            setRecordCounts(() => _recordCounts);
+            setFetchingCollection(() => false);
+          }
+        });
+      });
     }
   };
 
@@ -82,10 +107,15 @@ export default function Content({ selected }) {
         toggleArchive={toggleArchive}
         isArchive={isArchive}
       />
-      {selected === "" ? (
-        <h3 className="content-message">Nothing Selected</h3>
-      ) : fetchingCollection ? (
+      {fetchingCollection ? (
         <Loader />
+      ) : selected === "" ? (
+        <div className="content-container">
+          {recordCounts.map((recordCount) => {
+            recordCount.id = recordCount.name;
+            return createItem(recordCount);
+          })}
+        </div>
       ) : (
         <div className="content-container">
           {getMatches()[0] ? (

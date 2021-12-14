@@ -45,13 +45,19 @@ export async function fetchCollection(collectionName) {
   return datas;
 }
 
-export async function recordCounter(collectionName, countCallback) {
+export async function notificationCounter(collectionName, countCallback) {
   onSnapshot(
     query(collection(firestore, collectionName), where("seen", "!=", true)),
     (data) => {
       countCallback(data);
     }
   );
+}
+
+export async function recordCounter(collectionName, countCallback) {
+  onSnapshot(collection(firestore, collectionName), (data) => {
+    countCallback(data);
+  });
 }
 
 export async function addRecord(collectionName, record) {

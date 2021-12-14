@@ -34,11 +34,11 @@ export default function ContentItem({
   const [hasCert, setHasCert] = useState(false);
   const [image, setImage] = useState(false);
 
-  let showEdit = !["requests", "donation"].includes(selected);
-  let showAchive = !["events", "donation"].includes(selected);
-  let showUpload = !["schedule", "donation", "requests"].includes(selected);
+  let showEdit = !["requests", "donation", ""].includes(selected);
+  let showAchive = !["events", "donation", ""].includes(selected);
+  let showUpload = !["schedule", "donation", "requests", ""].includes(selected);
   const showProperty = (key) =>
-    !["id", "dateDocumentAdded", "seen", "referrence"].includes(key);
+    !["id", "dateDocumentAdded", "seen", "referrence", ""].includes(key);
 
   useEffect(() => {
     async function checkCert() {
@@ -676,7 +676,6 @@ export default function ContentItem({
                           scheduleDialog();
                           break;
                         default:
-                          marriageDialog();
                       }
                     }}
                   />
