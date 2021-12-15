@@ -40,6 +40,7 @@ export default function ContentItem({
 
   let showEdit = !["requests", "donation", ""].includes(selected);
   let showAchive = !["events", "donation", ""].includes(selected);
+  let showPrint = !["events", "donation", ""].includes(selected);
   let showUpload = !["schedule", "donation", "requests", ""].includes(selected);
   let showConfirmDonation = selected === "donation";
 
@@ -643,145 +644,96 @@ export default function ContentItem({
         </div>
         <span>
           <div className="icons-container">
-            {selected !== "events" && selected !== "donation" ? (
-              <div className="icon-container">
-                {hasCert ? (
-                  <img
-                    src={print}
-                    title="print"
-                    alt=""
-                    className="icon"
-                    onClick={async () => {
-                      let file = await getFile(
-                        record.referrence !== undefined
-                          ? record.referrence
-                          : record.id,
-                        selected,
-                        "pdf"
-                      );
-                      window.open(file);
-                    }}
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-            {showConfirmDonation && record.verified !== true ? (
-              <div className="icon-container">
-                <form ref={form} className="no-display">
-                  <input type="email" name="user_email" value={record.email} />
-                  <input type="text" name="donor" value={record.firstName} />
-                </form>
-                {confirmingDonation ? (
-                  <MiniLoader />
-                ) : (
-                  <img
-                    src={confirm}
-                    title="confirm donation"
-                    alt="confirm"
-                    className="icon"
-                    onClick={async () => {
-                      setConfirmingDonation(() => true);
-                      sendEmail();
-                    }}
-                  />
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-            {showUpload ? (
-              <div className="icon-container">
-                {uploading ? (
-                  <MiniLoader />
-                ) : (
-                  <img
-                    src={upload}
-                    title="upload"
-                    alt="upload"
-                    className="icon"
-                    onClick={async () => {
-                      if (selected === "events") {
-                        uploadImage();
-                      } else {
-                        uploadDialog();
-                      }
-                    }}
-                  />
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-            {showEdit ? (
-              <div className="icon-container">
-                {updating ? (
-                  <MiniLoader />
-                ) : (
-                  <img
-                    src={edit}
-                    title="edit"
-                    alt=""
-                    className="icon"
-                    onClick={() => {
-                      switch (selected) {
-                        case "marriage":
-                          marriageDialog();
-                          break;
-                        case "death":
-                          deathDialog();
-                          break;
-                        case "donation":
-                          donationDialog();
-                          break;
-                        case "events":
-                          eventDialog();
-                          break;
-                        case "schedule":
-                          scheduleDialog();
-                          break;
-                        default:
-                      }
-                    }}
-                  />
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-            {showAchive ? (
-              <div className="icon-container">
-                {archiving ? (
-                  <MiniLoader />
-                ) : (
-                  <img
-                    src={archive}
-                    title="archive"
-                    alt="archive"
-                    className="icon"
-                    onClick={() =>
-                      Swal.fire({
-                        title: `Are you sure you want to ${
-                          isArchive ? "un-archive" : "archive"
-                        } this record?`,
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonText: isArchive ? "un-archive" : "archive",
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          confirmArchive();
-                        }
-                      })
-                    }
-                  />
-                )}
-              </div>
-            ) : (
-              ""
-            )}
+            <ActionButton
+              isShown={showPrint && hasCert}
+              isLoading={false}
+              title={print}
+              icon={print}
+              onClick={async () => {
+                let file = await getFile(
+                  record.referrence !== undefined
+                    ? record.referrence
+                    : record.id,
+                  selected,
+                  "pdf"
+                );
+                window.open(file);
+              }}
+            />
+            <form ref={form} className="no-display">
+              <input type="email" name="user_email" value={record.email} />
+              <input type="text" name="donor" value={record.firstName} />
+            </form>
+            <ActionButton
+              isShown={showConfirmDonation && record.verified !== true}
+              isLoading={confirmingDonation}
+              icon={confirm}
+              title="confirm"
+              onClick={async () => {
+                setConfirmingDonation(() => true);
+                sendEmail();
+              }}
+            />
+            <ActionButton
+              isShown={showUpload}
+              isLoading={uploading}
+              icon={upload}
+              title="upload"
+              onClick={async () => {
+                if (selected === "events") {
+                  uploadImage();
+                } else {
+                  uploadDialog();
+                }
+              }}
+            />
+
+            <ActionButton
+              isShown={showEdit}
+              isLoading={updating}
+              icon={edit}
+              title="edit"
+              onClick={() => {
+                switch (selected) {
+                  case "marriage":
+                    marriageDialog();
+                    break;
+                  case "death":
+                    deathDialog();
+                    break;
+                  case "donation":
+                    donationDialog();
+                    break;
+                  case "events":
+                    eventDialog();
+                    break;
+                  case "schedule":
+                    scheduleDialog();
+                    break;
+                  default:
+                }
+              }}
+            />
+            <ActionButton
+              isShown={showAchive}
+              isLoading={archiving}
+              icon={archive}
+              title="archive"
+              onClick={() =>
+                Swal.fire({
+                  title: `Are you sure you want to ${
+                    isArchive ? "un-archive" : "archive"
+                  } this record?`,
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonText: isArchive ? "un-archive" : "archive",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    confirmArchive();
+                  }
+                })
+              }
+            />
           </div>
         </span>
       </div>
@@ -791,5 +743,25 @@ export default function ContentItem({
         ""
       )}
     </div>
+  );
+}
+
+function ActionButton({ isShown, isLoading, icon, onClick, title }) {
+  return isShown ? (
+    <div className="icon-container">
+      {isLoading ? (
+        <MiniLoader />
+      ) : (
+        <img
+          src={icon}
+          title={title}
+          alt={title}
+          className="icon"
+          onClick={() => onClick()}
+        />
+      )}
+    </div>
+  ) : (
+    ""
   );
 }
