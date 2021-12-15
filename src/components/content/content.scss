@@ -91,19 +91,16 @@
   }
 
   .content-message {
+    z-index: 1;
+    position: relative;
     text-align: center;
     color: $secondary;
   }
 
   .content-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 16px;
-
-    @include mobile {
-      grid-template-columns: 1fr;
-    }
-
+    display: block;
+    position: relative;
+    z-index: 1;
     max-height: inherit;
 
     @extend .default-padding;

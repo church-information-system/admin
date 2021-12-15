@@ -15,6 +15,8 @@ export default function Content({ selected }) {
   const [isArchive, setIsArchive] = useState(false);
   const [recordCounts, setRecordCounts] = useState([]);
 
+  let yearLastAdded = "";
+
   const toggleArchive = (value) => setIsArchive(() => value);
 
   const refreshList = () => setRefreshes((value) => value + 1);
@@ -86,6 +88,21 @@ export default function Content({ selected }) {
   }
 
   function createItem(record) {
+    if (isArchive) {
+      return (
+        <ContentItem
+          record={record}
+          key={record.id}
+          selected={selected}
+          requestRefresh={refreshList}
+          isArchive={isArchive}
+        >
+          <div className="content-message">
+            {toDateTime(record.dateDocumentAdded.seconds).getFullYear()}
+          </div>
+        </ContentItem>
+      );
+    }
     return (
       <ContentItem
         record={record}
@@ -116,6 +133,24 @@ export default function Content({ selected }) {
             return createItem(recordCount);
           })}
         </div>
+      ) : isArchive ? (
+        getMatches().map((record) => {
+          console.log(record.props.record.dateDocumentAdded);
+          let dateAdded = toDateTime(
+            record.props.record.dateDocumentAdded.seconds
+          ).getFullYear();
+          if (yearLastAdded !== dateAdded) {
+            yearLastAdded = dateAdded;
+            return (
+              <div>
+                <h3 className="content-message">{yearLastAdded}</h3>
+                <div className="content-container">{record}</div>
+              </div>
+            );
+          } else {
+            return <div className="content-container">{record}</div>;
+          }
+        })
       ) : (
         <div className="content-container">
           {getMatches()[0] ? (
