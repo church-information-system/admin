@@ -662,7 +662,7 @@ export default function ContentItem({
               isLoading={false}
               icon={email}
               title="email"
-              onClick={async () => {
+              onClick={async (e) => {
                 window.open(
                   `mailto:${record.emailAddress}?subject=${record.requestedDocument} request&body=`
                 );
@@ -717,7 +717,9 @@ export default function ContentItem({
               isLoading={updating}
               icon={edit}
               title="edit"
-              onClick={() => {
+              onClick={(event) => {
+                console.log(event);
+                // e.stopPropagation();
                 switch (selected) {
                   case "marriage":
                     marriageDialog();
@@ -781,7 +783,10 @@ function ActionButton({ isShown, isLoading, icon, onClick, title }) {
           title={title}
           alt={title}
           className="icon"
-          onClick={() => onClick()}
+          onClick={(event) => {
+            event.stopPropagation();
+            onClick();
+          }}
         />
       )}
     </div>
