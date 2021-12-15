@@ -135,7 +135,6 @@ export default function Content({ selected }) {
         </div>
       ) : isArchive ? (
         getMatches().map((record) => {
-          console.log(record.props.record.dateDocumentAdded);
           let dateAdded = toDateTime(
             record.props.record.dateDocumentAdded.seconds
           ).getFullYear();
@@ -143,7 +142,9 @@ export default function Content({ selected }) {
             yearLastAdded = dateAdded;
             return (
               <div>
-                <h3 className="content-message">{yearLastAdded}</h3>
+                <h3 className="content-message">
+                  Records From year {yearLastAdded}
+                </h3>
                 <div className="content-container">{record}</div>
               </div>
             );

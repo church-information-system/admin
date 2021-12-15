@@ -39,6 +39,8 @@ export default function ContentItem({
   const [hasCert, setHasCert] = useState(false);
   const [image, setImage] = useState(false);
 
+  const [showOthers, setShowOthers] = useState(false);
+
   let showEdit = !["requests", "donation", ""].includes(selected);
   let showAchive = !["events", "donation", ""].includes(selected);
   let showPrint = !["events", "donation", ""].includes(selected);
@@ -46,10 +48,17 @@ export default function ContentItem({
   let showConfirmDonation = selected === "donation";
   let showEmailRequest = selected === "requests";
 
-  const showProperty = (key) =>
-    !["id", "dateDocumentAdded", "seen", "referrence", "verified"].includes(
-      key
-    );
+  const showProperty = (key) => {
+    if (showOthers || ["schedule", "events", ""].includes(selected))
+      return ![
+        "id",
+        "dateDocumentAdded",
+        "seen",
+        "referrence",
+        "verified",
+      ].includes(key);
+    else return key.toLowerCase().includes("name");
+  };
 
   const form = useRef();
 
@@ -616,7 +625,6 @@ export default function ContentItem({
           setConfirmingDonation(false);
         },
         (error) => {
-          console.log(error.text);
           customAlert("Something went wrong", "error");
           setConfirmingDonation(false);
         }
@@ -630,13 +638,16 @@ export default function ContentItem({
     );
   };
 
-  async function setVerified() {
+  function setVerified() {
     record.verified = true;
-    console.log(await editRecord("donation", record.id, record));
+    editRecord("donation", record.id, record);
   }
 
   return (
-    <div className="content-item">
+    <div
+      className="content-item"
+      onClick={() => setShowOthers((current) => !current)}
+    >
       <div className="content-details">
         <div className="record-datas">
           {attributeSorter(selected, record).map((key) => {
