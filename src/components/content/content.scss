@@ -110,8 +110,6 @@
       margin-bottom: 16px;
       border-left: 8px solid $secondary;
 
-      transition: 1s;
-
       @extend .subtle-hover-grow;
       @extend .bg-white;
       @extend .default-padding;

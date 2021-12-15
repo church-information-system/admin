@@ -24,6 +24,7 @@ import {
 import emailJS from "emailjs-com";
 import { useEffect, useRef, useState } from "react";
 import { MiniLoader } from "../misc/loader";
+import ContentTable from "../misc/content-table/content-table";
 
 export default function ContentItem({
   record,
@@ -41,6 +42,8 @@ export default function ContentItem({
 
   const [showOthers, setShowOthers] = useState(false);
 
+  let dontShow = ["id", "dateDocumentAdded", "seen", "referrence", "verified"];
+
   let showEdit = !["requests", "donation", ""].includes(selected);
   let showAchive = !["events", "donation", ""].includes(selected);
   let showPrint = !["events", "donation", ""].includes(selected);
@@ -49,7 +52,7 @@ export default function ContentItem({
   let showEmailRequest = selected === "requests";
 
   const showProperty = (key) => {
-    if (showOthers || ["schedule", "events", ""].includes(selected))
+    if (["schedule", "events", ""].includes(selected))
       return ![
         "id",
         "dateDocumentAdded",
@@ -654,6 +657,16 @@ export default function ContentItem({
             if (showProperty(key)) return recordDetail(key, record[key]);
             else return null;
           })}
+          {showOthers ? (
+            <ContentTable
+              columns={Object.keys(record).filter(
+                (key) => !dontShow.includes(key)
+              )}
+              data={record}
+            />
+          ) : (
+            ""
+          )}
         </div>
         <span>
           <div className="icons-container">
