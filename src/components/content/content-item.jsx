@@ -5,6 +5,7 @@ import edit from "../../assets/edit.svg";
 import archive from "../../assets/archive.svg";
 import upload from "../../assets/upload.svg";
 import confirm from "../../assets/confirm.svg";
+import email from "../../assets/email.svg";
 import {
   archiveRecord,
   editRecord,
@@ -43,6 +44,7 @@ export default function ContentItem({
   let showPrint = !["events", "donation", ""].includes(selected);
   let showUpload = !["schedule", "donation", "requests", ""].includes(selected);
   let showConfirmDonation = selected === "donation";
+  let showEmailRequest = selected === "requests";
 
   const showProperty = (key) =>
     !["id", "dateDocumentAdded", "seen", "referrence", "verified"].includes(
@@ -644,6 +646,17 @@ export default function ContentItem({
         </div>
         <span>
           <div className="icons-container">
+            <ActionButton
+              isShown={showEmailRequest}
+              isLoading={false}
+              icon={email}
+              title="email"
+              onClick={async () => {
+                window.open(
+                  `mailto:${record.emailAddress}?subject=Document Has been Picked up&body=The ${record.requestedDocument} you requested has been released`
+                );
+              }}
+            />
             <ActionButton
               isShown={showPrint && hasCert}
               isLoading={false}
