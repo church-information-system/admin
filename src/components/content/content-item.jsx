@@ -664,7 +664,7 @@ export default function ContentItem({
               title="email"
               onClick={async () => {
                 window.open(
-                  `mailto:${record.emailAddress}?subject=Document Has been Picked up&body=The ${record.requestedDocument} you requested has been released`
+                  `mailto:${record.emailAddress}?subject=${record.requestedDocument} request&body=`
                 );
               }}
             />
