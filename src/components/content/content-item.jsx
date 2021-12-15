@@ -659,7 +659,7 @@ export default function ContentItem({
           })}
           {showOthers ? (
             <ContentTable
-              columns={Object.keys(record).filter(
+              columns={attributeSorter(selected, record).filter(
                 (key) => !dontShow.includes(key)
               )}
               data={record}
