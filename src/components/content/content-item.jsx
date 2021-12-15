@@ -15,6 +15,7 @@ import {
 } from "../../api/FirebaseHelper";
 import {
   attributeSorter,
+  convertCamelCase,
   convertTime12to24,
   customAlert,
   formatTime,
@@ -51,15 +52,10 @@ export default function ContentItem({
   let showConfirmDonation = selected === "donation";
   let showEmailRequest = selected === "requests";
 
+  let showTable = !["events", "schedule", ""].includes(selected);
+
   const showProperty = (key) => {
-    if (["schedule", "events", ""].includes(selected))
-      return ![
-        "id",
-        "dateDocumentAdded",
-        "seen",
-        "referrence",
-        "verified",
-      ].includes(key);
+    if (!showTable) return !dontShow.includes(key);
     else return key.toLowerCase().includes("name");
   };
 
@@ -146,10 +142,7 @@ export default function ContentItem({
   }
 
   function recordDetail(key, value) {
-    try {
-      key = key.charAt(0).toUpperCase() + key.slice(1);
-      key = key.match(/[A-Z][a-z]+|[0-9]+/g).join(" ");
-    } catch {}
+    key = convertCamelCase(key);
 
     return (
       <div className="key-value-pair" key={key}>
@@ -766,10 +759,12 @@ export default function ContentItem({
           </div>
         </span>
       </div>
-      {showOthers ? (
+      {showOthers && showTable ? (
         <ContentTable
           columns={attributeSorter(selected, record).filter(
-            (key) => !dontShow.includes(key)
+            (key) =>
+              ![...dontShow].includes(key) &&
+              !key.toString().toLowerCase().includes("name")
           )}
           data={record}
         />

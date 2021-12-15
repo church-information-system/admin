@@ -146,3 +146,13 @@ export function chunkArray(inputArray) {
 
   return result;
 }
+
+export function convertCamelCase(word) {
+  try {
+    word = word.charAt(0).toUpperCase() + word.slice(1);
+    word = word.match(/[A-Z][a-z]+|[0-9]+/g).join(" ");
+    return word;
+  } catch {
+    return word;
+  }
+}

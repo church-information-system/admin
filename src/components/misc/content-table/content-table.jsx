@@ -1,9 +1,7 @@
-import { chunkArray } from "../../../helpers";
+import { convertCamelCase } from "../../../helpers";
 import "./content-table.scss";
 
 export default function ContentTable({ columns, data }) {
-  console.log(chunkArray(columns));
-
   return (
     <div className="table-container">
       <Table columns={columns} data={data} />
@@ -14,16 +12,20 @@ export default function ContentTable({ columns, data }) {
 function Table({ columns, data }) {
   return (
     <table onClick={(event) => event.stopPropagation()}>
-      <tr>
-        {columns.map((key) => (
-          <th>{key}</th>
-        ))}
-      </tr>
-      <tr>
-        {columns.map((key) => (
-          <td>{data[key]}</td>
-        ))}
-      </tr>
+      <thead>
+        <tr>
+          {columns.map((key, index) => (
+            <th key={key + index}>{convertCamelCase(key)}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {columns.map((key, index) => (
+            <td key={data[key] + index}>{data[key]}</td>
+          ))}
+        </tr>
+      </tbody>
     </table>
   );
 }
