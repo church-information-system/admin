@@ -128,3 +128,21 @@ export function attributeSorter(selected, obj) {
     (a, b) => sortingArray.indexOf(a) - sortingArray.indexOf(b)
   );
 }
+
+export function chunkArray(inputArray) {
+  let perChunk = 5;
+
+  let result = inputArray.reduce((resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / perChunk);
+
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = [];
+    }
+
+    resultArray[chunkIndex].push(item);
+
+    return resultArray;
+  }, []);
+
+  return result;
+}

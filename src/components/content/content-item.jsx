@@ -657,16 +657,6 @@ export default function ContentItem({
             if (showProperty(key)) return recordDetail(key, record[key]);
             else return null;
           })}
-          {showOthers ? (
-            <ContentTable
-              columns={attributeSorter(selected, record).filter(
-                (key) => !dontShow.includes(key)
-              )}
-              data={record}
-            />
-          ) : (
-            ""
-          )}
         </div>
         <span>
           <div className="icons-container">
@@ -776,6 +766,16 @@ export default function ContentItem({
           </div>
         </span>
       </div>
+      {showOthers ? (
+        <ContentTable
+          columns={attributeSorter(selected, record).filter(
+            (key) => !dontShow.includes(key)
+          )}
+          data={record}
+        />
+      ) : (
+        ""
+      )}
       {selected === "events" && image !== null ? (
         <img src={image} alt="" className="event-image" />
       ) : (

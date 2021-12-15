@@ -117,12 +117,14 @@
       @extend .rounded-border;
 
       .content-details {
+        max-width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         .record-datas {
           width: 100%;
+
           .key-value-pair {
             display: flex;
             justify-content: space-between;
@@ -139,6 +141,7 @@
         }
 
         .icons-container {
+          flex-grow: 1;
           display: flex;
           @include mobile {
             flex-direction: column;
