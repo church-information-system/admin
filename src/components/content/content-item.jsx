@@ -682,6 +682,11 @@ export default function ContentItem({
             />
             <form ref={form} className="no-display">
               <input type="email" name="user_email" value={record.email} />
+              <input
+                type="email"
+                name="admin_email"
+                value={"josejeromelalunio2@gmail.com"}
+              />
               <input type="text" name="donor" value={record.firstName} />
             </form>
             <ActionButton
