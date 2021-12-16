@@ -2,6 +2,7 @@ import death from "../../assets/death.svg";
 import marriage from "../../assets/marriage.svg";
 import donation from "../../assets/donation.svg";
 import post from "../../assets/post.svg";
+import records from "../../assets/records.svg";
 import requests from "../../assets/request.svg";
 import church from "../../assets/church.svg";
 
@@ -20,6 +21,8 @@ export default function CountContent({ name, count }) {
         return requests;
       case "schedule":
         return church;
+      default:
+        return records;
     }
   }
 
