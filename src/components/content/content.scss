@@ -97,6 +97,56 @@
     color: $secondary;
   }
 
+  .count-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+
+    max-height: inherit;
+
+    @extend .default-padding;
+
+    .content-item {
+      z-index: 1;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+
+      @extend .subtle-hover-grow;
+      @extend .bg-white;
+      @extend .box-shadow;
+      @extend .rounded-border;
+
+      .count-icon-container {
+        display: flex;
+        align-items: center;
+        background-color: $primary;
+
+        @extend .default-padding;
+        @extend .rounded-border;
+
+        .count-icon {
+          width: 50px;
+        }
+      }
+
+      .count-item-container {
+        text-align: center;
+
+        @extend .default-padding;
+
+        * {
+          text-transform: capitalize;
+          margin: auto;
+        }
+      }
+    }
+  }
+
   .content-container {
     display: block;
     position: relative;

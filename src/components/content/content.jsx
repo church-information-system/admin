@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { fetchCollection, recordCounter } from "../../api/FirebaseHelper";
 import { Loader } from "../misc/loader";
 import { toDateTime } from "../../helpers";
+import CountContent from "./count-content";
 
 export default function Content({ selected }) {
   const [records, setRecords] = useState([]);
@@ -127,10 +128,15 @@ export default function Content({ selected }) {
       {fetchingCollection ? (
         <Loader />
       ) : selected === "" ? (
-        <div className="content-container">
+        <div className="count-container">
           {recordCounts.map((recordCount) => {
             recordCount.id = recordCount.name;
-            return createItem(recordCount);
+            return (
+              <CountContent
+                name={recordCount.name}
+                count={recordCount.countOfRecords}
+              />
+            );
           })}
         </div>
       ) : isArchive ? (
