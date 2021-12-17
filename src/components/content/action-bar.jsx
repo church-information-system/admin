@@ -405,7 +405,7 @@ export default function ActionBar({
             ) : (
               <img src={archive} alt="add" className="icon" />
             )}
-            <h4>Archive selected </h4>
+            <h4>Archive</h4>
           </span>
         ) : (
           <span></span>

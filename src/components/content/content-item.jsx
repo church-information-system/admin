@@ -34,11 +34,15 @@ export default function ContentItem({
   requestRefresh,
   isArchive,
   isSelect,
+  addToSelected,
+  removeFromSelected,
 }) {
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [confirmingDonation, setConfirmingDonation] = useState(false);
+
+  const [isChecked, setIsChecked] = useState(false);
 
   const [hasCert, setHasCert] = useState(false);
   const [image, setImage] = useState(false);
@@ -60,6 +64,15 @@ export default function ContentItem({
     if (!showTable) return !dontShow.includes(key);
     else return key.toLowerCase().includes("name");
   };
+
+  function check(value) {
+    setIsChecked(() => value);
+    if (value) {
+      addToSelected(record);
+    } else {
+      removeFromSelected(record);
+    }
+  }
 
   const form = useRef();
 
@@ -655,7 +668,11 @@ export default function ContentItem({
         </div>
         <span>
           <div className="icons-container">
-            {isSelect ? <CheckBox /> : ""}
+            {isSelect ? (
+              <CheckBox isChecked={isChecked} onChange={check} />
+            ) : (
+              ""
+            )}
             <ActionButton
               isShown={showEmailRequest}
               isLoading={false}
@@ -688,9 +705,9 @@ export default function ContentItem({
               <input
                 type="email"
                 name="admin_email"
-                value={"josejeromelalunio2@gmail.com"}
+                defaultValue={"josejeromelalunio2@gmail.com"}
               />
-              <input type="text" name="donor" value={record.firstName} />
+              <input type="text" name="donor" defaultValue={record.firstName} />
             </form>
             <ActionButton
               isShown={showConfirmDonation && record.verified !== true}

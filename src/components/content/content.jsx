@@ -17,6 +17,19 @@ export default function Content({ selected }) {
   const [isSelect, setIsSelect] = useState(false);
   const [recordCounts, setRecordCounts] = useState([]);
 
+  const selectedRecords = [];
+
+  function addToSelected(record) {
+    selectedRecords.push(record);
+  }
+
+  function removeFromSelected(record) {
+    selectedRecords.splice(
+      selectedRecords.findIndex((element) => (record.id = element.id)),
+      1
+    );
+  }
+
   let yearLastAdded = "";
 
   const toggleArchive = (value) => setIsArchive(() => value);
@@ -91,22 +104,6 @@ export default function Content({ selected }) {
   }
 
   function createItem(record) {
-    if (isArchive) {
-      return (
-        <ContentItem
-          record={record}
-          key={record.id}
-          selected={selected}
-          requestRefresh={refreshList}
-          isArchive={isArchive}
-          isSelect={isSelect}
-        >
-          <div className="content-message">
-            {toDateTime(record.dateDocumentAdded.seconds).getFullYear()}
-          </div>
-        </ContentItem>
-      );
-    }
     return (
       <ContentItem
         record={record}
@@ -115,6 +112,8 @@ export default function Content({ selected }) {
         requestRefresh={refreshList}
         isArchive={isArchive}
         isSelect={isSelect}
+        addToSelected={addToSelected}
+        removeFromSelected={removeFromSelected}
       />
     );
   }
@@ -139,6 +138,7 @@ export default function Content({ selected }) {
             recordCount.id = recordCount.name;
             return (
               <CountContent
+                key={recordCount.name}
                 name={recordCount.name}
                 count={recordCount.countOfRecords}
               />
@@ -153,7 +153,7 @@ export default function Content({ selected }) {
           if (yearLastAdded !== dateAdded) {
             yearLastAdded = dateAdded;
             return (
-              <div>
+              <div key={dateAdded}>
                 <h3 className="content-message">
                   Records From year {yearLastAdded}
                 </h3>
