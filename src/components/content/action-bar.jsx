@@ -12,9 +12,12 @@ export default function ActionBar({
   show,
   selected,
   toggleArchive,
+  toggleSelectMode,
   isArchive,
 }) {
   const [addingRecord, setAddingRecord] = useState(false);
+
+  let showArchive = !["events", "donation", ""].includes(selected);
 
   async function submit(values) {
     setAddingRecord(() => true);
@@ -357,8 +360,12 @@ export default function ActionBar({
       )}
       {selected !== "events" && selected !== "donation" ? (
         <span className="archive-bar">
-          <ToggleSwitch toggleArchive={toggleArchive} />
-          <h4>Toggle Archive</h4>
+          <ToggleSwitch toggle={toggleArchive} label="Toggle Archive" />
+          {showArchive ? (
+            <ToggleSwitch toggle={toggleSelectMode} label="Multi Select" />
+          ) : (
+            ""
+          )}
         </span>
       ) : (
         ""

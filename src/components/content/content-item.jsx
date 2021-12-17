@@ -32,6 +32,7 @@ export default function ContentItem({
   selected,
   requestRefresh,
   isArchive,
+  isSelect,
 }) {
   const [updating, setUpdating] = useState(false);
   const [archiving, setArchiving] = useState(false);
@@ -763,6 +764,7 @@ export default function ContentItem({
             />
           </div>
         </span>
+        {isSelect ? "select" : ""}
       </div>
       {showOthers && showTable ? (
         <ContentTable

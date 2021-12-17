@@ -14,11 +14,13 @@ export default function Content({ selected }) {
   const [fetchingCollection, setFetchingCollection] = useState(false);
   const [refereshes, setRefreshes] = useState(0);
   const [isArchive, setIsArchive] = useState(false);
+  const [isSelect, setIsSelect] = useState(false);
   const [recordCounts, setRecordCounts] = useState([]);
 
   let yearLastAdded = "";
 
   const toggleArchive = (value) => setIsArchive(() => value);
+  const toggleSelectMode = (value) => setIsSelect(() => value);
 
   const refreshList = () => setRefreshes((value) => value + 1);
 
@@ -111,6 +113,7 @@ export default function Content({ selected }) {
         selected={selected}
         requestRefresh={refreshList}
         isArchive={isArchive}
+        isSelect={isSelect}
       />
     );
   }
@@ -123,6 +126,7 @@ export default function Content({ selected }) {
         show={selected !== ""}
         selected={selected}
         toggleArchive={toggleArchive}
+        toggleSelectMode={toggleSelectMode}
         isArchive={isArchive}
       />
       {fetchingCollection ? (
