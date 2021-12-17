@@ -45,7 +45,7 @@ export default function ContentItem({
   const [isChecked, setIsChecked] = useState(false);
 
   const [hasCert, setHasCert] = useState(false);
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState("");
 
   const [showOthers, setShowOthers] = useState(false);
 
