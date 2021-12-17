@@ -26,6 +26,7 @@ import emailJS from "emailjs-com";
 import { useEffect, useRef, useState } from "react";
 import { MiniLoader } from "../misc/loader";
 import ContentTable from "../misc/content-table/content-table";
+import CheckBox from "../misc/checkbox/checkbox";
 
 export default function ContentItem({
   record,
@@ -654,6 +655,7 @@ export default function ContentItem({
         </div>
         <span>
           <div className="icons-container">
+            {isSelect ? <CheckBox /> : ""}
             <ActionButton
               isShown={showEmailRequest}
               isLoading={false}
@@ -764,7 +766,6 @@ export default function ContentItem({
             />
           </div>
         </span>
-        {isSelect ? "select" : ""}
       </div>
       {showOthers && showTable ? (
         <ContentTable

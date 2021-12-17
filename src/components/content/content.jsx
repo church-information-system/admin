@@ -99,6 +99,7 @@ export default function Content({ selected }) {
           selected={selected}
           requestRefresh={refreshList}
           isArchive={isArchive}
+          isSelect={isSelect}
         >
           <div className="content-message">
             {toDateTime(record.dateDocumentAdded.seconds).getFullYear()}
