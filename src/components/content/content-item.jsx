@@ -705,7 +705,7 @@ export default function ContentItem({
               <input
                 type="email"
                 name="admin_email"
-                defaultValue={"josejeromelalunio2@gmail.com"}
+                defaultValue={"fdoreennicole@gmail.com"}
               />
               <input type="text" name="donor" defaultValue={record.firstName} />
             </form>
