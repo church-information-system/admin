@@ -1,4 +1,6 @@
 import add from "../../assets/add.svg";
+import archive from "../../assets/archive.svg";
+
 import Swal from "sweetalert2";
 import { addRecord } from "../../api/FirebaseHelper";
 import { MiniLoader } from "../misc/loader";
@@ -14,6 +16,7 @@ export default function ActionBar({
   toggleArchive,
   toggleSelectMode,
   isArchive,
+  isSelect,
 }) {
   const [addingRecord, setAddingRecord] = useState(false);
 
@@ -370,42 +373,80 @@ export default function ActionBar({
       ) : (
         ""
       )}
-      {selected !== "donation" && selected !== "requests" ? (
-        <span
-          className="action-button add-record"
-          title="Add"
-          onClick={() => {
-            switch (selected) {
-              case "marriage":
-                marriageDialog();
-                break;
-              case "death":
-                deathDialog();
-                break;
-              case "donation":
-                donationDialog();
-                break;
-              case "events":
-                eventDialog();
-                break;
-              case "schedule":
-                scheduleDialog();
-                break;
-              default:
-                marriageDialog();
-            }
-          }}
-        >
-          {addingRecord ? (
-            <MiniLoader />
-          ) : (
-            <img src={add} alt="add" className="icon" />
-          )}
-          <h4>Add </h4>
-        </span>
-      ) : (
-        <span></span>
-      )}
+      <div className="action-button-container">
+        {showArchive && isSelect ? (
+          <span
+            className="action-button add-record"
+            title="Archive selected"
+            onClick={() => {
+              switch (selected) {
+                case "marriage":
+                  marriageDialog();
+                  break;
+                case "death":
+                  deathDialog();
+                  break;
+                case "donation":
+                  donationDialog();
+                  break;
+                case "events":
+                  eventDialog();
+                  break;
+                case "schedule":
+                  scheduleDialog();
+                  break;
+                default:
+                  marriageDialog();
+              }
+            }}
+          >
+            {addingRecord ? (
+              <MiniLoader />
+            ) : (
+              <img src={archive} alt="add" className="icon" />
+            )}
+            <h4>Archive selected </h4>
+          </span>
+        ) : (
+          <span></span>
+        )}
+        {selected !== "donation" && selected !== "requests" ? (
+          <span
+            className="action-button add-record"
+            title="Add"
+            onClick={() => {
+              switch (selected) {
+                case "marriage":
+                  marriageDialog();
+                  break;
+                case "death":
+                  deathDialog();
+                  break;
+                case "donation":
+                  donationDialog();
+                  break;
+                case "events":
+                  eventDialog();
+                  break;
+                case "schedule":
+                  scheduleDialog();
+                  break;
+                default:
+                  marriageDialog();
+              }
+            }}
+          >
+            {addingRecord ? (
+              <MiniLoader />
+            ) : (
+              <img src={add} alt="add" className="icon" />
+            )}
+            <h4>Add </h4>
+          </span>
+        ) : (
+          <span></span>
+        )}
+      </div>
     </div>
   ) : (
     ""

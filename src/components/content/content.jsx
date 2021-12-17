@@ -128,6 +128,7 @@ export default function Content({ selected }) {
         toggleArchive={toggleArchive}
         toggleSelectMode={toggleSelectMode}
         isArchive={isArchive}
+        isSelect={isSelect}
       />
       {fetchingCollection ? (
         <Loader />

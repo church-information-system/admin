@@ -70,23 +70,29 @@
       }
     }
 
-    .action-button {
-      justify-content: center;
-      padding: 0 16px;
+    .action-button-container {
       display: flex;
-      align-items: center;
-      color: white;
+      justify-content: center;
 
-      @include mobile {
-        margin: 10px;
-        padding: 4px;
-        height: 40px;
+      .action-button {
+        margin-left: 8px;
+        justify-content: center;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        color: white;
+
+        @include mobile {
+          margin: 10px;
+          padding: 4px;
+          height: 40px;
+        }
+
+        @extend .button-primary;
+        @extend .clickable;
+        @extend .rounded-border;
+        @extend .box-shadow;
       }
-
-      @extend .button-primary;
-      @extend .clickable;
-      @extend .rounded-border;
-      @extend .box-shadow;
     }
   }
 
