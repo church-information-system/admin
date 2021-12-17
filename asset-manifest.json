@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/admin/static/css/main.eb1e400e.chunk.css",
-    "main.js": "/admin/static/js/main.7de5d853.chunk.js",
-    "main.js.map": "/admin/static/js/main.7de5d853.chunk.js.map",
-    "runtime-main.js": "/admin/static/js/runtime-main.8a2eec79.js",
-    "runtime-main.js.map": "/admin/static/js/runtime-main.8a2eec79.js.map",
+    "main.css": "/admin/static/css/main.c18e145f.chunk.css",
+    "main.js": "/admin/static/js/main.932ee0d5.chunk.js",
+    "main.js.map": "/admin/static/js/main.932ee0d5.chunk.js.map",
+    "runtime-main.js": "/admin/static/js/runtime-main.37486698.js",
+    "runtime-main.js.map": "/admin/static/js/runtime-main.37486698.js.map",
     "static/js/2.5dbc9f81.chunk.js": "/admin/static/js/2.5dbc9f81.chunk.js",
     "static/js/2.5dbc9f81.chunk.js.map": "/admin/static/js/2.5dbc9f81.chunk.js.map",
-    "static/js/3.03b2d553.chunk.js": "/admin/static/js/3.03b2d553.chunk.js",
-    "static/js/3.03b2d553.chunk.js.map": "/admin/static/js/3.03b2d553.chunk.js.map",
+    "static/js/3.2edad86c.chunk.js": "/admin/static/js/3.2edad86c.chunk.js",
+    "static/js/3.2edad86c.chunk.js.map": "/admin/static/js/3.2edad86c.chunk.js.map",
     "index.html": "/admin/index.html",
-    "static/css/main.eb1e400e.chunk.css.map": "/admin/static/css/main.eb1e400e.chunk.css.map",
+    "static/css/main.c18e145f.chunk.css.map": "/admin/static/css/main.c18e145f.chunk.css.map",
     "static/js/2.5dbc9f81.chunk.js.LICENSE.txt": "/admin/static/js/2.5dbc9f81.chunk.js.LICENSE.txt",
     "static/media/add.c687829d.svg": "/admin/static/media/add.c687829d.svg",
     "static/media/archive.899a083e.svg": "/admin/static/media/archive.899a083e.svg",
@@ -22,6 +22,7 @@
     "static/media/edit.640a02d0.svg": "/admin/static/media/edit.640a02d0.svg",
     "static/media/email.f2182462.svg": "/admin/static/media/email.f2182462.svg",
     "static/media/hamburger.2a7fc546.svg": "/admin/static/media/hamburger.2a7fc546.svg",
+    "static/media/loading.c7d9f081.gif": "/admin/static/media/loading.c7d9f081.gif",
     "static/media/logout.cadd8c56.svg": "/admin/static/media/logout.cadd8c56.svg",
     "static/media/marriage.2e506062.svg": "/admin/static/media/marriage.2e506062.svg",
     "static/media/password.0fbccfa5.svg": "/admin/static/media/password.0fbccfa5.svg",
@@ -32,9 +33,9 @@
     "static/media/upload.2a69f0ee.svg": "/admin/static/media/upload.2a69f0ee.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.8a2eec79.js",
+    "static/js/runtime-main.37486698.js",
     "static/js/2.5dbc9f81.chunk.js",
-    "static/css/main.eb1e400e.chunk.css",
-    "static/js/main.7de5d853.chunk.js"
+    "static/css/main.c18e145f.chunk.css",
+    "static/js/main.932ee0d5.chunk.js"
   ]
 }
