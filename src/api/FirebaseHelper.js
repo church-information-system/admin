@@ -110,29 +110,33 @@ export async function archiveMultipleRecords(
   isArchive,
   onFinished
 ) {
-  Swal.fire({
-    title: `${
-      isArchive ? "Un-Archiving" : "Archiving"
-    } multiple records Please wait`,
-    html: `<img src="${loading}"/>`,
-    allowOutsideClick: false,
-    showConfirmButton: false,
-  });
-  records.forEach(async (record, index) => {
-    await archiveRecord(
-      currentCollectionName,
-      targetCollectionName,
-      record.id,
-      record
-    );
-    if (index === records.length - 1) {
-      customAlert(
-        `Done ${isArchive ? "Un-Archiving" : "Archiving"}`,
-        "success"
+  if (records.length > 0) {
+    Swal.fire({
+      title: `${
+        isArchive ? "Un-Archiving" : "Archiving"
+      } multiple records Please wait`,
+      html: `<img src="${loading}"/>`,
+      allowOutsideClick: false,
+      showConfirmButton: false,
+    });
+    records.forEach(async (record, index) => {
+      await archiveRecord(
+        currentCollectionName,
+        targetCollectionName,
+        record.id,
+        record
       );
-      onFinished();
-    }
-  });
+      if (index === records.length - 1) {
+        customAlert(
+          `Done ${isArchive ? "Un-Archiving" : "Archiving"}`,
+          "success"
+        );
+        onFinished();
+      }
+    });
+  } else {
+    customAlert("Nothing selected", "info");
+  }
 }
 
 export async function archiveRecord(
