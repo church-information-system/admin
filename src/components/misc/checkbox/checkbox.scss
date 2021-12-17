@@ -1,0 +1,16 @@
+@import "../../../styles/variables";
+@import "../../../styles/presets";
+
+.checkbox-container {
+  display: flex;
+  font-size: 120%;
+  color: $primary;
+  @extend .default-margin;
+
+  .checkbox {
+    display: block;
+    transform: scale(2);
+
+    @extend .default-padding;
+  }
+}
