@@ -3,9 +3,13 @@ import "./content.scss";
 import ContentItem from "./content-item";
 import ActionBar from "./action-bar";
 import { useEffect, useState } from "react";
-import { fetchCollection, recordCounter } from "../../api/FirebaseHelper";
+import {
+  archiveMultipleRecords,
+  fetchCollection,
+  recordCounter,
+} from "../../api/FirebaseHelper";
 import { Loader } from "../misc/loader";
-import { toDateTime } from "../../helpers";
+import { showArchive, toDateTime } from "../../helpers";
 import CountContent from "./count-content";
 
 export default function Content({ selected }) {
@@ -30,6 +34,16 @@ export default function Content({ selected }) {
     );
   }
 
+  function archiveSelected() {
+    archiveMultipleRecords(
+      isArchive ? `${selected}_archive` : selected,
+      isArchive ? selected : `${selected}_archive`,
+      selectedRecords,
+      isArchive,
+      () => refreshList()
+    );
+  }
+
   let yearLastAdded = "";
 
   const toggleArchive = (value) => setIsArchive(() => value);
@@ -44,6 +58,9 @@ export default function Content({ selected }) {
       setFetchingCollection(() => true);
       if (selected === "donation" || selected === "events") {
         setIsArchive(() => false);
+      }
+      if (!showArchive(selected)) {
+        setIsSelect(() => false);
       }
       setRecords(
         await fetchCollection(selected + (isArchive ? "_archive" : ""))
@@ -107,7 +124,7 @@ export default function Content({ selected }) {
     return (
       <ContentItem
         record={record}
-        key={record.id}
+        key={record.id + isArchive}
         selected={selected}
         requestRefresh={refreshList}
         isArchive={isArchive}
@@ -129,6 +146,7 @@ export default function Content({ selected }) {
         toggleSelectMode={toggleSelectMode}
         isArchive={isArchive}
         isSelect={isSelect}
+        archiveSelected={archiveSelected}
       />
       {fetchingCollection ? (
         <Loader />
@@ -150,10 +168,11 @@ export default function Content({ selected }) {
           let dateAdded = toDateTime(
             record.props.record.dateDocumentAdded.seconds
           ).getFullYear();
+          let id = record.props.record.id;
           if (yearLastAdded !== dateAdded) {
             yearLastAdded = dateAdded;
             return (
-              <div key={dateAdded}>
+              <div key={id + isArchive.toString()}>
                 <h3 className="content-message">
                   Records From year {yearLastAdded}
                 </h3>
@@ -161,7 +180,14 @@ export default function Content({ selected }) {
               </div>
             );
           } else {
-            return <div className="content-container">{record}</div>;
+            return (
+              <div
+                key={id + isArchive.toString()}
+                className="content-container"
+              >
+                {record}
+              </div>
+            );
           }
         })
       ) : (

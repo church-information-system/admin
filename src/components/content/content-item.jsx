@@ -52,7 +52,7 @@ export default function ContentItem({
   let dontShow = ["id", "dateDocumentAdded", "seen", "referrence", "verified"];
 
   let showEdit = !["requests", "donation", ""].includes(selected);
-  let showAchive = !["events", "donation", ""].includes(selected);
+  let showArchive = !["events", "donation", ""].includes(selected);
   let showPrint = !["events", "donation", ""].includes(selected);
   let showUpload = !["schedule", "donation", "requests", ""].includes(selected);
   let showConfirmDonation = selected === "donation";
@@ -762,7 +762,7 @@ export default function ContentItem({
               }}
             />
             <ActionButton
-              isShown={showAchive}
+              isShown={showArchive}
               isLoading={archiving}
               icon={archive}
               title="archive"

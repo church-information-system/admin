@@ -11,7 +11,11 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import Swal from "sweetalert2";
 import { firestore, storage } from "../App";
+import { customAlert } from "../helpers";
+
+import loading from "../assets/loading.gif";
 
 export async function getFile(id, directory, type) {
   try {
@@ -97,6 +101,38 @@ export async function deleteRecord(collectionName, docId) {
     success = false;
   }
   return success;
+}
+
+export async function archiveMultipleRecords(
+  currentCollectionName,
+  targetCollectionName,
+  records,
+  isArchive,
+  onFinished
+) {
+  Swal.fire({
+    title: `${
+      isArchive ? "Un-Archiving" : "Archiving"
+    } multiple records Please wait`,
+    html: `<img src="${loading}"/>`,
+    allowOutsideClick: false,
+    showConfirmButton: false,
+  });
+  records.forEach(async (record, index) => {
+    await archiveRecord(
+      currentCollectionName,
+      targetCollectionName,
+      record.id,
+      record
+    );
+    if (index === records.length - 1) {
+      customAlert(
+        `Done ${isArchive ? "Un-Archiving" : "Archiving"}`,
+        "success"
+      );
+      onFinished();
+    }
+  });
 }
 
 export async function archiveRecord(

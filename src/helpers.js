@@ -156,3 +156,6 @@ export function convertCamelCase(word) {
     return word;
   }
 }
+
+export const showArchive = (selected) =>
+  !["events", "donation", ""].includes(selected);

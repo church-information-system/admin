@@ -17,6 +17,7 @@ export default function ActionBar({
   toggleSelectMode,
   isArchive,
   isSelect,
+  archiveSelected,
 }) {
   const [addingRecord, setAddingRecord] = useState(false);
 
@@ -379,25 +380,7 @@ export default function ActionBar({
             className="action-button add-record"
             title="Archive selected"
             onClick={() => {
-              switch (selected) {
-                case "marriage":
-                  marriageDialog();
-                  break;
-                case "death":
-                  deathDialog();
-                  break;
-                case "donation":
-                  donationDialog();
-                  break;
-                case "events":
-                  eventDialog();
-                  break;
-                case "schedule":
-                  scheduleDialog();
-                  break;
-                default:
-                  marriageDialog();
-              }
+              archiveSelected();
             }}
           >
             {addingRecord ? (
@@ -405,7 +388,7 @@ export default function ActionBar({
             ) : (
               <img src={archive} alt="add" className="icon" />
             )}
-            <h4>Archive</h4>
+            <h4> {isArchive ? "Un-Archive" : "Archive"}</h4>
           </span>
         ) : (
           <span></span>
