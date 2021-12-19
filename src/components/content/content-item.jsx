@@ -22,8 +22,7 @@ import {
   getById,
   inputGetter,
 } from "../../helpers";
-import emailJS from "emailjs-com";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { MiniLoader } from "../misc/loader";
 import ContentTable from "../misc/content-table/content-table";
 import CheckBox from "../misc/checkbox/checkbox";
@@ -73,8 +72,6 @@ export default function ContentItem({
       removeFromSelected(record);
     }
   }
-
-  const form = useRef();
 
   useEffect(() => {
     async function checkCert() {
@@ -621,39 +618,6 @@ export default function ContentItem({
     });
   }
 
-  const sendEmail = () => {
-    emailJS
-      .sendForm(
-        "service_iredyvh",
-        "template_cf0wjy5",
-        form.current,
-        "user_NRZC9vjUaHFQ7n72dO765"
-      )
-      .then(
-        () => {
-          customAlert("Email has been sent", "success");
-          setVerified();
-          setConfirmingDonation(false);
-        },
-        (error) => {
-          customAlert("Something went wrong", "error");
-          setConfirmingDonation(false);
-        }
-      );
-
-    emailJS.sendForm(
-      "service_iredyvh",
-      "template_tpwuinn",
-      form.current,
-      "user_NRZC9vjUaHFQ7n72dO765"
-    );
-  };
-
-  function setVerified() {
-    record.verified = true;
-    editRecord("donation", record.id, record);
-  }
-
   return (
     <div
       className="content-item"
@@ -700,23 +664,38 @@ export default function ContentItem({
                 window.open(file);
               }}
             />
-            <form ref={form} className="no-display">
-              <input type="email" name="user_email" value={record.email} />
-              <input
-                type="email"
-                name="admin_email"
-                defaultValue={"fdoreennicole@gmail.com"}
-              />
-              <input type="text" name="donor" defaultValue={record.firstName} />
-            </form>
+            <ActionButton
+              isShown={showConfirmDonation && record.verified !== true}
+              isLoading={false}
+              icon={email}
+              title="send email"
+              onClick={async () => {
+                window.open(
+                  `mailto:${record.email}?subject=Donation Confirmation&body=Your Donation of amount ${record.amount} has been confirmed, thank you for your support`
+                );
+              }}
+            />
             <ActionButton
               isShown={showConfirmDonation && record.verified !== true}
               isLoading={confirmingDonation}
               icon={confirm}
               title="confirm"
-              onClick={async () => {
-                setConfirmingDonation(() => true);
-                sendEmail();
+              onClick={() => {
+                Swal.fire({
+                  icon: "question",
+                  title: "Do you want to mark this donation as verified?",
+                  showCancelButton: true,
+                  confirmButtonColor: "red",
+                }).then(async (value) => {
+                  if (value.isConfirmed) {
+                    setConfirmingDonation(() => true);
+                    record.verified = true;
+                    if (await editRecord("donation", record.id, record)) {
+                      customAlert("Donation verified!", "success");
+                    }
+                    setConfirmingDonation(() => false);
+                  }
+                });
               }}
             />
             <ActionButton
@@ -739,8 +718,6 @@ export default function ContentItem({
               icon={edit}
               title="edit"
               onClick={(event) => {
-                console.log(event);
-                // e.stopPropagation();
                 switch (selected) {
                   case "marriage":
                     marriageDialog();
