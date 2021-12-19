@@ -50,7 +50,7 @@ export default function ContentItem({
 
   let dontShow = ["id", "dateDocumentAdded", "seen", "referrence", "verified"];
 
-  let showEdit = !["requests", "donation", ""].includes(selected);
+  let showEdit = !["requests", ""].includes(selected);
   let showArchive = !["events", "donation", ""].includes(selected);
   let showPrint = !["events", "donation", ""].includes(selected);
   let showUpload = !["schedule", "donation", "requests", ""].includes(selected);
@@ -384,61 +384,59 @@ export default function ContentItem({
     Swal.fire({
       title: "Edit Details",
       html:
-        '<span class="swal2-input-label">Fullname</span>' +
-        '<input id="fullname" class="swal2-input">' +
-        '<span class="swal2-input-label">Address</span>' +
-        '<input id="address" class="swal2-input">' +
-        '<span class="swal2-input-label">Phone</span>' +
-        '<input id="phone" class="swal2-input" type="tel" pattern="[+]{1}[0-9]{11,14}">' +
+        '<span class="swal2-input-label">First Name</span>' +
+        '<input id="firstName" class="swal2-input">' +
+        '<span class="swal2-input-label">Last Name</span>' +
+        '<input id="lastName" class="swal2-input">' +
+        '<span class="swal2-input-label">Amount</span>' +
+        '<input id="amount" class="swal2-input">' +
+        '<span class="swal2-input-label">Verified</span>' +
+        '<input id="verified" class="swal2-input" type="checkbox">' +
         '<div id="empty" class="error-text"> </div>' +
-        '<div id="nothingChanged" class="error-text"> </div>' +
-        '<div id="invalidPhone" class="error-text"> </div>',
+        '<div id="nothingChanged" class="error-text"> </div>',
       didOpen: () => {
-        getById("fullname").value = record.name;
-        getById("address").value = record.address;
-        getById("phone").value = record.phone;
+        getById("firstName").value = record.firstName;
+        getById("lastName").value = record.lastName;
+        getById("amount").value = record.amount;
+        getById("verified").checked = record.verified;
       },
       preConfirm: () => {
-        getById("phone").value = getById("phone").value.replace(/[^0-9]/g, "");
-
-        let fullname = inputGetter("fullname");
-        let address = inputGetter("address");
-        let phone = inputGetter("phone");
-
-        let phoneValid = phone.length === 11;
-        if (!phoneValid)
-          getById("invalidPhone").innerHTML =
-            "Please make sure that the phone number you entered is a valid phone number, Sample: 09xxxxxxxxx";
-        else getById("invalidPhone").innerHTML = " ";
+        let firstName = inputGetter("firstName");
+        let lastName = inputGetter("lastName");
+        let amount = inputGetter("amount");
+        let verified = getById("verified").checked;
 
         let noempty =
-          fullname.length > 0 && address.length > 0 && phone.length > 0;
+          firstName.length > 0 && lastName.length > 0 && amount.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
 
         let nothingChanged =
-          fullname === record.name &&
-          address === record.address &&
-          phone === record.phone;
+          firstName === record.firstName &&
+          lastName === record.lastName &&
+          amount === record.amount &&
+          verified === record.verified;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
         else getById("nothingChanged").innerHTML = " ";
 
-        return noempty && !nothingChanged && phoneValid;
+        return noempty && !nothingChanged;
       },
       showCancelButton: true,
     }).then((value) => {
       if (value.isConfirmed) {
-        let fullname = inputGetter("fullname");
-        let address = inputGetter("address");
-        let phone = inputGetter("phone");
+        let firstName = inputGetter("firstName");
+        let lastName = inputGetter("lastName");
+        let amount = inputGetter("amount");
+        let verified = getById("verified").checked;
 
         submit({
-          name: fullname,
-          address: address,
-          phone: phone,
+          firstName: firstName,
+          lastName: lastName,
+          amount: amount,
+          verified: verified,
         });
       }
     });
