@@ -9,6 +9,7 @@ import post from "../../assets/post.svg";
 import records from "../../assets/records.svg";
 import requests from "../../assets/request.svg";
 import church from "../../assets/church.svg";
+import backup from "../../assets/backup.svg";
 import Swal from "sweetalert2";
 import { customAlert, getById, getCookie, inputGetter } from "../../helpers";
 import { changePassword } from "../../api/FirebaseHelper";
@@ -186,6 +187,19 @@ export default function SideBar({ selected, select, hideSidebar }) {
       </span>
       <span onClick={() => logoutDialog()}>
         <SidebarItem label="Logout" imagesrc={logout} />
+      </span>
+      <span
+        onClick={() => {
+          select("backup");
+          _hideSidebar();
+        }}
+        className="sidebar-item-container"
+      >
+        <SidebarItem
+          label="Backup & Restore"
+          imagesrc={backup}
+          isSelected={selected === "backup"}
+        />
       </span>
     </div>
   );

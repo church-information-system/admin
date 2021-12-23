@@ -1,5 +1,8 @@
 import "./content.scss";
+import loading from "../../assets/loading.gif";
 
+import backup from "../../assets/backup.svg";
+import upload from "../../assets/upload.svg";
 import ContentItem from "./content-item";
 import ActionBar from "./action-bar";
 import { useEffect, useState } from "react";
@@ -11,6 +14,7 @@ import {
 import { Loader } from "../misc/loader";
 import { showArchive, toDateTime } from "../../helpers";
 import CountContent from "./count-content";
+import Swal from "sweetalert2";
 
 export default function Content({ selected }) {
   const [records, setRecords] = useState([]);
@@ -145,73 +149,109 @@ export default function Content({ selected }) {
 
   return (
     <div id="content">
-      <ActionBar
-        search={search}
-        requestRefresh={refreshList}
-        show={selected !== ""}
-        selected={selected}
-        toggleArchive={toggleArchive}
-        toggleSelectMode={toggleSelectMode}
-        isArchive={isArchive}
-        isSelect={isSelect}
-        archiveSelected={archiveSelected}
-      />
-      {fetchingCollection ? (
-        <Loader />
-      ) : selected === "" ? (
-        <div className="count-container">
-          {recordCounts.map((recordCount) => {
-            recordCount.id = recordCount.name;
-            return (
-              <CountContent
-                key={recordCount.name}
-                name={recordCount.name}
-                count={recordCount.countOfRecords}
-              />
-            );
-          })}
+      {selected === "backup" ? (
+        // another DRY violation but I couldn't care less
+        <div className="backup-card">
+          <div
+            className="backup-button"
+            onClick={() => {
+              Swal.fire({
+                title: "Backing up your data don't refresh or leave the page",
+                html: `<img src="${loading}"/>`,
+                allowOutsideClick: false,
+                showConfirmButton: false,
+              });
+            }}
+          >
+            <span className="backup-label">backup data</span>
+            <img className="backup-icon icon" src={backup} alt="backup" />
+          </div>
+          <div
+            className="backup-button"
+            onClick={() => {
+              Swal.fire({
+                title: "Restoring your data don't refresh or leave the page",
+                html: `<img src="${loading}"/>`,
+                allowOutsideClick: false,
+                showConfirmButton: false,
+              });
+            }}
+          >
+            <span className="backup-label">restore data</span>
+            <img className="backup-icon icon" src={upload} alt="backup" />
+          </div>
         </div>
-      ) : isArchive ? (
-        getMatches().map((record) => {
-          let dateAdded =
-            record.props.record.dateDocumentAdded.seconds !== undefined
-              ? toDateTime(
-                  record.props.record.dateDocumentAdded.seconds
-                ).getFullYear()
-              : toDateTime(
-                  record.props.record.dateDocumentAdded._seconds
-                ).getFullYear();
-
-          if (record.props.record.dateDocumentAdded.seconds !== undefined)
-            console.log("never archived");
-          let id = record.props.record.id;
-          if (yearLastAdded !== dateAdded) {
-            yearLastAdded = dateAdded;
-            return (
-              <div key={id + isArchive.toString()}>
-                <h3 className="content-message">
-                  Records From year {yearLastAdded}
-                </h3>
-                <div className="content-container">{record}</div>
-              </div>
-            );
-          } else {
-            return (
-              <div
-                key={id + isArchive.toString()}
-                className="content-container"
-              >
-                {record}
-              </div>
-            );
-          }
-        })
       ) : (
-        <div className="content-container">
-          {getMatches()[0] ? (
-            getMatches()
+        <div>
+          <ActionBar
+            search={search}
+            requestRefresh={refreshList}
+            show={selected !== ""}
+            selected={selected}
+            toggleArchive={toggleArchive}
+            toggleSelectMode={toggleSelectMode}
+            isArchive={isArchive}
+            isSelect={isSelect}
+            archiveSelected={archiveSelected}
+          />
+          {fetchingCollection ? (
+            <Loader />
+          ) : selected === "" ? (
+            <div className="count-container">
+              {recordCounts.map((recordCount) => {
+                recordCount.id = recordCount.name;
+                return (
+                  <CountContent
+                    key={recordCount.name}
+                    name={recordCount.name}
+                    count={recordCount.countOfRecords}
+                  />
+                );
+              })}
+            </div>
+          ) : isArchive ? (
+            getMatches().map((record) => {
+              let dateAdded =
+                record.props.record.dateDocumentAdded.seconds !== undefined
+                  ? toDateTime(
+                      record.props.record.dateDocumentAdded.seconds
+                    ).getFullYear()
+                  : toDateTime(
+                      record.props.record.dateDocumentAdded._seconds
+                    ).getFullYear();
+
+              if (record.props.record.dateDocumentAdded.seconds !== undefined)
+                console.log("never archived");
+              let id = record.props.record.id;
+              if (yearLastAdded !== dateAdded) {
+                yearLastAdded = dateAdded;
+                return (
+                  <div key={id + isArchive.toString()}>
+                    <h3 className="content-message">
+                      Records From year {yearLastAdded}
+                    </h3>
+                    <div className="content-container">{record}</div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    key={id + isArchive.toString()}
+                    className="content-container"
+                  >
+                    {record}
+                  </div>
+                );
+              }
+            })
           ) : (
-            <h3 className="content-message">No Records found</h3>
+            <div className="content-container">
+              {getMatches()[0] ? (
+                getMatches()
+              ) : (
+                <h3 className="content-message">No Records found</h3>
+              )}
+            </div>
           )}
         </div>
       )}

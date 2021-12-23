@@ -20,6 +20,39 @@
     right: 0;
   }
 
+  .backup-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    text-align: center;
+    text-transform: capitalize;
+    justify-content: center;
+
+    @extend .subtle-hover-grow;
+    @extend .bg-white;
+    @extend .box-shadow;
+    @extend .default-margin;
+    @extend .default-padding;
+    @extend .rounded-border;
+
+    .backup-button {
+      //this violates DRY but I couldn't care less
+      display: flex;
+      align-items: center;
+      background-color: $primary;
+      color: white;
+
+      @extend .rounded-border;
+      @extend .clickable;
+      @extend .default-margin;
+      @extend .default-padding;
+      @extend .subtle-hover-grow;
+      @extend .box-shadow;
+      @extend .rounded-border;
+      @extend .no-select;
+    }
+  }
+
   .action-bar {
     z-index: 1;
     position: relative;
@@ -71,23 +104,7 @@
     }
 
     .action-button {
-      margin-left: 8px;
-      justify-content: center;
-      padding: 0 16px;
-      display: flex;
-      align-items: center;
-      color: white;
-
-      @include mobile {
-        margin: 10px;
-        padding: 4px;
-        height: 40px;
-      }
-
-      @extend .button-primary;
-      @extend .clickable;
-      @extend .rounded-border;
-      @extend .box-shadow;
+      @extend .action-button;
     }
 
     .action-button-container {
@@ -208,16 +225,7 @@
           }
 
           .icon-container {
-            margin: 8px;
-            background-color: $primary;
-
-            @include mobile {
-              margin: 4px;
-            }
-
-            @extend .rounded-border;
-            @extend .clickable;
-            @extend .box-shadow;
+            @extend .icon-container;
           }
         }
       }

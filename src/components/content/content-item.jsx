@@ -780,7 +780,7 @@ export default function ContentItem({
   );
 }
 
-function ActionButton({ isShown, isLoading, icon, onClick, title }) {
+export function ActionButton({ isShown, isLoading, icon, onClick, title }) {
   return isShown ? (
     <div className="icon-container">
       {isLoading ? (

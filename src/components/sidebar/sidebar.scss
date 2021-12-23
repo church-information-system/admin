@@ -8,6 +8,8 @@
   background-color: $primary;
   color: white;
 
+  overflow: auto;
+
   @include desktop {
     max-width: 16vw;
     min-width: 16vw;
