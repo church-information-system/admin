@@ -8,6 +8,7 @@ import ActionBar from "./action-bar";
 import { useEffect, useState } from "react";
 import {
   archiveMultipleRecords,
+  backupOrRestore,
   fetchCollection,
   recordCounter,
 } from "../../api/FirebaseHelper";
@@ -161,6 +162,7 @@ export default function Content({ selected }) {
                 allowOutsideClick: false,
                 showConfirmButton: false,
               });
+              backupOrRestore(true);
             }}
           >
             <span className="backup-label">backup data</span>
@@ -175,6 +177,7 @@ export default function Content({ selected }) {
                 allowOutsideClick: false,
                 showConfirmButton: false,
               });
+              backupOrRestore(false);
             }}
           >
             <span className="backup-label">restore data</span>

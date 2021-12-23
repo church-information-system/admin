@@ -184,3 +184,32 @@ export async function changePassword(id, oldPassword, newPassword) {
     return { success: false, message: "Old password didn't match" };
   }
 }
+
+// not related to firebase but at this point I'm too tilted to even care
+
+export function backupOrRestore(isBackup) {
+  fetch(`http://localhost:8080/${isBackup ? "backupAll" : "restoreAll"}`, {
+    credentials: "same-origin",
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        customAlert(
+          `Data ${isBackup ? "Backed up" : "Restored"} successfully`,
+          "success"
+        );
+      } else {
+        customAlert(
+          `Failed to ${
+            isBackup ? "Back up" : "Restore"
+          } Data , check your internet connection and make sure you are running the data backup server in port 8080`,
+          "error"
+        );
+      }
+    });
+}
