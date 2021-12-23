@@ -100,8 +100,16 @@ export default function Content({ selected }) {
     let arr = [];
     records.sort(
       (a, b) =>
-        toDateTime(a.dateDocumentAdded.seconds) <
-        toDateTime(b.dateDocumentAdded.seconds)
+        toDateTime(
+          a.dateDocumentAdded.seconds !== undefined
+            ? a.dateDocumentAdded.seconds
+            : a.dateDocumentAdded._seconds
+        ) <
+        toDateTime(
+          b.dateDocumentAdded.seconds !== undefined
+            ? b.dateDocumentAdded.seconds
+            : b.dateDocumentAdded._seconds
+        )
     );
     if (searchString !== "") {
       records.forEach((record) => {
@@ -165,9 +173,17 @@ export default function Content({ selected }) {
         </div>
       ) : isArchive ? (
         getMatches().map((record) => {
-          let dateAdded = toDateTime(
-            record.props.record.dateDocumentAdded.seconds
-          ).getFullYear();
+          let dateAdded =
+            record.props.record.dateDocumentAdded.seconds !== undefined
+              ? toDateTime(
+                  record.props.record.dateDocumentAdded.seconds
+                ).getFullYear()
+              : toDateTime(
+                  record.props.record.dateDocumentAdded._seconds
+                ).getFullYear();
+
+          if (record.props.record.dateDocumentAdded.seconds !== undefined)
+            console.log("never archived");
           let id = record.props.record.id;
           if (yearLastAdded !== dateAdded) {
             yearLastAdded = dateAdded;
