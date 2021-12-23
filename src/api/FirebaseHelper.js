@@ -211,5 +211,13 @@ export function backupOrRestore(isBackup) {
           "error"
         );
       }
+    })
+    .catch(() => {
+      customAlert(
+        `Failed to ${
+          isBackup ? "Back up" : "Restore"
+        } Data , check your internet connection and make sure you are running the data backup server in port 8080`,
+        "error"
+      );
     });
 }
