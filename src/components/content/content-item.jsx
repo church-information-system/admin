@@ -642,7 +642,7 @@ export default function ContentItem({
               title="email"
               onClick={async (e) => {
                 window.open(
-                  `mailto:${record.emailAddress}?subject=${record.requestedDocument} request&body=`
+                  `mailto:${record.emailAddress}?subject=${record.requestedDocument} request&body=Your request has been confirmed`
                 );
               }}
             />
