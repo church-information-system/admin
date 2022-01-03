@@ -119,7 +119,11 @@ export default function Content({ selected }) {
     if (searchString !== "") {
       records.forEach((record) => {
         if (
-          (record.name || record.wifeName || record.husbandName || record.title)
+          (
+            record.name ||
+            record.wifeName + " " + record.husbandName ||
+            record.title
+          )
             .trim()
             .toLowerCase()
             .includes(searchString.trim().toLowerCase())

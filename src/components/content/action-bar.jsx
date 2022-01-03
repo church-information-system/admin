@@ -348,7 +348,14 @@ export default function ActionBar({
     <div className="action-bar">
       {selected !== "events" ? (
         <span className="search-bar">
-          <input type="text" className="search-field" id="search-field" />
+          <input
+            type="text"
+            className="search-field"
+            id="search-field"
+            onChange={() =>
+              search(document.getElementById("search-field").value)
+            }
+          />
           <div
             className="action-button"
             title="Search"
