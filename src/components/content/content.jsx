@@ -103,19 +103,21 @@ export default function Content({ selected }) {
 
   function getMatches() {
     let arr = [];
-    records.sort(
-      (a, b) =>
-        toDateTime(
-          a.dateDocumentAdded.seconds !== undefined
-            ? a.dateDocumentAdded.seconds
-            : a.dateDocumentAdded._seconds
-        ) <
+    records.sort((a, b) => {
+      console.log(a.dateDocumentAdded.seconds ?? a.dateDocumentAdded._seconds);
+      return (
         toDateTime(
           b.dateDocumentAdded.seconds !== undefined
             ? b.dateDocumentAdded.seconds
             : b.dateDocumentAdded._seconds
+        ) -
+        toDateTime(
+          a.dateDocumentAdded.seconds !== undefined
+            ? a.dateDocumentAdded.seconds
+            : a.dateDocumentAdded._seconds
         )
-    );
+      );
+    });
     if (searchString !== "") {
       records.forEach((record) => {
         if (
