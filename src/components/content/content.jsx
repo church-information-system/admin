@@ -104,7 +104,6 @@ export default function Content({ selected }) {
   function getMatches() {
     let arr = [];
     records.sort((a, b) => {
-      console.log(a.dateDocumentAdded.seconds ?? a.dateDocumentAdded._seconds);
       return (
         toDateTime(
           b.dateDocumentAdded.seconds !== undefined
@@ -229,8 +228,6 @@ export default function Content({ selected }) {
                       record.props.record.dateDocumentAdded._seconds
                     ).getFullYear();
 
-              if (record.props.record.dateDocumentAdded.seconds !== undefined)
-                console.log("never archived");
               let id = record.props.record.id;
               if (yearLastAdded !== dateAdded) {
                 yearLastAdded = dateAdded;
