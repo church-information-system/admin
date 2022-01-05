@@ -61,7 +61,11 @@ export default function ContentItem({
 
   const showProperty = (key) => {
     if (!showTable) return !dontShow.includes(key);
-    else return key.toLowerCase().includes("name");
+    else
+      return (
+        key.toLowerCase().includes("name") ||
+        key.toLowerCase().includes("gcashnumber")
+      );
   };
 
   function check(value) {
