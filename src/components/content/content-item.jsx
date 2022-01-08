@@ -389,9 +389,7 @@ export default function ContentItem({
       title: "Edit Details",
       html:
         '<span class="swal2-input-label">First Name</span>' +
-        '<input id="firstName" class="swal2-input">' +
-        '<span class="swal2-input-label">Last Name</span>' +
-        '<input id="lastName" class="swal2-input">' +
+        '<input id="fullName" class="swal2-input">' +
         '<span class="swal2-input-label">Amount</span>' +
         '<input id="amount" class="swal2-input">' +
         '<span class="swal2-input-label">Verified</span>' +
@@ -399,26 +397,22 @@ export default function ContentItem({
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>',
       didOpen: () => {
-        getById("firstName").value = record.firstName;
-        getById("lastName").value = record.lastName;
+        getById("fullName").value = record.fullName;
         getById("amount").value = record.amount;
         getById("verified").checked = record.verified;
       },
       preConfirm: () => {
-        let firstName = inputGetter("firstName");
-        let lastName = inputGetter("lastName");
+        let fullName = inputGetter("fullName");
         let amount = inputGetter("amount");
         let verified = getById("verified").checked;
 
-        let noempty =
-          firstName.length > 0 && lastName.length > 0 && amount.length > 0;
+        let noempty = fullName.length > 0 && amount.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
 
         let nothingChanged =
-          firstName === record.firstName &&
-          lastName === record.lastName &&
+          fullName === record.fullName &&
           amount === record.amount &&
           verified === record.verified;
 
@@ -431,14 +425,12 @@ export default function ContentItem({
       showCancelButton: true,
     }).then((value) => {
       if (value.isConfirmed) {
-        let firstName = inputGetter("firstName");
-        let lastName = inputGetter("lastName");
+        let fullName = inputGetter("fullName");
         let amount = inputGetter("amount");
         let verified = getById("verified").checked;
 
         submit({
-          firstName: firstName,
-          lastName: lastName,
+          fullName: fullName,
           amount: amount,
           verified: verified,
         });
