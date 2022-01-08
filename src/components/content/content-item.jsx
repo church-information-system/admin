@@ -222,6 +222,11 @@ export default function ContentItem({
           /[^0-9]/g,
           ""
         );
+        // TO ADD
+        // birthPlace, address, father, mother, priest, presenceOf, residence,
+        // churchRecord{bookNo, pageNo, line}
+        // licenseNo
+        // dateIssued
 
         let husbandName = inputGetter("husbandName");
         let husbandAge = inputGetter("husbandAge");
@@ -334,6 +339,10 @@ export default function ContentItem({
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
+
+        // TO ADD
+        // address, father, mother, spouse, cemetery, dateOfBurial, causeOfDeath, receivedSacrament
+        // churchRecord{bookNo, pageNo, line, date}
 
         let ageValid = newAge.length > 0 && newAge > 0;
         if (!ageValid)
