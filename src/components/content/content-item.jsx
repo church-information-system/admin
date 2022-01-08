@@ -399,31 +399,25 @@ export default function ContentItem({
       html:
         '<span class="swal2-input-label">First Name</span>' +
         '<input id="fullName" class="swal2-input">' +
-        '<span class="swal2-input-label">Amount</span>' +
-        '<input id="amount" class="swal2-input">' +
         '<span class="swal2-input-label">Verified</span>' +
         '<input id="verified" class="swal2-input" type="checkbox">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>',
       didOpen: () => {
         getById("fullName").value = record.fullName;
-        getById("amount").value = record.amount;
         getById("verified").checked = record.verified;
       },
       preConfirm: () => {
         let fullName = inputGetter("fullName");
-        let amount = inputGetter("amount");
         let verified = getById("verified").checked;
 
-        let noempty = fullName.length > 0 && amount.length > 0;
+        let noempty = fullName.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
 
         let nothingChanged =
-          fullName === record.fullName &&
-          amount === record.amount &&
-          verified === record.verified;
+          fullName === record.fullName && verified === record.verified;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
@@ -435,12 +429,10 @@ export default function ContentItem({
     }).then((value) => {
       if (value.isConfirmed) {
         let fullName = inputGetter("fullName");
-        let amount = inputGetter("amount");
         let verified = getById("verified").checked;
 
         submit({
           fullName: fullName,
-          amount: amount,
           verified: verified,
         });
       }
@@ -674,7 +666,7 @@ export default function ContentItem({
               title="send email"
               onClick={async () => {
                 window.open(
-                  `mailto:${record.email}?subject=Donation Confirmation&body=Your Donation of amount ${record.amount} has been confirmed, thank you for your support`
+                  `mailto:${record.email}?subject=Donation Confirmation&body=Your Donation has been confirmed, thank you for your support`
                 );
               }}
             />
