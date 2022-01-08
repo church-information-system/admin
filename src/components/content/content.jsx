@@ -120,11 +120,18 @@ export default function Content({ selected }) {
     if (searchString !== "") {
       records.forEach((record) => {
         if (
-          (
-            record.name ||
-            record.wifeName + " " + record.husbandName ||
-            record.title
-          )
+          JSON.stringify(record)
+            // record.name +
+            // (record.wifeName !== null
+            //   ? record.wifeName + " " + record.husbandName
+            //   : "") +
+            // (record.title !== null ? record.title : "") +
+            // (record.nameOfDeceased !== null ? record.nameOfDeceased : "") +
+            // (record.fullName !== null ? record.fullName : "") +
+            // (record.gcashNumber !== null ? record.gcashNumber : "") +
+            // (record.firstName !== null
+            //   ? record.firstName + record.lastName
+            //   : "")
             .trim()
             .toLowerCase()
             .includes(searchString.trim().toLowerCase())
