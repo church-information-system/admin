@@ -24,6 +24,7 @@ import {
   formatTime,
   getById,
   inputGetter,
+  toDateTime,
 } from "../../helpers";
 import { useEffect, useState } from "react";
 import { MiniLoader } from "../misc/loader";
@@ -116,14 +117,19 @@ export default function ContentItem({
       if (error) {
         throw error;
       }
+      //TODO: setup the variables in the template
       const zip = new PizZip(content);
       const doc = new Docxtemplater(zip, {
         paragraphLoop: true,
         linebreaks: true,
       });
+      let dayOfDeath = new Date(record.dayOfDeath);
+
       doc.render({
         name: record.name,
-        dayOfDeath: record.dayOfDeath,
+        dd: dayOfDeath.getDay(),
+        dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
+        dy: dayOfDeath.getFullYear(),
         dayOfBirth: record.dayOfBirth,
         dateOfMass: record.dateOfMass,
         age: record.age,
@@ -134,7 +140,7 @@ export default function ContentItem({
         cemetery: record.cemetery,
         dateOfBurial: record.dateOfBurial,
         causeOfDeath: record.causeOfDeath,
-        receivedSacrament: record.receivedSacrament,
+        receivedSacrament: record.receivedSacrament ? "was" : "was not",
         bookNo: record.bookNo,
         pageNo: record.pageNo,
         lineNo: record.lineNo,
@@ -364,7 +370,7 @@ export default function ContentItem({
         '<span class="swal2-input-label">Age</span>' +
         '<input id="age" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Address</span>' +
-        '<input id="address" class="swal2-input" type="number" min="1">' +
+        '<input id="address" class="swal2-input">' +
         '<span class="swal2-input-label">Father\'s name</span>' +
         '<input id="father" class="swal2-input">' +
         '<span class="swal2-input-label">Mother\'s name</span>' +
@@ -453,7 +459,6 @@ export default function ContentItem({
           cemetery.length > 0 &&
           dateOfBurial.length > 0 &&
           causeOfDeath.length > 0 &&
-          receivedSacrament.length > 0 &&
           bookNo.length > 0 &&
           pageNo.length > 0 &&
           lineNo.length > 0 &&
