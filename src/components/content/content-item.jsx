@@ -743,20 +743,11 @@ export default function ContentItem({
               }}
             />
             <ActionButton
-              isShown={showPrint && hasCert}
+              isShown={true}
               isLoading={false}
               title={print}
               icon={print}
-              onClick={async () => {
-                let file = await getFile(
-                  record.referrence !== undefined
-                    ? record.referrence
-                    : record.id,
-                  selected,
-                  "pdf"
-                );
-                window.open(file);
-              }}
+              onClick={async () => {}}
             />
             <ActionButton
               isShown={showConfirmDonation && record.verified !== true}
@@ -792,7 +783,7 @@ export default function ContentItem({
                 });
               }}
             />
-            <ActionButton
+            {/* <ActionButton
               isShown={showUpload}
               isLoading={uploading}
               icon={upload}
@@ -804,7 +795,7 @@ export default function ContentItem({
                   uploadDialog();
                 }
               }}
-            />
+            /> */}
 
             <ActionButton
               isShown={showEdit}
