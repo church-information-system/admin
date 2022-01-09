@@ -143,16 +143,40 @@ export default function ActionBar({
       html:
         '<span class="swal2-input-label">Fullname</span>' +
         '<input id="fullname" class="swal2-input">' +
-        '<span class="swal2-input-label">Day Of Death</span>' +
+        '<span class="swal2-input-label" type="date">Day Of Death</span>' +
         '<input id="dayOfDeath" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Day Of Birth</span>' +
         '<input id="dayOfBirth" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Date Of Mass</span>' +
         '<input id="dateOfMass" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Date Of Burial</span>' +
+        '<input id="dateOfBurial" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Age</span>' +
         '<input id="age" class="swal2-input" type="number" min="1">' +
+        '<span class="swal2-input-label">Address</span>' +
+        '<input id="address" class="swal2-input" type="number" min="1">' +
+        '<span class="swal2-input-label">Father\'s name</span>' +
+        '<input id="father" class="swal2-input">' +
+        '<span class="swal2-input-label">Mother\'s name</span>' +
+        '<input id="mother" class="swal2-input">' +
+        '<span class="swal2-input-label">Spouse\' Name</span>' +
+        '<input id="spouse" class="swal2-input">' +
+        '<span class="swal2-input-label">Cemetery</span>' +
+        '<input id="cemetery" class="swal2-input">' +
+        '<span class="swal2-input-label">Cause Of Death</span>' +
+        '<input id="causeOfDeath" class="swal2-input">' +
+        '<span class="swal2-input-label">Has Received Sacrament</span>' +
+        '<input id="receivedSacrament" class="swal2-input" type="checkbox">' +
+        "<h3>Church Record</h3>" +
+        '<span class="swal2-input-label">Book No</span>' +
+        '<input id="bookNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Page No</span>' +
+        '<input id="pageNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Line No</span>' +
+        '<input id="lineNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Date Recorded</span>' +
+        '<input id="dateRecorded" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
-        '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
       preConfirm: () => {
         getById("age").value = getById("age").value.replace(/[^0-9]/g, "");
@@ -162,6 +186,19 @@ export default function ActionBar({
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
+
+        let address = inputGetter("address");
+        let father = inputGetter("father");
+        let mother = inputGetter("mother");
+        let spouse = inputGetter("spouse");
+        let cemetery = inputGetter("cemetery");
+        let dateOfBurial = inputGetter("dateOfBurial");
+        let causeOfDeath = inputGetter("causeOfDeath");
+        let receivedSacrament = getById("receivedSacrament").checked;
+        let bookNo = inputGetter("bookNo");
+        let pageNo = inputGetter("pageNo");
+        let lineNo = inputGetter("lineNo");
+        let dateRecorded = inputGetter("dateRecorded");
 
         let ageValid = newAge.length > 0 && newAge > 0;
         if (!ageValid)
@@ -174,7 +211,19 @@ export default function ActionBar({
           newDayOfBirth.length > 0 &&
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
-          newAge.length > 0;
+          newAge.length > 0 &&
+          address.length > 0 &&
+          father.length > 0 &&
+          mother.length > 0 &&
+          spouse.length > 0 &&
+          cemetery.length > 0 &&
+          dateOfBurial.length > 0 &&
+          causeOfDeath.length > 0 &&
+          receivedSacrament.length > 0 &&
+          bookNo.length > 0 &&
+          pageNo.length > 0 &&
+          lineNo.length > 0 &&
+          dateRecorded.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
@@ -190,12 +239,37 @@ export default function ActionBar({
         let newDateOfMass = inputGetter("dateOfMass");
         let newAge = inputGetter("age");
 
+        let address = inputGetter("address");
+        let father = inputGetter("father");
+        let mother = inputGetter("mother");
+        let spouse = inputGetter("spouse");
+        let cemetery = inputGetter("cemetery");
+        let dateOfBurial = inputGetter("dateOfBurial");
+        let causeOfDeath = inputGetter("causeOfDeath");
+        let receivedSacrament = inputGetter("receivedSacrament");
+        let bookNo = inputGetter("bookNo");
+        let pageNo = inputGetter("pageNo");
+        let lineNo = inputGetter("lineNo");
+        let dateRecorded = inputGetter("dateRecorded");
+
         submit({
           name: newName,
           dayOfDeath: newDayOfDeath,
           dayOfBirth: newDayOfBirth,
           dateOfMass: newDateOfMass,
           age: newAge,
+          address: address,
+          father: father,
+          mother: mother,
+          spouse: spouse,
+          cemetery: cemetery,
+          dateOfBurial: dateOfBurial,
+          causeOfDeath: causeOfDeath,
+          receivedSacrament: receivedSacrament,
+          bookNo: bookNo,
+          pageNo: pageNo,
+          lineNo: lineNo,
+          dateRecorded: dateRecorded,
         });
       }
     });
