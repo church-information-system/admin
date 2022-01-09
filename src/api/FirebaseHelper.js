@@ -25,6 +25,14 @@ export async function getFile(id, directory, type) {
   }
 }
 
+export async function deathCertificate() {
+  try {
+    return await getDownloadURL(ref(storage, `hello_world.docx`));
+  } catch (e) {
+    return null;
+  }
+}
+
 export async function uploadFile(id, file, directory, type) {
   return await uploadBytes(ref(storage, `${directory}/${id}.${type}`), file);
 }

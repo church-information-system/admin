@@ -6,8 +6,11 @@ import archive from "../../assets/archive.svg";
 import upload from "../../assets/upload.svg";
 import confirm from "../../assets/confirm.svg";
 import email from "../../assets/email.svg";
+
+import deathCert from "../../documents/death_cert.docx";
 import {
   archiveRecord,
+  deathCertificate,
   editRecord,
   getFile,
   hasCertificate,
@@ -26,6 +29,14 @@ import { useEffect, useState } from "react";
 import { MiniLoader } from "../misc/loader";
 import ContentTable from "../misc/content-table/content-table";
 import CheckBox from "../misc/checkbox/checkbox";
+import Docxtemplater from "docxtemplater";
+import PizZip from "pizzip";
+import PizZipUtils from "pizzip/utils/index.js";
+import { saveAs } from "file-saver";
+
+function loadFile(url, callback) {
+  PizZipUtils.getBinaryContent(url, callback);
+}
 
 export default function ContentItem({
   record,
@@ -78,15 +89,6 @@ export default function ContentItem({
   }
 
   useEffect(() => {
-    async function checkCert() {
-      let res = await hasCertificate(
-        record.referrence !== undefined ? record.referrence : record.id,
-        selected
-      );
-      setHasCert(() => res);
-    }
-    checkCert();
-
     function markSeen() {
       record["seen"] = true;
       editRecord(selected, record.id, record);
@@ -108,6 +110,44 @@ export default function ContentItem({
       getImage();
     }
   }, [record.id, isArchive, selected, record]);
+
+  const generateDocument = async () => {
+    loadFile(deathCert, function (error, content) {
+      if (error) {
+        throw error;
+      }
+      const zip = new PizZip(content);
+      const doc = new Docxtemplater(zip, {
+        paragraphLoop: true,
+        linebreaks: true,
+      });
+      doc.render({
+        name: record.name,
+        dayOfDeath: record.dayOfDeath,
+        dayOfBirth: record.dayOfBirth,
+        dateOfMass: record.dateOfMass,
+        age: record.age,
+        address: record.address,
+        father: record.father,
+        mother: record.mother,
+        spouse: record.spouse,
+        cemetery: record.cemetery,
+        dateOfBurial: record.dateOfBurial,
+        causeOfDeath: record.causeOfDeath,
+        receivedSacrament: record.receivedSacrament,
+        bookNo: record.bookNo,
+        pageNo: record.pageNo,
+        lineNo: record.lineNo,
+        dateRecorded: record.dateRecorded,
+      });
+      const out = doc.getZip().generate({
+        type: "blob",
+        mimeType:
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      });
+      saveAs(out, `${record.name}.docx`);
+    });
+  };
 
   async function submit(values, override = false) {
     setUpdating(() => true);
@@ -747,7 +787,9 @@ export default function ContentItem({
               isLoading={false}
               title={print}
               icon={print}
-              onClick={async () => {}}
+              onClick={async () => {
+                generateDocument();
+              }}
             />
             <ActionButton
               isShown={showConfirmDonation && record.verified !== true}
