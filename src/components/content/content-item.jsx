@@ -229,6 +229,12 @@ export default function ContentItem({
         '<input id="wifeReligion" class="swal2-input">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
         '<input id="wifePlaceOfBirth" class="swal2-input">' +
+        '<span class="swal2-input-label">Wife\'s Residence</span>' +
+        '<input id="wifeResidence" class="swal2-input">' +
+        '<span class="swal2-input-label">Wife\'s Father</span>' +
+        '<input id="wifeFather" class="swal2-input">' +
+        '<span class="swal2-input-label">Wife\'s Mother</span>' +
+        '<input id="wifeMother" class="swal2-input">' +
         "<br></br>" +
         "<h3>Enter Husband details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
@@ -241,8 +247,30 @@ export default function ContentItem({
         '<input id="husbandReligion" class="swal2-input">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
         '<input id="husbandPlaceOfBirth" class="swal2-input">' +
-        "<h3>Date Of Marriage</h3>" +
+        '<span class="swal2-input-label">Husband\'s Residence</span>' +
+        '<input id="husbandResidence" class="swal2-input">' +
+        '<span class="swal2-input-label">Husband\'s Father</span>' +
+        '<input id="husbandFather" class="swal2-input">' +
+        '<span class="swal2-input-label">Husband\'s Mother</span>' +
+        '<input id="husbandMother" class="swal2-input">' +
+        "<h3>Marriage Details</h3>" +
+        '<span class="swal2-input-label">Date Of marriage</span>' +
         '<input id="marriageDate" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Priest </span>' +
+        '<input id="priest" class="swal2-input">' +
+        '<span class="swal2-input-label">Witness </span>' +
+        '<input id="witness" class="swal2-input">' +
+        '<span class="swal2-input-label">Residence </span>' +
+        '<input id="residence" class="swal2-input">' +
+        "<h3>Church Record</h3>" +
+        '<span class="swal2-input-label">Book No</span>' +
+        '<input id="bookNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Page No</span>' +
+        '<input id="pageNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Line No</span>' +
+        '<input id="lineNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Date Recorded</span>' +
+        '<input id="dateRecorded" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
@@ -258,6 +286,19 @@ export default function ContentItem({
         getById("wifePlaceOfBirth").value = record.wifePlaceOfBirth;
         getById("wifeReligion").value = record.wifeReligion;
         getById("marriageDate").value = record.marriageDate;
+        getById("husbandResidence").value = record.husbandResidence;
+        getById("husbandFather").value = record.husbandFather;
+        getById("husbandMother").value = record.husbandMother;
+        getById("wifeResidence").value = record.wifeResidence;
+        getById("wifeFather").value = record.wifeFather;
+        getById("wifeMother").value = record.wifeMother;
+        getById("priest").value = record.priest;
+        getById("witness").value = record.witness;
+        getById("residence").value = record.residence;
+        getById("bookNo").value = record.bookNo;
+        getById("pageNo").value = record.pageNo;
+        getById("lineNo").value = record.lineNo;
+        getById("dateRecorded").value = record.dateRecorded;
       },
       preConfirm: () => {
         getById("husbandAge").value = getById("husbandAge").value.replace(
@@ -279,20 +320,50 @@ export default function ContentItem({
         let husbandBirthday = inputGetter("husbandBirthday");
         let husbandPlaceOfBirth = inputGetter("husbandPlaceOfBirth");
         let husbandReligion = inputGetter("husbandReligion");
+        let husbandResidence = inputGetter("husbandResidence");
+        let husbandFather = inputGetter("husbandFather");
+        let husbandMother = inputGetter("husbandMother");
 
         let wifeName = inputGetter("wifeName");
         let wifeAge = inputGetter("wifeAge");
         let wifeBirthday = inputGetter("wifeBirthday");
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
+        let wifeResidence = inputGetter("wifeResidence");
+        let wifeFather = inputGetter("wifeFather");
+        let wifeMother = inputGetter("wifeMother");
 
         let marriageDate = inputGetter("marriageDate");
+
+        let priest = inputGetter("priest");
+        let witness = inputGetter("witness");
+        let residence = inputGetter("residence");
+
+        let bookNo = inputGetter("bookNo");
+        let pageNo = inputGetter("pageNo");
+        let lineNo = inputGetter("lineNo");
+        let dateRecorded = inputGetter("dateRecorded");
+
+        // let husbandResidence = inputGetter("husbandResidence");
+        // let husbandFather = inputGetter("husbandFather");
+        // let husbandMother = inputGetter("husbandMother");
+        // let wifeResidence = inputGetter("wifeResidence");
+        // let wifeFather = inputGetter("wifeFather");
+        // let wifeMother = inputGetter("wifeMother");
+        // let priest = inputGetter("priest");
+        // let witness = inputGetter("witness");
+        // let residence = inputGetter("residence");
+        // let bookNo = inputGetter("bookNo");
+        // let pageNo = inputGetter("pageNo");
+        // let lineNo = inputGetter("lineNo");
+        // let dateRecorded = inputGetter("dateRecorded");
 
         let ageValid =
           husbandAge.length > 0 &&
           wifeAge.length > 0 &&
           husbandAge > 0 &&
           wifeAge > 0;
+
         if (!ageValid)
           getById("invalidAge").innerHTML =
             "Please make sure that the age you entered is a valid number";
@@ -309,7 +380,20 @@ export default function ContentItem({
           wifeBirthday.length > 0 &&
           wifePlaceOfBirth.length > 0 &&
           wifeReligion.length > 0 &&
-          marriageDate.length > 0;
+          marriageDate.length > 0 &&
+          husbandResidence.length > 0 &&
+          husbandFather.length > 0 &&
+          husbandMother.length > 0 &&
+          wifeResidence.length > 0 &&
+          wifeFather.length > 0 &&
+          wifeMother.length > 0 &&
+          priest.length > 0 &&
+          witness.length > 0 &&
+          residence.length > 0 &&
+          bookNo.length > 0 &&
+          pageNo.length > 0 &&
+          lineNo.length > 0 &&
+          dateRecorded.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
@@ -325,7 +409,20 @@ export default function ContentItem({
           wifeBirthday === record.wifeBirthday &&
           wifePlaceOfBirth === record.wifePlaceOfBirth &&
           wifeReligion === record.wifeReligion &&
-          marriageDate === record.marriageDate;
+          marriageDate === record.marriageDate &&
+          husbandResidence === record.husbandResidence &&
+          husbandFather === record.husbandFather &&
+          husbandMother === record.husbandMother &&
+          wifeResidence === record.wifeResidence &&
+          wifeFather === record.wifeFather &&
+          wifeMother === record.wifeMother &&
+          priest === record.priest &&
+          witness === record.witness &&
+          residence === record.residence &&
+          bookNo === record.bookNo &&
+          pageNo === record.pageNo &&
+          lineNo === record.lineNo &&
+          dateRecorded === record.dateRecorded;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
@@ -348,6 +445,19 @@ export default function ContentItem({
           wifePlaceOfBirth: inputGetter("wifePlaceOfBirth"),
           wifeReligion: inputGetter("wifeReligion"),
           marriageDate: inputGetter("marriageDate"),
+          husbandResidence: inputGetter("husbandResidence"),
+          husbandFather: inputGetter("husbandFather"),
+          husbandMother: inputGetter("husbandMother"),
+          wifeResidence: inputGetter("wifeResidence"),
+          wifeFather: inputGetter("wifeFather"),
+          wifeMother: inputGetter("wifeMother"),
+          priest: inputGetter("priest"),
+          witness: inputGetter("witness"),
+          residence: inputGetter("residence"),
+          bookNo: inputGetter("bookNo"),
+          pageNo: inputGetter("pageNo"),
+          lineNo: inputGetter("lineNo"),
+          dateRecorded: inputGetter("dateRecorded"),
         });
       }
     });
