@@ -49,6 +49,12 @@ export default function ActionBar({
         '<input id="wifeReligion" class="swal2-input">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
         '<input id="wifePlaceOfBirth" class="swal2-input">' +
+        '<span class="swal2-input-label">Residence</span>' +
+        '<input id="wifeResidence" class="swal2-input">' +
+        '<span class="swal2-input-label">Father</span>' +
+        '<input id="wifeFather" class="swal2-input">' +
+        '<span class="swal2-input-label">Mother</span>' +
+        '<input id="wifeMother" class="swal2-input">' +
         "<br></br>" +
         "<h3>Enter Husband details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
@@ -61,8 +67,30 @@ export default function ActionBar({
         '<input id="husbandReligion" class="swal2-input">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
         '<input id="husbandPlaceOfBirth" class="swal2-input">' +
-        "<h3>Date Of Marriage</h3>" +
+        '<span class="swal2-input-label">Residence</span>' +
+        '<input id="husbandResidence" class="swal2-input">' +
+        '<span class="swal2-input-label">Father</span>' +
+        '<input id="husbandFather" class="swal2-input">' +
+        '<span class="swal2-input-label">Mother</span>' +
+        '<input id="husbandMother" class="swal2-input">' +
+        "<h3>Marriage Details</h3>" +
+        '<span class="swal2-input-label">Date Of marriage</span>' +
         '<input id="marriageDate" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Priest </span>' +
+        '<input id="priest" class="swal2-input">' +
+        '<span class="swal2-input-label">Witness </span>' +
+        '<input id="witness" class="swal2-input">' +
+        '<span class="swal2-input-label">Residence </span>' +
+        '<input id="residence" class="swal2-input">' +
+        "<h3>Church Record</h3>" +
+        '<span class="swal2-input-label">Book No</span>' +
+        '<input id="bookNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Page No</span>' +
+        '<input id="pageNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Line No</span>' +
+        '<input id="lineNo" class="swal2-input" type="number">' +
+        '<span class="swal2-input-label">Date Recorded</span>' +
+        '<input id="dateRecorded" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
       showCancelButton: true,
@@ -81,14 +109,29 @@ export default function ActionBar({
         let husbandBirthday = inputGetter("husbandBirthday");
         let husbandPlaceOfBirth = inputGetter("husbandPlaceOfBirth");
         let husbandReligion = inputGetter("husbandReligion");
+        let husbandResidence = inputGetter("husbandResidence");
+        let husbandFather = inputGetter("husbandFather");
+        let husbandMother = inputGetter("husbandMother");
 
         let wifeName = inputGetter("wifeName");
         let wifeAge = inputGetter("wifeAge");
         let wifeBirthday = inputGetter("wifeBirthday");
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
+        let wifeResidence = inputGetter("wifeResidence");
+        let wifeFather = inputGetter("wifeFather");
+        let wifeMother = inputGetter("wifeMother");
 
         let marriageDate = inputGetter("marriageDate");
+
+        let priest = inputGetter("priest");
+        let witness = inputGetter("witness");
+        let residence = inputGetter("residence");
+
+        let bookNo = inputGetter("bookNo");
+        let pageNo = inputGetter("pageNo");
+        let lineNo = inputGetter("lineNo");
+        let dateRecorded = inputGetter("dateRecorded");
 
         let ageValid =
           husbandAge.length > 0 &&
@@ -111,7 +154,20 @@ export default function ActionBar({
           wifeBirthday.length > 0 &&
           wifePlaceOfBirth.length > 0 &&
           wifeReligion.length > 0 &&
-          marriageDate.length > 0;
+          marriageDate.length > 0 &&
+          husbandResidence.length > 0 &&
+          husbandFather.length > 0 &&
+          husbandMother.length > 0 &&
+          wifeResidence.length > 0 &&
+          wifeFather.length > 0 &&
+          wifeMother.length > 0 &&
+          priest.length > 0 &&
+          witness.length > 0 &&
+          residence.length > 0 &&
+          bookNo.length > 0 &&
+          pageNo.length > 0 &&
+          lineNo.length > 0 &&
+          dateRecorded.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
@@ -132,6 +188,19 @@ export default function ActionBar({
           wifePlaceOfBirth: inputGetter("wifePlaceOfBirth"),
           wifeReligion: inputGetter("wifeReligion"),
           marriageDate: inputGetter("marriageDate"),
+          husbandResidence: inputGetter("husbandResidence"),
+          husbandFather: inputGetter("husbandFather"),
+          husbandMother: inputGetter("husbandMother"),
+          wifeResidence: inputGetter("wifeResidence"),
+          wifeFather: inputGetter("wifeFather"),
+          wifeMother: inputGetter("wifeMother"),
+          priest: inputGetter("priest"),
+          witness: inputGetter("witness"),
+          residence: inputGetter("residence"),
+          bookNo: inputGetter("bookNo"),
+          pageNo: inputGetter("pageNo"),
+          lineNo: inputGetter("lineNo"),
+          dateRecorded: inputGetter("dateRecorded"),
         });
       }
     });

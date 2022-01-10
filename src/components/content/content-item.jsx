@@ -238,11 +238,11 @@ export default function ContentItem({
         '<input id="wifeReligion" class="swal2-input">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
         '<input id="wifePlaceOfBirth" class="swal2-input">' +
-        '<span class="swal2-input-label">Wife\'s Residence</span>' +
+        '<span class="swal2-input-label">Residence</span>' +
         '<input id="wifeResidence" class="swal2-input">' +
-        '<span class="swal2-input-label">Wife\'s Father</span>' +
+        '<span class="swal2-input-label">Father</span>' +
         '<input id="wifeFather" class="swal2-input">' +
-        '<span class="swal2-input-label">Wife\'s Mother</span>' +
+        '<span class="swal2-input-label">Mother</span>' +
         '<input id="wifeMother" class="swal2-input">' +
         "<br></br>" +
         "<h3>Enter Husband details:</h4>" +
@@ -256,11 +256,11 @@ export default function ContentItem({
         '<input id="husbandReligion" class="swal2-input">' +
         '<span class="swal2-input-label">Place of Birth</span>' +
         '<input id="husbandPlaceOfBirth" class="swal2-input">' +
-        '<span class="swal2-input-label">Husband\'s Residence</span>' +
+        '<span class="swal2-input-label">Residence</span>' +
         '<input id="husbandResidence" class="swal2-input">' +
-        '<span class="swal2-input-label">Husband\'s Father</span>' +
+        '<span class="swal2-input-label">Father</span>' +
         '<input id="husbandFather" class="swal2-input">' +
-        '<span class="swal2-input-label">Husband\'s Mother</span>' +
+        '<span class="swal2-input-label">Mother</span>' +
         '<input id="husbandMother" class="swal2-input">' +
         "<h3>Marriage Details</h3>" +
         '<span class="swal2-input-label">Date Of marriage</span>' +
