@@ -82,10 +82,36 @@ export function attributeSorter(selected, obj) {
         "husbandReligion",
         "husbandPlaceOfBirth",
         "marriageDate",
+        "priest",
+        "witness",
+        "residence",
+        "licenseNo",
+        "bookNo",
+        "pageNo",
+        "lineNo",
+        "dateIssued",
       ];
       break;
     case "death":
-      sortingArray = ["name", "dayOfBirth", "dayOfDeath", "dateOfMass", "age"];
+      sortingArray = [
+        "name",
+        "dayOfBirth",
+        "dayOfDeath",
+        "dateOfMass",
+        "age",
+        "address",
+        "father",
+        "mother",
+        "spouse",
+        "cemetery",
+        "cemeteryAddress",
+        "receivedSacrament",
+        "address",
+        "bookNo",
+        "pageNo",
+        "lineNo",
+        "dateRecorded",
+      ];
       break;
     case "requests":
       sortingArray = [
