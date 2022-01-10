@@ -63,7 +63,7 @@ export default function ContentItem({
   let showEdit = !["requests", ""].includes(selected);
   let showArchive = !["events", "donation", ""].includes(selected);
   let showPrint = !["events", "donation", ""].includes(selected);
-  let showUpload = !["schedule", "donation", "requests", ""].includes(selected);
+  let showUpload = ["events"].includes(selected);
   let showConfirmDonation = selected === "donation";
   let showEmailRequest = selected === "requests";
 
