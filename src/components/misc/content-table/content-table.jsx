@@ -22,7 +22,7 @@ function Table({ columns, data }) {
       <tbody>
         <tr>
           {columns.map((key, index) => (
-            <td key={data[key] + index}>{data[key]}</td>
+            <td key={data[key] + index}>{data[key].toString()}</td>
           ))}
         </tr>
       </tbody>

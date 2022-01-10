@@ -123,7 +123,12 @@ export default function ContentItem({
         paragraphLoop: true,
         linebreaks: true,
       });
+
       let dayOfDeath = new Date(record.dayOfDeath);
+      let dateOfBurial = new Date(record.dateOfBurial);
+
+      console.log(record.cemetery);
+      console.log(record.cemeteryAddress);
 
       doc.render({
         name: record.name,
@@ -138,9 +143,13 @@ export default function ContentItem({
         mother: record.mother,
         spouse: record.spouse,
         cemetery: record.cemetery,
+        cemeteryAddress: record.cemeteryAddress,
         dateOfBurial: record.dateOfBurial,
+        bd: dateOfBurial.getDay(),
+        bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
+        by: dateOfBurial.getFullYear(),
         causeOfDeath: record.causeOfDeath,
-        receivedSacrament: record.receivedSacrament ? "was" : "was not",
+        received: record.receivedSacrament ? "was" : "was not",
         bookNo: record.bookNo,
         pageNo: record.pageNo,
         lineNo: record.lineNo,
@@ -208,8 +217,8 @@ export default function ContentItem({
 
     return (
       <div className="key-value-pair" key={key}>
-        <span className="key">{key}:</span>
-        <span className="value">{value}</span>
+        <span className="key">{key.toString()}:</span>
+        <span className="value">{value.toString()}</span>
       </div>
     );
   }
@@ -314,6 +323,8 @@ export default function ContentItem({
         // churchRecord{bookNo, pageNo, line}
         // licenseNo
         // dateIssued
+
+        //TODO: add more fields in the actionbar as well
 
         let husbandName = inputGetter("husbandName");
         let husbandAge = inputGetter("husbandAge");
@@ -489,6 +500,8 @@ export default function ContentItem({
         '<input id="spouse" class="swal2-input">' +
         '<span class="swal2-input-label">Cemetery</span>' +
         '<input id="cemetery" class="swal2-input">' +
+        '<span class="swal2-input-label">Cemetery Address</span>' +
+        '<input id="cemeteryAddress" class="swal2-input">' +
         '<span class="swal2-input-label">Cause Of Death</span>' +
         '<input id="causeOfDeath" class="swal2-input">' +
         '<span class="swal2-input-label">Has Received Sacrament</span>' +
@@ -516,6 +529,7 @@ export default function ContentItem({
         getById("mother").value = record.mother;
         getById("spouse").value = record.spouse;
         getById("cemetery").value = record.cemetery;
+        getById("cemeteryAddress").value = record.cemeteryAddress;
         getById("dateOfBurial").value = record.dateOfBurial;
         getById("causeOfDeath").value = record.causeOfDeath;
         getById("receivedSacrament").checked = record.receivedSacrament;
@@ -538,6 +552,7 @@ export default function ContentItem({
         let mother = inputGetter("mother");
         let spouse = inputGetter("spouse");
         let cemetery = inputGetter("cemetery");
+        let cemeteryAddress = inputGetter("cemeteryAddress");
         let dateOfBurial = inputGetter("dateOfBurial");
         let causeOfDeath = inputGetter("causeOfDeath");
         let receivedSacrament = getById("receivedSacrament").checked;
@@ -567,6 +582,7 @@ export default function ContentItem({
           mother.length > 0 &&
           spouse.length > 0 &&
           cemetery.length > 0 &&
+          cemeteryAddress.length > 0 &&
           dateOfBurial.length > 0 &&
           causeOfDeath.length > 0 &&
           bookNo.length > 0 &&
@@ -588,6 +604,7 @@ export default function ContentItem({
           mother === record.mother &&
           spouse === record.spouse &&
           cemetery === record.cemetery &&
+          cemeteryAddress === record.cemeteryAddress &&
           dateOfBurial === record.dateOfBurial &&
           causeOfDeath === record.causeOfDeath &&
           receivedSacrament === record.receivedSacrament &&
@@ -616,9 +633,10 @@ export default function ContentItem({
         let mother = inputGetter("mother");
         let spouse = inputGetter("spouse");
         let cemetery = inputGetter("cemetery");
+        let cemeteryAddress = inputGetter("cemeteryAddress");
         let dateOfBurial = inputGetter("dateOfBurial");
         let causeOfDeath = inputGetter("causeOfDeath");
-        let receivedSacrament = inputGetter("receivedSacrament");
+        let receivedSacrament = getById("receivedSacrament").checked;
         let bookNo = inputGetter("bookNo");
         let pageNo = inputGetter("pageNo");
         let lineNo = inputGetter("lineNo");
@@ -635,6 +653,7 @@ export default function ContentItem({
           mother: mother,
           spouse: spouse,
           cemetery: cemetery,
+          cemeteryAddress: cemeteryAddress,
           dateOfBurial: dateOfBurial,
           causeOfDeath: causeOfDeath,
           receivedSacrament: receivedSacrament,
