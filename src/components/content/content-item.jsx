@@ -8,6 +8,8 @@ import confirm from "../../assets/confirm.svg";
 import email from "../../assets/email.svg";
 
 import deathCert from "../../documents/death_cert.docx";
+import marriageCert from "../../documents/marriage_cert.docx";
+
 import {
   archiveRecord,
   editRecord,
@@ -109,55 +111,100 @@ export default function ContentItem({
   }, [record.id, isArchive, selected, record]);
 
   const generateDocument = async () => {
-    loadFile(deathCert, function (error, content) {
-      if (error) {
-        throw error;
+    loadFile(
+      selected === "marriage" ? marriageCert : deathCert,
+      function (error, content) {
+        if (error) {
+          throw error;
+        }
+        const zip = new PizZip(content);
+        const doc = new Docxtemplater(zip, {
+          paragraphLoop: true,
+          linebreaks: true,
+        });
+
+        if (selected === "marriage") {
+          let marriageDate = new Date(record.marriageDate);
+          let dateIssued = new Date(record.dateIssued);
+
+          doc.render({
+            husbandName: record.husbandName,
+            husbandAge: record.husbandAge,
+            husbandBirthday: record.husbandBirthday,
+            husbandPlaceOfBirth: record.husbandPlaceOfBirth,
+            husbandReligion: record.husbandReligion,
+            husbandResidence: record.husbandResidence,
+            husbandFather: record.husbandFather,
+            husbandMother: record.husbandMother,
+            wifeName: record.wifeName,
+            wifeAge: record.wifeAge,
+            wifeBirthday: record.wifeBirthday,
+            wifePlaceOfBirth: record.wifePlaceOfBirth,
+            wifeReligion: record.wifeReligion,
+            wifeResidence: record.wifeResidence,
+            wifeFather: record.wifeFather,
+            wifeMother: record.wifeMother,
+            md: marriageDate.getDay(),
+            mm: marriageDate.toLocaleDateString("default", { month: "long" }),
+            my: marriageDate.getFullYear(),
+            priest: record.priest,
+            witness: record.witness,
+            residence: record.residence,
+            licenseNo: record.licenseNo,
+            bookNo: record.bookNo,
+            pageNo: record.pageNo,
+            lineNo: record.lineNo,
+            dateIssued: record.dateIssued,
+            dIssued: dateIssued.getDay(),
+            mIssued: dateIssued.toLocaleDateString("default", {
+              month: "long",
+            }),
+            yIssued: dateIssued.getFullYear(),
+          });
+          const out = doc.getZip().generate({
+            type: "blob",
+            mimeType:
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          saveAs(out, `${record.husbandName}_${record.wifeName}.docx`);
+        } else {
+          let dayOfDeath = new Date(record.dayOfDeath);
+          let dateOfBurial = new Date(record.dateOfBurial);
+
+          doc.render({
+            name: record.name,
+            dd: dayOfDeath.getDay(),
+            dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
+            dy: dayOfDeath.getFullYear(),
+            dayOfBirth: record.dayOfBirth,
+            dateOfMass: record.dateOfMass,
+            age: record.age,
+            address: record.address,
+            father: record.father,
+            mother: record.mother,
+            spouse: record.spouse,
+            cemetery: record.cemetery,
+            cemeteryAddress: record.cemeteryAddress,
+            dateOfBurial: record.dateOfBurial,
+            bd: dateOfBurial.getDay(),
+            bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
+            by: dateOfBurial.getFullYear(),
+            causeOfDeath: record.causeOfDeath,
+            received: record.receivedSacrament ? "was" : "was not",
+            bookNo: record.bookNo,
+            pageNo: record.pageNo,
+            lineNo: record.lineNo,
+            dateRecorded: record.dateRecorded,
+          });
+          const out = doc.getZip().generate({
+            type: "blob",
+            mimeType:
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          saveAs(out, `${record.name}.docx`);
+        }
       }
-      //TODO: setup the variables in the template
-      const zip = new PizZip(content);
-      const doc = new Docxtemplater(zip, {
-        paragraphLoop: true,
-        linebreaks: true,
-      });
-
-      let dayOfDeath = new Date(record.dayOfDeath);
-      let dateOfBurial = new Date(record.dateOfBurial);
-
-      console.log(record.cemetery);
-      console.log(record.cemeteryAddress);
-
-      doc.render({
-        name: record.name,
-        dd: dayOfDeath.getDay(),
-        dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
-        dy: dayOfDeath.getFullYear(),
-        dayOfBirth: record.dayOfBirth,
-        dateOfMass: record.dateOfMass,
-        age: record.age,
-        address: record.address,
-        father: record.father,
-        mother: record.mother,
-        spouse: record.spouse,
-        cemetery: record.cemetery,
-        cemeteryAddress: record.cemeteryAddress,
-        dateOfBurial: record.dateOfBurial,
-        bd: dateOfBurial.getDay(),
-        bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
-        by: dateOfBurial.getFullYear(),
-        causeOfDeath: record.causeOfDeath,
-        received: record.receivedSacrament ? "was" : "was not",
-        bookNo: record.bookNo,
-        pageNo: record.pageNo,
-        lineNo: record.lineNo,
-        dateRecorded: record.dateRecorded,
-      });
-      const out = doc.getZip().generate({
-        type: "blob",
-        mimeType:
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      });
-      saveAs(out, `${record.name}.docx`);
-    });
+    );
   };
 
   async function submit(values, override = false) {
@@ -268,14 +315,16 @@ export default function ContentItem({
         '<span class="swal2-input-label">Residence </span>' +
         '<input id="residence" class="swal2-input">' +
         "<h3>Church Record</h3>" +
+        '<span class="swal2-input-label">license No</span>' +
+        '<input id="licenseNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Book No</span>' +
         '<input id="bookNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Page No</span>' +
         '<input id="pageNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Line No</span>' +
         '<input id="lineNo" class="swal2-input" type="number">' +
-        '<span class="swal2-input-label">Date Recorded</span>' +
-        '<input id="dateRecorded" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Marriage License Issued Date</span>' +
+        '<input id="dateIssued" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="nothingChanged" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
@@ -300,10 +349,11 @@ export default function ContentItem({
         getById("priest").value = record.priest;
         getById("witness").value = record.witness;
         getById("residence").value = record.residence;
+        getById("licenseNo").value = record.licenseNo;
         getById("bookNo").value = record.bookNo;
         getById("pageNo").value = record.pageNo;
         getById("lineNo").value = record.lineNo;
-        getById("dateRecorded").value = record.dateRecorded;
+        getById("dateIssued").value = record.dateIssued;
       },
       preConfirm: () => {
         getById("husbandAge").value = getById("husbandAge").value.replace(
@@ -346,10 +396,12 @@ export default function ContentItem({
         let witness = inputGetter("witness");
         let residence = inputGetter("residence");
 
+        let licenseNo = inputGetter("licenseNo");
+
         let bookNo = inputGetter("bookNo");
         let pageNo = inputGetter("pageNo");
         let lineNo = inputGetter("lineNo");
-        let dateRecorded = inputGetter("dateRecorded");
+        let dateIssued = inputGetter("dateIssued");
 
         // let husbandResidence = inputGetter("husbandResidence");
         // let husbandFather = inputGetter("husbandFather");
@@ -400,7 +452,8 @@ export default function ContentItem({
           bookNo.length > 0 &&
           pageNo.length > 0 &&
           lineNo.length > 0 &&
-          dateRecorded.length > 0;
+          dateIssued.length > 0 &&
+          licenseNo.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
@@ -429,7 +482,8 @@ export default function ContentItem({
           bookNo === record.bookNo &&
           pageNo === record.pageNo &&
           lineNo === record.lineNo &&
-          dateRecorded === record.dateRecorded;
+          licenseNo === record.licenseNo &&
+          dateIssued === record.dateIssued;
 
         if (nothingChanged)
           getById("nothingChanged").innerHTML = "Change atleast one value";
@@ -461,10 +515,11 @@ export default function ContentItem({
           priest: inputGetter("priest"),
           witness: inputGetter("witness"),
           residence: inputGetter("residence"),
+          licenseNo: inputGetter("licenseNo"),
           bookNo: inputGetter("bookNo"),
           pageNo: inputGetter("pageNo"),
           lineNo: inputGetter("lineNo"),
-          dateRecorded: inputGetter("dateRecorded"),
+          dateIssued: inputGetter("dateIssued"),
         });
       }
     });

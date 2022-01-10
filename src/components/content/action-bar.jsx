@@ -83,14 +83,16 @@ export default function ActionBar({
         '<span class="swal2-input-label">Residence </span>' +
         '<input id="residence" class="swal2-input">' +
         "<h3>Church Record</h3>" +
+        '<span class="swal2-input-label">License No</span>' +
+        '<input id="licenseNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Book No</span>' +
         '<input id="bookNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Page No</span>' +
         '<input id="pageNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Line No</span>' +
         '<input id="lineNo" class="swal2-input" type="number">' +
-        '<span class="swal2-input-label">Date Recorded</span>' +
-        '<input id="dateRecorded" class="swal2-input" type="date">' +
+        '<span class="swal2-input-label">Marriage License Issued Date</span>' +
+        '<input id="dateIssued" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
         '<div id="invalidAge" class="error-text"> </div>',
       showCancelButton: true,
@@ -128,10 +130,12 @@ export default function ActionBar({
         let witness = inputGetter("witness");
         let residence = inputGetter("residence");
 
+        let licenseNo = inputGetter("licenseNo");
+
         let bookNo = inputGetter("bookNo");
         let pageNo = inputGetter("pageNo");
         let lineNo = inputGetter("lineNo");
-        let dateRecorded = inputGetter("dateRecorded");
+        let dateIssued = inputGetter("dateIssued");
 
         let ageValid =
           husbandAge.length > 0 &&
@@ -164,10 +168,11 @@ export default function ActionBar({
           priest.length > 0 &&
           witness.length > 0 &&
           residence.length > 0 &&
+          licenseNo.length > 0 &&
           bookNo.length > 0 &&
           pageNo.length > 0 &&
           lineNo.length > 0 &&
-          dateRecorded.length > 0;
+          dateIssued.length > 0;
 
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
@@ -197,10 +202,11 @@ export default function ActionBar({
           priest: inputGetter("priest"),
           witness: inputGetter("witness"),
           residence: inputGetter("residence"),
+          licenseNo: inputGetter("licenseNo"),
           bookNo: inputGetter("bookNo"),
           pageNo: inputGetter("pageNo"),
           lineNo: inputGetter("lineNo"),
-          dateRecorded: inputGetter("dateRecorded"),
+          dateIssued: inputGetter("dateRecorded"),
         });
       }
     });
