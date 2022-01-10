@@ -263,7 +263,6 @@ export default function ActionBar({
         let cemetery = inputGetter("cemetery");
         let dateOfBurial = inputGetter("dateOfBurial");
         let causeOfDeath = inputGetter("causeOfDeath");
-        let receivedSacrament = getById("receivedSacrament").checked;
         let bookNo = inputGetter("bookNo");
         let pageNo = inputGetter("pageNo");
         let lineNo = inputGetter("lineNo");

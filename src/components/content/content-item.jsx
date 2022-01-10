@@ -10,10 +10,8 @@ import email from "../../assets/email.svg";
 import deathCert from "../../documents/death_cert.docx";
 import {
   archiveRecord,
-  deathCertificate,
   editRecord,
   getFile,
-  hasCertificate,
   uploadFile,
 } from "../../api/FirebaseHelper";
 import {
@@ -24,7 +22,6 @@ import {
   formatTime,
   getById,
   inputGetter,
-  toDateTime,
 } from "../../helpers";
 import { useEffect, useState } from "react";
 import { MiniLoader } from "../misc/loader";
@@ -55,7 +52,6 @@ export default function ContentItem({
 
   const [isChecked, setIsChecked] = useState(false);
 
-  const [hasCert, setHasCert] = useState(false);
   const [image, setImage] = useState("");
 
   const [showOthers, setShowOthers] = useState(false);
@@ -762,28 +758,6 @@ export default function ContentItem({
     });
   }
 
-  function uploadDialog() {
-    Swal.fire({
-      title: "Upload Certificate",
-      input: "file",
-      html: "<span id='invalid' class='error-text'></span>",
-      showCancelButton: true,
-      confirmButtonText: "Upload",
-      showLoaderOnConfirm: true,
-      backdrop: true,
-      allowOutsideClick: () => !Swal.isLoading(),
-      preConfirm: (value) => {
-        let isValid = value !== null && value.type === "application/pdf";
-        if (!isValid) getById("invalid").innerHTML = "choose a pdf file";
-        return isValid ? value : false;
-      },
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        submitFile(result.value, "pdf");
-      }
-    });
-  }
-
   function uploadImage() {
     Swal.fire({
       title: "Upload Image",
@@ -917,7 +891,7 @@ export default function ContentItem({
               }}
             />
             <ActionButton
-              isShown={true}
+              isShown={showPrint}
               isLoading={false}
               title={print}
               icon={print}
@@ -959,7 +933,7 @@ export default function ContentItem({
                 });
               }}
             />
-            {/* <ActionButton
+            <ActionButton
               isShown={showUpload}
               isLoading={uploading}
               icon={upload}
@@ -967,11 +941,9 @@ export default function ContentItem({
               onClick={async () => {
                 if (selected === "events") {
                   uploadImage();
-                } else {
-                  uploadDialog();
                 }
               }}
-            /> */}
+            />
 
             <ActionButton
               isShown={showEdit}
