@@ -206,7 +206,7 @@ export default function ActionBar({
           bookNo: inputGetter("bookNo"),
           pageNo: inputGetter("pageNo"),
           lineNo: inputGetter("lineNo"),
-          dateIssued: inputGetter("dateRecorded"),
+          dateIssued: inputGetter("dateIssued"),
         });
       }
     });
