@@ -6,6 +6,7 @@ import archive from "../../assets/archive.svg";
 import upload from "../../assets/upload.svg";
 import confirm from "../../assets/confirm.svg";
 import email from "../../assets/email.svg";
+import download from "../../assets/download.svg";
 
 import deathCert from "../../documents/death_cert.docx";
 import marriageCert from "../../documents/marriage_cert.docx";
@@ -170,47 +171,49 @@ export default function ContentItem({
           });
           saveAs(out, `${record.husbandName}_${record.wifeName}.docx`);
         } else {
-          testing();
-          // let dayOfDeath = new Date(record.dayOfDeath);
-          // let dateOfBurial = new Date(record.dateOfBurial);
-          // doc.render({
-          //   name: record.name,
-          //   dd: dayOfDeath.getDay(),
-          //   dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
-          //   dy: dayOfDeath.getFullYear(),
-          //   dayOfBirth: record.dayOfBirth,
-          //   dateOfMass: record.dateOfMass,
-          //   age: record.age,
-          //   address: record.address,
-          //   father: record.father,
-          //   mother: record.mother,
-          //   spouse: record.spouse,
-          //   cemetery: record.cemetery,
-          //   cemeteryAddress: record.cemeteryAddress,
-          //   dateOfBurial: record.dateOfBurial,
-          //   bd: dateOfBurial.getDay(),
-          //   bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
-          //   by: dateOfBurial.getFullYear(),
-          //   causeOfDeath: record.causeOfDeath,
-          //   received: record.receivedSacrament ? "was" : "was not",
-          //   bookNo: record.bookNo,
-          //   pageNo: record.pageNo,
-          //   lineNo: record.lineNo,
-          //   dateRecorded: record.dateRecorded,
-          // });
-          // const out = doc.getZip().generate({
-          //   type: "blob",
-          //   mimeType:
-          //     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          // });
-          // saveAs(out, `${record.name}.docx`);
+          let dayOfDeath = new Date(record.dayOfDeath);
+          let dateOfBurial = new Date(record.dateOfBurial);
+          doc.render({
+            name: record.name,
+            dd: dayOfDeath.getDay(),
+            dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
+            dy: dayOfDeath.getFullYear(),
+            dayOfBirth: record.dayOfBirth,
+            dateOfMass: record.dateOfMass,
+            age: record.age,
+            address: record.address,
+            father: record.father,
+            mother: record.mother,
+            spouse: record.spouse,
+            cemetery: record.cemetery,
+            cemeteryAddress: record.cemeteryAddress,
+            dateOfBurial: record.dateOfBurial,
+            bd: dateOfBurial.getDay(),
+            bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
+            by: dateOfBurial.getFullYear(),
+            causeOfDeath: record.causeOfDeath,
+            received: record.receivedSacrament ? "was" : "was not",
+            bookNo: record.bookNo,
+            pageNo: record.pageNo,
+            lineNo: record.lineNo,
+            dateRecorded: record.dateRecorded,
+          });
+          const out = doc.getZip().generate({
+            type: "blob",
+            mimeType:
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          });
+          saveAs(out, `${record.name}.docx`);
         }
       }
     );
   };
 
-  async function testing() {
+  async function openPdf() {
     loadFile(deathCertPdf, async (error, content) => {
+      if (error) {
+        return;
+      }
       const pdfDoc = await PDFDocument.load(content);
       const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
       const pages = pdfDoc.getPages();
@@ -218,31 +221,6 @@ export default function ContentItem({
 
       let dayOfDeath = new Date(record.dayOfDeath);
       let dateOfBurial = new Date(record.dateOfBurial);
-      // doc.render({
-      //   name: record.name,
-      //   dd: dayOfDeath.getDay(),
-      //   dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
-      //   dy: dayOfDeath.getFullYear(),
-      //   dayOfBirth: record.dayOfBirth,
-      //   dateOfMass: record.dateOfMass,
-      //   age: record.age,
-      //   address: record.address,
-      //   father: record.father,
-      //   mother: record.mother,
-      //   spouse: record.spouse,
-      //   cemetery: record.cemetery,
-      //   cemeteryAddress: record.cemeteryAddress,
-      //   dateOfBurial: record.dateOfBurial,
-      //   bd: dateOfBurial.getDay(),
-      //   bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
-      //   by: dateOfBurial.getFullYear(),
-      //   causeOfDeath: record.causeOfDeath,
-      //   received: record.receivedSacrament ? "was" : "was not",
-      //   bookNo: record.bookNo,
-      //   pageNo: record.pageNo,
-      //   lineNo: record.lineNo,
-      //   dateRecorded: record.dateRecorded,
-      // });
       function draw(value, x, y) {
         firstPage.drawText(value.toString(), {
           x: x,
@@ -1040,8 +1018,17 @@ export default function ContentItem({
             <ActionButton
               isShown={showPrint}
               isLoading={false}
-              title={print}
+              title="print"
               icon={print}
+              onClick={async () => {
+                openPdf();
+              }}
+            />
+            <ActionButton
+              isShown={showPrint}
+              isLoading={false}
+              title="download"
+              icon={download}
               onClick={async () => {
                 generateDocument();
               }}
