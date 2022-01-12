@@ -10,6 +10,7 @@ import download from "../../assets/download.svg";
 
 import deathCert from "../../documents/death_cert.docx";
 import marriageCert from "../../documents/marriage_cert.docx";
+import marriageCertPdf from "../../documents/marriage_cert.pdf";
 import deathCertPdf from "../../documents/death_cert_empty.pdf";
 
 import {
@@ -210,71 +211,151 @@ export default function ContentItem({
   };
 
   async function openPdf() {
-    loadFile(deathCertPdf, async (error, content) => {
-      if (error) {
-        return;
-      }
-      const pdfDoc = await PDFDocument.load(content);
-      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-      const pages = pdfDoc.getPages();
-      const firstPage = pages[0];
+    if (selected === "death") {
+      loadFile(deathCertPdf, async (error, content) => {
+        if (error) {
+          return;
+        }
+        const pdfDoc = await PDFDocument.load(content);
+        const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        const pages = pdfDoc.getPages();
+        const firstPage = pages[0];
 
-      let dayOfDeath = new Date(record.dayOfDeath);
-      let dateOfBurial = new Date(record.dateOfBurial);
-      function draw(value, x, y) {
-        firstPage.drawText(value.toString(), {
-          x: x,
-          y: y,
-          size: 11,
-          font: helveticaFont,
-          color: rgb(0, 0, 0),
+        let dayOfDeath = new Date(record.dayOfDeath);
+        let dateOfBurial = new Date(record.dateOfBurial);
+        function draw(value, x, y) {
+          firstPage.drawText(value.toString(), {
+            x: x,
+            y: y,
+            size: 11,
+            font: helveticaFont,
+            color: rgb(0, 0, 0),
+          });
+        }
+
+        let records = [
+          { value: record.name, x: 260, y: 570 },
+          { value: dayOfDeath.getDay(), x: 122, y: 453 },
+          {
+            value: dayOfDeath.toLocaleDateString("default", { month: "long" }),
+            x: 230,
+            y: 453,
+          },
+          { value: dayOfDeath.getFullYear(), x: 356, y: 453 },
+          { value: record.age, x: 479, y: 453 },
+          { value: record.address, x: 175, y: 540 },
+          { value: record.mother, x: 398, y: 510 },
+          { value: record.father, x: 189, y: 510 },
+          { value: record.spouse, x: 261, y: 481 },
+          { value: record.cemetery, x: 180, y: 425 },
+          { value: record.cemeteryAddress, x: 67, y: 395 },
+          { value: dateOfBurial.getDay(), x: 402, y: 395 },
+          {
+            value: dateOfBurial.toLocaleDateString("default", {
+              month: "long",
+            }),
+            x: 462,
+            y: 395,
+          },
+          { value: dateOfBurial.getFullYear(), x: 535, y: 395 },
+          { value: record.causeOfDeath, x: 191, y: 376 },
+          {
+            value: record.receivedSacrament ? "was" : "was not",
+            x: 178,
+            y: 299,
+          },
+          { value: record.bookNo, x: 231, y: 240 },
+          { value: record.pageNo, x: 312, y: 240 },
+          { value: record.lineNo, x: 391, y: 240 },
+          { value: record.dateRecorded, x: 374, y: 212 },
+        ];
+
+        records.forEach((rec) => {
+          draw(rec.value, rec.x, rec.y);
         });
-      }
 
-      let records = [
-        { value: record.name, x: 260, y: 570 },
-        { value: dayOfDeath.getDay(), x: 122, y: 453 },
-        {
-          value: dayOfDeath.toLocaleDateString("default", { month: "long" }),
-          x: 230,
-          y: 453,
-        },
-        { value: dayOfDeath.getFullYear(), x: 356, y: 453 },
-        { value: record.age, x: 479, y: 453 },
-        { value: record.address, x: 175, y: 540 },
-        { value: record.mother, x: 398, y: 510 },
-        { value: record.father, x: 189, y: 510 },
-        { value: record.spouse, x: 261, y: 481 },
-        { value: record.cemetery, x: 180, y: 425 },
-        { value: record.cemeteryAddress, x: 67, y: 395 },
-        { value: dateOfBurial.getDay(), x: 402, y: 395 },
-        {
-          value: dateOfBurial.toLocaleDateString("default", { month: "long" }),
-          x: 462,
-          y: 395,
-        },
-        { value: dateOfBurial.getFullYear(), x: 535, y: 395 },
-        { value: record.causeOfDeath, x: 191, y: 376 },
-        { value: record.receivedSacrament ? "was" : "was not", x: 178, y: 299 },
-        { value: record.bookNo, x: 231, y: 240 },
-        { value: record.pageNo, x: 312, y: 240 },
-        { value: record.lineNo, x: 391, y: 240 },
-        { value: record.dateRecorded, x: 374, y: 212 },
-      ];
+        const outputBase64 = pdfDoc.saveAsBase64();
 
-      records.forEach((rec) => {
-        draw(rec.value, rec.x, rec.y);
+        let pdfWindow = window.open("");
+        pdfWindow.document.write(
+          "<style>body{margin:0; padding:0}iframe{border:none;margin:0;padding:0}</style><iframe width='100%' height='100%' border=none src='data:application/pdf;base64, " +
+            encodeURI(await outputBase64) +
+            "'></iframe>"
+        );
       });
+    } else if (selected === "marriage") {
+      loadFile(marriageCertPdf, async (error, content) => {
+        if (error) {
+          return;
+        }
+        const pdfDoc = await PDFDocument.load(content);
+        const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        const pages = pdfDoc.getPages();
+        const firstPage = pages[0];
 
-      const outputBase64 = pdfDoc.saveAsBase64();
+        let dayOfDeath = new Date(record.dayOfDeath);
+        let dateOfBurial = new Date(record.dateOfBurial);
+        function draw(value, x, y) {
+          firstPage.drawText(value.toString(), {
+            x: x,
+            y: y,
+            size: 11,
+            font: helveticaFont,
+            color: rgb(0, 0, 0),
+          });
+        }
 
-      let pdfWindow = window.open("");
-      pdfWindow.document.write(
-        "<style>body{margin:0; padding:0}iframe{border:none;margin:0;padding:0}</style><iframe width='100%' height='100%' border=none src='data:application/pdf;base64, " +
-          encodeURI(await outputBase64) +
-          "'></iframe>"
-      );
-    });
+        let records = [
+          { value: record.name, x: 260, y: 570 },
+          { value: dayOfDeath.getDay(), x: 122, y: 453 },
+          {
+            value: dayOfDeath.toLocaleDateString("default", { month: "long" }),
+            x: 230,
+            y: 453,
+          },
+          { value: dayOfDeath.getFullYear(), x: 356, y: 453 },
+          { value: record.age, x: 479, y: 453 },
+          { value: record.address, x: 175, y: 540 },
+          { value: record.mother, x: 398, y: 510 },
+          { value: record.father, x: 189, y: 510 },
+          { value: record.spouse, x: 261, y: 481 },
+          { value: record.cemetery, x: 180, y: 425 },
+          { value: record.cemeteryAddress, x: 67, y: 395 },
+          { value: dateOfBurial.getDay(), x: 402, y: 395 },
+          {
+            value: dateOfBurial.toLocaleDateString("default", {
+              month: "long",
+            }),
+            x: 462,
+            y: 395,
+          },
+          { value: dateOfBurial.getFullYear(), x: 535, y: 395 },
+          { value: record.causeOfDeath, x: 191, y: 376 },
+          {
+            value: record.receivedSacrament ? "was" : "was not",
+            x: 178,
+            y: 299,
+          },
+          { value: record.bookNo, x: 231, y: 240 },
+          { value: record.pageNo, x: 312, y: 240 },
+          { value: record.lineNo, x: 391, y: 240 },
+          { value: record.dateRecorded, x: 374, y: 212 },
+        ];
+
+        records.forEach((rec) => {
+          draw(rec.value, rec.x, rec.y);
+        });
+
+        const outputBase64 = pdfDoc.saveAsBase64();
+
+        let pdfWindow = window.open("");
+        pdfWindow.document.write(
+          "<style>body{margin:0; padding:0}iframe{border:none;margin:0;padding:0}</style><iframe width='100%' height='100%' border=none src='data:application/pdf;base64, " +
+            encodeURI(await outputBase64) +
+            "'></iframe>"
+        );
+      });
+    }
   }
 
   async function submit(values, override = false) {
