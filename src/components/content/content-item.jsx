@@ -9,6 +9,7 @@ import email from "../../assets/email.svg";
 
 import deathCert from "../../documents/death_cert.docx";
 import marriageCert from "../../documents/marriage_cert.docx";
+import deathCertPdf from "../../documents/death_cert_empty.pdf";
 
 import {
   archiveRecord,
@@ -33,6 +34,8 @@ import Docxtemplater from "docxtemplater";
 import PizZip from "pizzip";
 import PizZipUtils from "pizzip/utils/index.js";
 import { saveAs } from "file-saver";
+import { degrees, PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import templatePDF from "pdf-templater";
 
 function loadFile(url, callback) {
   PizZipUtils.getBinaryContent(url, callback);
@@ -168,44 +171,108 @@ export default function ContentItem({
           });
           saveAs(out, `${record.husbandName}_${record.wifeName}.docx`);
         } else {
-          let dayOfDeath = new Date(record.dayOfDeath);
-          let dateOfBurial = new Date(record.dateOfBurial);
-
-          doc.render({
-            name: record.name,
-            dd: dayOfDeath.getDay(),
-            dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
-            dy: dayOfDeath.getFullYear(),
-            dayOfBirth: record.dayOfBirth,
-            dateOfMass: record.dateOfMass,
-            age: record.age,
-            address: record.address,
-            father: record.father,
-            mother: record.mother,
-            spouse: record.spouse,
-            cemetery: record.cemetery,
-            cemeteryAddress: record.cemeteryAddress,
-            dateOfBurial: record.dateOfBurial,
-            bd: dateOfBurial.getDay(),
-            bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
-            by: dateOfBurial.getFullYear(),
-            causeOfDeath: record.causeOfDeath,
-            received: record.receivedSacrament ? "was" : "was not",
-            bookNo: record.bookNo,
-            pageNo: record.pageNo,
-            lineNo: record.lineNo,
-            dateRecorded: record.dateRecorded,
-          });
-          const out = doc.getZip().generate({
-            type: "blob",
-            mimeType:
-              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          });
-          saveAs(out, `${record.name}.docx`);
+          testing();
+          // let dayOfDeath = new Date(record.dayOfDeath);
+          // let dateOfBurial = new Date(record.dateOfBurial);
+          // doc.render({
+          //   name: record.name,
+          //   dd: dayOfDeath.getDay(),
+          //   dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
+          //   dy: dayOfDeath.getFullYear(),
+          //   dayOfBirth: record.dayOfBirth,
+          //   dateOfMass: record.dateOfMass,
+          //   age: record.age,
+          //   address: record.address,
+          //   father: record.father,
+          //   mother: record.mother,
+          //   spouse: record.spouse,
+          //   cemetery: record.cemetery,
+          //   cemeteryAddress: record.cemeteryAddress,
+          //   dateOfBurial: record.dateOfBurial,
+          //   bd: dateOfBurial.getDay(),
+          //   bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
+          //   by: dateOfBurial.getFullYear(),
+          //   causeOfDeath: record.causeOfDeath,
+          //   received: record.receivedSacrament ? "was" : "was not",
+          //   bookNo: record.bookNo,
+          //   pageNo: record.pageNo,
+          //   lineNo: record.lineNo,
+          //   dateRecorded: record.dateRecorded,
+          // });
+          // const out = doc.getZip().generate({
+          //   type: "blob",
+          //   mimeType:
+          //     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          // });
+          // saveAs(out, `${record.name}.docx`);
         }
       }
     );
   };
+
+  async function testing() {
+    loadFile(deathCertPdf, async (error, content) => {
+      const pdfDoc = await PDFDocument.load(content);
+      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+      const pages = pdfDoc.getPages();
+      const firstPage = pages[0];
+
+      let dayOfDeath = new Date(record.dayOfDeath);
+      let dateOfBurial = new Date(record.dateOfBurial);
+      // doc.render({
+      //   name: record.name,
+      //   dd: dayOfDeath.getDay(),
+      //   dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
+      //   dy: dayOfDeath.getFullYear(),
+      //   dayOfBirth: record.dayOfBirth,
+      //   dateOfMass: record.dateOfMass,
+      //   age: record.age,
+      //   address: record.address,
+      //   father: record.father,
+      //   mother: record.mother,
+      //   spouse: record.spouse,
+      //   cemetery: record.cemetery,
+      //   cemeteryAddress: record.cemeteryAddress,
+      //   dateOfBurial: record.dateOfBurial,
+      //   bd: dateOfBurial.getDay(),
+      //   bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
+      //   by: dateOfBurial.getFullYear(),
+      //   causeOfDeath: record.causeOfDeath,
+      //   received: record.receivedSacrament ? "was" : "was not",
+      //   bookNo: record.bookNo,
+      //   pageNo: record.pageNo,
+      //   lineNo: record.lineNo,
+      //   dateRecorded: record.dateRecorded,
+      // });
+      function draw(value, x, y) {
+        firstPage.drawText(value, {
+          x: x,
+          y: y,
+          size: 11,
+          font: helveticaFont,
+          color: rgb(0, 0, 0),
+        });
+      }
+
+      let records = [
+        { value: record.name, x: 260, y: 570 },
+        { value: dayOfDeath.getDay().toString(), x: 122, y: 453 },
+      ];
+
+      records.forEach((rec) => {
+        draw(rec.value, rec.x, rec.y);
+      });
+
+      const outputBase64 = pdfDoc.saveAsBase64();
+
+      let pdfWindow = window.open("");
+      pdfWindow.document.write(
+        "<iframe width='100%' height='100%' border=none src='data:application/pdf;base64, " +
+          encodeURI(await outputBase64) +
+          "'></iframe>"
+      );
+    });
+  }
 
   async function submit(values, override = false) {
     setUpdating(() => true);
