@@ -10,7 +10,7 @@ import download from "../../assets/download.svg";
 
 import deathCert from "../../documents/death_cert.docx";
 import marriageCert from "../../documents/marriage_cert.docx";
-import marriageCertPdf from "../../documents/marriage_cert.pdf";
+import marriageCertPdf from "../../documents/marriage_cert_empty.pdf";
 import deathCertPdf from "../../documents/death_cert_empty.pdf";
 
 import {
@@ -293,8 +293,8 @@ export default function ContentItem({
         const pages = pdfDoc.getPages();
         const firstPage = pages[0];
 
-        let dayOfDeath = new Date(record.dayOfDeath);
-        let dateOfBurial = new Date(record.dateOfBurial);
+        let marriageDate = new Date(record.marriageDate);
+        let dateIssued = new Date(record.dateIssued);
         function draw(value, x, y) {
           firstPage.drawText(value.toString(), {
             x: x,
@@ -306,40 +306,43 @@ export default function ContentItem({
         }
 
         let records = [
-          { value: record.name, x: 260, y: 570 },
-          { value: dayOfDeath.getDay(), x: 122, y: 453 },
+          { value: record.husbandName, x: 75, y: 574 },
+          { value: record.husbandAge, x: 90, y: 549 },
+          { value: record.husbandPlaceOfBirth, x: 106, y: 524 },
+          { value: record.husbandResidence, x: 112, y: 499 },
+          { value: record.husbandFather, x: 106, y: 476 },
+          { value: record.husbandMother, x: 105, y: 452 },
+          { value: record.wifeName, x: 329, y: 574 },
+          { value: record.wifeAge, x: 329, y: 549 },
+          { value: record.wifePlaceOfBirth, x: 329, y: 524 },
+          { value: record.wifeResidence, x: 329, y: 501 },
+          { value: record.wifeFather, x: 329, y: 476 },
+          { value: record.wifeMother, x: 329, y: 452 },
+          { value: marriageDate.getDay(), x: 105, y: 350 },
           {
-            value: dayOfDeath.toLocaleDateString("default", { month: "long" }),
-            x: 230,
-            y: 453,
-          },
-          { value: dayOfDeath.getFullYear(), x: 356, y: 453 },
-          { value: record.age, x: 479, y: 453 },
-          { value: record.address, x: 175, y: 540 },
-          { value: record.mother, x: 398, y: 510 },
-          { value: record.father, x: 189, y: 510 },
-          { value: record.spouse, x: 261, y: 481 },
-          { value: record.cemetery, x: 180, y: 425 },
-          { value: record.cemeteryAddress, x: 67, y: 395 },
-          { value: dateOfBurial.getDay(), x: 402, y: 395 },
-          {
-            value: dateOfBurial.toLocaleDateString("default", {
+            value: marriageDate.toLocaleDateString("default", {
               month: "long",
             }),
-            x: 462,
-            y: 395,
+            x: 253,
+            y: 349,
           },
-          { value: dateOfBurial.getFullYear(), x: 535, y: 395 },
-          { value: record.causeOfDeath, x: 191, y: 376 },
+          { value: marriageDate.getFullYear(), x: 461, y: 350 },
+          { value: record.priest, x: 256, y: 325 },
+          { value: record.witness, x: 171, y: 300 },
+          { value: record.residence, x: 165, y: 277 },
+          { value: record.licenseNo, x: 359, y: 202 },
+          { value: record.bookNo, x: 217, y: 226 },
+          { value: record.pageNo, x: 315, y: 226 },
+          { value: record.lineNo, x: 401, y: 226 },
+          { value: dateIssued.getDay(), x: 181, y: 177 },
           {
-            value: record.receivedSacrament ? "was" : "was not",
-            x: 178,
-            y: 299,
+            value: dateIssued.toLocaleDateString("default", {
+              month: "long",
+            }),
+            x: 324,
+            y: 177,
           },
-          { value: record.bookNo, x: 231, y: 240 },
-          { value: record.pageNo, x: 312, y: 240 },
-          { value: record.lineNo, x: 391, y: 240 },
-          { value: record.dateRecorded, x: 374, y: 212 },
+          { value: dateIssued.getFullYear(), x: 441, y: 177 },
         ];
 
         records.forEach((rec) => {
