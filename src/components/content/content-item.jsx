@@ -224,6 +224,7 @@ export default function ContentItem({
         let dayOfDeath = new Date(record.dayOfDeath);
         let dateOfBurial = new Date(record.dateOfBurial);
         function draw(value, x, y) {
+          if (value === undefined || value === null) value = "";
           firstPage.drawText(value.toString(), {
             x: x,
             y: y,
@@ -262,12 +263,12 @@ export default function ContentItem({
           {
             value: record.receivedSacrament ? "was" : "was not",
             x: 178,
-            y: 299,
+            y: 315,
           },
-          { value: record.bookNo, x: 231, y: 240 },
-          { value: record.pageNo, x: 312, y: 240 },
-          { value: record.lineNo, x: 391, y: 240 },
-          { value: record.dateRecorded, x: 374, y: 212 },
+          { value: record.bookNo, x: 231, y: 256 },
+          { value: record.pageNo, x: 312, y: 256 },
+          { value: record.lineNo, x: 391, y: 256 },
+          { value: record.dateRecorded, x: 354, y: 228 },
         ];
 
         records.forEach((rec) => {

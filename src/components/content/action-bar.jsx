@@ -238,6 +238,8 @@ export default function ActionBar({
         '<input id="spouse" class="swal2-input">' +
         '<span class="swal2-input-label">Cemetery</span>' +
         '<input id="cemetery" class="swal2-input">' +
+        '<span class="swal2-input-label">Cemetery Address</span>' +
+        '<input id="cemeteryAddress" class="swal2-input">' +
         '<span class="swal2-input-label">Cause Of Death</span>' +
         '<input id="causeOfDeath" class="swal2-input">' +
         '<span class="swal2-input-label">Has Received Sacrament</span>' +
@@ -267,6 +269,7 @@ export default function ActionBar({
         let mother = inputGetter("mother");
         let spouse = inputGetter("spouse");
         let cemetery = inputGetter("cemetery");
+        let cemeteryAddress = inputGetter("cemeteryAddress");
         let dateOfBurial = inputGetter("dateOfBurial");
         let causeOfDeath = inputGetter("causeOfDeath");
         let bookNo = inputGetter("bookNo");
@@ -291,6 +294,7 @@ export default function ActionBar({
           mother.length > 0 &&
           spouse.length > 0 &&
           cemetery.length > 0 &&
+          cemeteryAddress.length > 0 &&
           dateOfBurial.length > 0 &&
           causeOfDeath.length > 0 &&
           bookNo.length > 0 &&
@@ -317,6 +321,7 @@ export default function ActionBar({
         let mother = inputGetter("mother");
         let spouse = inputGetter("spouse");
         let cemetery = inputGetter("cemetery");
+        let cemeteryAddress = inputGetter("cemeteryAddress");
         let dateOfBurial = inputGetter("dateOfBurial");
         let causeOfDeath = inputGetter("causeOfDeath");
         let receivedSacrament = inputGetter("receivedSacrament");
@@ -336,6 +341,7 @@ export default function ActionBar({
           mother: mother,
           spouse: spouse,
           cemetery: cemetery,
+          cemeteryAddress: cemeteryAddress,
           dateOfBurial: dateOfBurial,
           causeOfDeath: causeOfDeath,
           receivedSacrament: receivedSacrament,
