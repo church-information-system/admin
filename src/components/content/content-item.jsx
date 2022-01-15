@@ -131,9 +131,6 @@ export default function ContentItem({
           let marriageDate = new Date(record.marriageDate);
           let dateIssued = new Date(record.dateIssued);
 
-          console.log(dateIssued);
-          console.log(record.dateIssued);
-
           doc.render({
             husbandName: record.husbandName,
             husbandAge: record.husbandAge,
