@@ -131,6 +131,9 @@ export default function ContentItem({
           let marriageDate = new Date(record.marriageDate);
           let dateIssued = new Date(record.dateIssued);
 
+          console.log(dateIssued);
+          console.log(record.dateIssued);
+
           doc.render({
             husbandName: record.husbandName,
             husbandAge: record.husbandAge,
@@ -148,7 +151,7 @@ export default function ContentItem({
             wifeResidence: record.wifeResidence,
             wifeFather: record.wifeFather,
             wifeMother: record.wifeMother,
-            md: marriageDate.getDay(),
+            md: marriageDate.getDate(),
             mm: marriageDate.toLocaleDateString("default", { month: "long" }),
             my: marriageDate.getFullYear(),
             priest: record.priest,
@@ -159,7 +162,7 @@ export default function ContentItem({
             pageNo: record.pageNo,
             lineNo: record.lineNo,
             dateIssued: record.dateIssued,
-            dIssued: dateIssued.getDay(),
+            dIssued: dateIssued.getDate(),
             mIssued: dateIssued.toLocaleDateString("default", {
               month: "long",
             }),
@@ -174,9 +177,10 @@ export default function ContentItem({
         } else {
           let dayOfDeath = new Date(record.dayOfDeath);
           let dateOfBurial = new Date(record.dateOfBurial);
+
           doc.render({
             name: record.name,
-            dd: dayOfDeath.getDay(),
+            dd: dayOfDeath.getDate(),
             dm: dayOfDeath.toLocaleDateString("default", { month: "long" }),
             dy: dayOfDeath.getFullYear(),
             dayOfBirth: record.dayOfBirth,
@@ -189,7 +193,7 @@ export default function ContentItem({
             cemetery: record.cemetery,
             cemeteryAddress: record.cemeteryAddress,
             dateOfBurial: record.dateOfBurial,
-            bd: dateOfBurial.getDay(),
+            bd: dateOfBurial.getDate(),
             bm: dateOfBurial.toLocaleDateString("default", { month: "long" }),
             by: dateOfBurial.getFullYear(),
             causeOfDeath: record.causeOfDeath,
@@ -236,7 +240,7 @@ export default function ContentItem({
 
         let records = [
           { value: record.name, x: 260, y: 570 },
-          { value: dayOfDeath.getDay(), x: 122, y: 453 },
+          { value: dayOfDeath.getDate(), x: 122, y: 453 },
           {
             value: dayOfDeath.toLocaleDateString("default", { month: "long" }),
             x: 230,
@@ -250,7 +254,7 @@ export default function ContentItem({
           { value: record.spouse, x: 261, y: 481 },
           { value: record.cemetery, x: 180, y: 425 },
           { value: record.cemeteryAddress, x: 67, y: 395 },
-          { value: dateOfBurial.getDay(), x: 402, y: 395 },
+          { value: dateOfBurial.getDate(), x: 402, y: 395 },
           {
             value: dateOfBurial.toLocaleDateString("default", {
               month: "long",
@@ -319,7 +323,7 @@ export default function ContentItem({
           { value: record.wifeResidence, x: 329, y: 501 },
           { value: record.wifeFather, x: 329, y: 476 },
           { value: record.wifeMother, x: 329, y: 452 },
-          { value: marriageDate.getDay(), x: 105, y: 350 },
+          { value: marriageDate.getDate(), x: 105, y: 350 },
           {
             value: marriageDate.toLocaleDateString("default", {
               month: "long",
@@ -335,7 +339,7 @@ export default function ContentItem({
           { value: record.bookNo, x: 217, y: 226 },
           { value: record.pageNo, x: 315, y: 226 },
           { value: record.lineNo, x: 401, y: 226 },
-          { value: dateIssued.getDay(), x: 181, y: 177 },
+          { value: dateIssued.getDate(), x: 181, y: 177 },
           {
             value: dateIssued.toLocaleDateString("default", {
               month: "long",
