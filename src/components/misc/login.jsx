@@ -23,7 +23,7 @@ export default function Login({ authenticate }) {
         customAlert("Success", "success");
         if (rememberMe) {
           let expiry = new Date();
-          expiry.setDate(expiry.getDate() + 3);
+          expiry.setDate(expiry.getDate() + 300);
           document.cookie = `admin=${loginResult}; expires=${expiry}; SameSite=Lax`;
         }
         authenticate();
