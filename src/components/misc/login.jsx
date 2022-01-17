@@ -6,13 +6,15 @@ import "./misc.scss";
 
 export default function Login({ authenticate }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   async function submitLogin() {
     setSubmitting(() => true);
     let username = inputGetter("username");
     let password = inputGetter("password");
+
+    setRememberMe(true); //meh
 
     let noempty = username.length > 0 && password.length > 0;
 
@@ -62,14 +64,14 @@ export default function Login({ authenticate }) {
             />
           </div>
 
-          <div className="checkbox">
+          {/* <div className="checkbox">
             <strong className="label">Remember Me</strong>
             <input
               className="input"
               type="checkbox"
               onChange={(value) => setRememberMe(() => value.target.checked)}
             />
-          </div>
+          </div> */}
 
           <div className="login-button" onClick={() => submitLogin()}>
             {submitting ? (
