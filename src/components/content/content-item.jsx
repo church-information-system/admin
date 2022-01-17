@@ -117,6 +117,7 @@ export default function ContentItem({
   }, [record.id, isArchive, selected, record]);
 
   const generateDocument = async () => {
+    console.log(calculateAgeInYears(new Date(record.husbandBirthday)));
     loadFile(
       selected === "marriage" ? marriageCert : deathCert,
       function (error, content) {
@@ -135,7 +136,7 @@ export default function ContentItem({
 
           doc.render({
             husbandName: record.husbandName,
-            husbandAge: record.husbandAge,
+            husbandAge: calculateAgeInYears(new Date(record.husbandBirthday)),
             husbandBirthday: record.husbandBirthday,
             husbandPlaceOfBirth: record.husbandPlaceOfBirth,
             husbandReligion: record.husbandReligion,
@@ -143,7 +144,7 @@ export default function ContentItem({
             husbandFather: record.husbandFather,
             husbandMother: record.husbandMother,
             wifeName: record.wifeName,
-            wifeAge: record.wifeAge,
+            wifeAge: calculateAgeInYears(new Date(record.wifeBirthday)),
             wifeBirthday: record.wifeBirthday,
             wifePlaceOfBirth: record.wifePlaceOfBirth,
             wifeReligion: record.wifeReligion,
@@ -321,13 +322,21 @@ export default function ContentItem({
 
         let records = [
           { value: record.husbandName, x: 75, y: 574 },
-          { value: record.husbandAge, x: 90, y: 549 },
+          {
+            value: calculateAgeInYears(new Date(record.husbandBirthday)),
+            x: 90,
+            y: 549,
+          },
           { value: record.husbandPlaceOfBirth, x: 106, y: 524 },
           { value: record.husbandResidence, x: 112, y: 499 },
           { value: record.husbandFather, x: 106, y: 476 },
           { value: record.husbandMother, x: 105, y: 452 },
           { value: record.wifeName, x: 329, y: 574 },
-          { value: record.wifeAge, x: 329, y: 549 },
+          {
+            value: calculateAgeInYears(new Date(record.wifeBirthday)),
+            x: 329,
+            y: 549,
+          },
           { value: record.wifePlaceOfBirth, x: 329, y: 524 },
           { value: record.wifeResidence, x: 329, y: 501 },
           { value: record.wifeFather, x: 329, y: 476 },
