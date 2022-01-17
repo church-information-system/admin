@@ -117,7 +117,6 @@ export default function ContentItem({
   }, [record.id, isArchive, selected, record]);
 
   const generateDocument = async () => {
-    console.log(calculateAgeInYears(new Date(record.husbandBirthday)));
     loadFile(
       selected === "marriage" ? marriageCert : deathCert,
       function (error, content) {
