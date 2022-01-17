@@ -429,8 +429,6 @@ export default function ContentItem({
         "<h3>Enter Wife details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="wifeName" class="swal2-input">' +
-        '<span class="swal2-input-label">Age</span>' +
-        '<input id="wifeAge" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Birthday</span>' +
         '<input id="wifeBirthday" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Religion</span>' +
@@ -447,8 +445,6 @@ export default function ContentItem({
         "<h3>Enter Husband details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="husbandName" class="swal2-input">' +
-        '<span class="swal2-input-label">Age</span>' +
-        '<input id="husbandAge" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Birthday</span>' +
         '<input id="husbandBirthday" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Religion</span>' +
@@ -482,16 +478,13 @@ export default function ContentItem({
         '<span class="swal2-input-label">Marriage License Issued Date</span>' +
         '<input id="dateIssued" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
-        '<div id="nothingChanged" class="error-text"> </div>' +
-        '<div id="invalidAge" class="error-text"> </div>',
+        '<div id="nothingChanged" class="error-text"> </div>',
       didOpen: () => {
         getById("husbandName").value = record.husbandName;
-        getById("husbandAge").value = record.husbandAge;
         getById("husbandBirthday").value = record.husbandBirthday;
         getById("husbandPlaceOfBirth").value = record.husbandPlaceOfBirth;
         getById("husbandReligion").value = record.husbandReligion;
         getById("wifeName").value = record.wifeName;
-        getById("wifeAge").value = record.wifeAge;
         getById("wifeBirthday").value = record.wifeBirthday;
         getById("wifePlaceOfBirth").value = record.wifePlaceOfBirth;
         getById("wifeReligion").value = record.wifeReligion;
@@ -512,14 +505,6 @@ export default function ContentItem({
         getById("dateIssued").value = record.dateIssued;
       },
       preConfirm: () => {
-        getById("husbandAge").value = getById("husbandAge").value.replace(
-          /[^0-9]/g,
-          ""
-        );
-        getById("wifeAge").value = getById("wifeAge").value.replace(
-          /[^0-9]/g,
-          ""
-        );
         // TO ADD
         // birthPlace, address, father, mother, priest, presenceOf, residence,
         // churchRecord{bookNo, pageNo, line}
@@ -529,7 +514,6 @@ export default function ContentItem({
         //TODO: add more fields in the actionbar as well
 
         let husbandName = inputGetter("husbandName");
-        let husbandAge = inputGetter("husbandAge");
         let husbandBirthday = inputGetter("husbandBirthday");
         let husbandPlaceOfBirth = inputGetter("husbandPlaceOfBirth");
         let husbandReligion = inputGetter("husbandReligion");
@@ -538,7 +522,6 @@ export default function ContentItem({
         let husbandMother = inputGetter("husbandMother");
 
         let wifeName = inputGetter("wifeName");
-        let wifeAge = inputGetter("wifeAge");
         let wifeBirthday = inputGetter("wifeBirthday");
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
@@ -573,25 +556,12 @@ export default function ContentItem({
         // let lineNo = inputGetter("lineNo");
         // let dateRecorded = inputGetter("dateRecorded");
 
-        let ageValid =
-          husbandAge.length > 0 &&
-          wifeAge.length > 0 &&
-          husbandAge > 0 &&
-          wifeAge > 0;
-
-        if (!ageValid)
-          getById("invalidAge").innerHTML =
-            "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " ";
-
         let noempty =
           husbandName.length > 0 &&
-          husbandAge.length > 0 &&
           husbandBirthday.length > 0 &&
           husbandPlaceOfBirth.length > 0 &&
           husbandReligion.length > 0 &&
           wifeName.length > 0 &&
-          wifeAge.length > 0 &&
           wifeBirthday.length > 0 &&
           wifePlaceOfBirth.length > 0 &&
           wifeReligion.length > 0 &&
@@ -616,12 +586,10 @@ export default function ContentItem({
 
         let nothingChanged =
           husbandName === record.husbandName &&
-          husbandAge === record.husbandAge &&
           husbandBirthday === record.husbandBirthday &&
           husbandPlaceOfBirth === record.husbandPlaceOfBirth &&
           husbandReligion === record.husbandReligion &&
           wifeName === record.wifeName &&
-          wifeAge === record.wifeAge &&
           wifeBirthday === record.wifeBirthday &&
           wifePlaceOfBirth === record.wifePlaceOfBirth &&
           wifeReligion === record.wifeReligion &&
@@ -645,19 +613,17 @@ export default function ContentItem({
           getById("nothingChanged").innerHTML = "Change atleast one value";
         else getById("nothingChanged").innerHTML = " ";
 
-        return noempty && !nothingChanged && ageValid;
+        return noempty && !nothingChanged;
       },
       showCancelButton: true,
     }).then((value) => {
       if (value.isConfirmed) {
         submit({
           husbandName: inputGetter("husbandName"),
-          husbandAge: inputGetter("husbandAge"),
           husbandBirthday: inputGetter("husbandBirthday"),
           husbandPlaceOfBirth: inputGetter("husbandPlaceOfBirth"),
           husbandReligion: inputGetter("husbandReligion"),
           wifeName: inputGetter("wifeName"),
-          wifeAge: inputGetter("wifeAge"),
           wifeBirthday: inputGetter("wifeBirthday"),
           wifePlaceOfBirth: inputGetter("wifePlaceOfBirth"),
           wifeReligion: inputGetter("wifeReligion"),
@@ -695,8 +661,6 @@ export default function ContentItem({
         '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Date Of Burial</span>' +
         '<input id="dateOfBurial" class="swal2-input" type="date">' +
-        '<span class="swal2-input-label">Age</span>' +
-        '<input id="age" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Address</span>' +
         '<input id="address" class="swal2-input">' +
         '<span class="swal2-input-label">Father\'s name</span>' +
@@ -730,7 +694,6 @@ export default function ContentItem({
         getById("dayOfDeath").value = record.dayOfDeath;
         getById("dayOfBirth").value = record.dayOfBirth;
         getById("dateOfMass").value = record.dateOfMass;
-        getById("age").value = record.age;
         getById("address").value = record.address;
         getById("father").value = record.father;
         getById("mother").value = record.mother;
@@ -752,7 +715,6 @@ export default function ContentItem({
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAge = inputGetter("age");
 
         let address = inputGetter("address");
         let father = inputGetter("father");
@@ -772,18 +734,11 @@ export default function ContentItem({
         // address, father, mother, spouse, cemetery, dateOfBurial, causeOfDeath, receivedSacrament
         // churchRecord{bookNo, pageNo, line, date}
 
-        let ageValid = newAge.length > 0 && newAge > 0;
-        if (!ageValid)
-          getById("invalidAge").innerHTML =
-            "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " ";
-
         let noempty =
           newName.length > 0 &&
           newDayOfBirth.length > 0 &&
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
-          newAge.length > 0 &&
           address.length > 0 &&
           father.length > 0 &&
           mother.length > 0 &&
@@ -805,7 +760,6 @@ export default function ContentItem({
           newDayOfBirth === record.dayOfBirth &&
           newDayOfDeath === record.dayOfDeath &&
           newDateOfMass === record.dateOfMass &&
-          newAge === record.age &&
           address === record.address &&
           father === record.father &&
           mother === record.mother &&
@@ -824,7 +778,7 @@ export default function ContentItem({
           getById("nothingChanged").innerHTML = "Change atleast one value";
         else getById("nothingChanged").innerHTML = " ";
 
-        return noempty && !nothingChanged && ageValid;
+        return noempty && !nothingChanged;
       },
       showCancelButton: true,
     }).then((value) => {
@@ -833,7 +787,6 @@ export default function ContentItem({
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAge = inputGetter("age");
 
         let address = inputGetter("address");
         let father = inputGetter("father");
@@ -854,7 +807,6 @@ export default function ContentItem({
           dayOfDeath: newDayOfDeath,
           dayOfBirth: newDayOfBirth,
           dateOfMass: newDateOfMass,
-          age: newAge,
           address: address,
           father: father,
           mother: mother,

@@ -41,8 +41,6 @@ export default function ActionBar({
         "<h3>Enter Wife details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="wifeName" class="swal2-input">' +
-        '<span class="swal2-input-label">Age</span>' +
-        '<input id="wifeAge" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Birthday</span>' +
         '<input id="wifeBirthday" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Religion</span>' +
@@ -59,8 +57,6 @@ export default function ActionBar({
         "<h3>Enter Husband details:</h4>" +
         '<span class="swal2-input-label">Name</span>' +
         '<input id="husbandName" class="swal2-input">' +
-        '<span class="swal2-input-label">Age</span>' +
-        '<input id="husbandAge" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Birthday</span>' +
         '<input id="husbandBirthday" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Religion</span>' +
@@ -93,21 +89,10 @@ export default function ActionBar({
         '<input id="lineNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Marriage License Issued Date</span>' +
         '<input id="dateIssued" class="swal2-input" type="date">' +
-        '<div id="empty" class="error-text"> </div>' +
-        '<div id="invalidAge" class="error-text"> </div>',
+        '<div id="empty" class="error-text"> </div>',
       showCancelButton: true,
       preConfirm: () => {
-        getById("husbandAge").value = getById("husbandAge").value.replace(
-          /[^0-9]/g,
-          ""
-        );
-        getById("wifeAge").value = getById("wifeAge").value.replace(
-          /[^0-9]/g,
-          ""
-        );
-
         let husbandName = inputGetter("husbandName");
-        let husbandAge = inputGetter("husbandAge");
         let husbandBirthday = inputGetter("husbandBirthday");
         let husbandPlaceOfBirth = inputGetter("husbandPlaceOfBirth");
         let husbandReligion = inputGetter("husbandReligion");
@@ -116,7 +101,6 @@ export default function ActionBar({
         let husbandMother = inputGetter("husbandMother");
 
         let wifeName = inputGetter("wifeName");
-        let wifeAge = inputGetter("wifeAge");
         let wifeBirthday = inputGetter("wifeBirthday");
         let wifePlaceOfBirth = inputGetter("wifePlaceOfBirth");
         let wifeReligion = inputGetter("wifeReligion");
@@ -137,24 +121,12 @@ export default function ActionBar({
         let lineNo = inputGetter("lineNo");
         let dateIssued = inputGetter("dateIssued");
 
-        let ageValid =
-          husbandAge.length > 0 &&
-          wifeAge.length > 0 &&
-          husbandAge > 0 &&
-          wifeAge > 0;
-        if (!ageValid)
-          getById("invalidAge").innerHTML =
-            "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " ";
-
         let noempty =
           husbandName.length > 0 &&
-          husbandAge.length > 0 &&
           husbandBirthday.length > 0 &&
           husbandPlaceOfBirth.length > 0 &&
           husbandReligion.length > 0 &&
           wifeName.length > 0 &&
-          wifeAge.length > 0 &&
           wifeBirthday.length > 0 &&
           wifePlaceOfBirth.length > 0 &&
           wifeReligion.length > 0 &&
@@ -177,18 +149,16 @@ export default function ActionBar({
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
 
-        return noempty && ageValid;
+        return noempty;
       },
     }).then((value) => {
       if (value.isConfirmed) {
         submit({
           husbandName: inputGetter("husbandName"),
-          husbandAge: inputGetter("husbandAge"),
           husbandBirthday: inputGetter("husbandBirthday"),
           husbandPlaceOfBirth: inputGetter("husbandPlaceOfBirth"),
           husbandReligion: inputGetter("husbandReligion"),
           wifeName: inputGetter("wifeName"),
-          wifeAge: inputGetter("wifeAge"),
           wifeBirthday: inputGetter("wifeBirthday"),
           wifePlaceOfBirth: inputGetter("wifePlaceOfBirth"),
           wifeReligion: inputGetter("wifeReligion"),
@@ -226,8 +196,6 @@ export default function ActionBar({
         '<input id="dateOfMass" class="swal2-input" type="date">' +
         '<span class="swal2-input-label">Date Of Burial</span>' +
         '<input id="dateOfBurial" class="swal2-input" type="date">' +
-        '<span class="swal2-input-label">Age</span>' +
-        '<input id="age" class="swal2-input" type="number" min="1">' +
         '<span class="swal2-input-label">Address</span>' +
         '<input id="address" class="swal2-input">' +
         '<span class="swal2-input-label">Father\'s name</span>' +
@@ -253,16 +221,12 @@ export default function ActionBar({
         '<input id="lineNo" class="swal2-input" type="number">' +
         '<span class="swal2-input-label">Date Recorded</span>' +
         '<input id="dateRecorded" class="swal2-input" type="date">' +
-        '<div id="empty" class="error-text"> </div>' +
-        '<div id="invalidAge" class="error-text"> </div>',
+        '<div id="empty" class="error-text"> </div>',
       preConfirm: () => {
-        getById("age").value = getById("age").value.replace(/[^0-9]/g, "");
-
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAge = inputGetter("age");
 
         let address = inputGetter("address");
         let father = inputGetter("father");
@@ -277,18 +241,11 @@ export default function ActionBar({
         let lineNo = inputGetter("lineNo");
         let dateRecorded = inputGetter("dateRecorded");
 
-        let ageValid = newAge.length > 0 && newAge > 0;
-        if (!ageValid)
-          getById("invalidAge").innerHTML =
-            "Please make sure that the age you entered is a valid number";
-        else getById("invalidAge").innerHTML = " ";
-
         let noempty =
           newName.length > 0 &&
           newDayOfBirth.length > 0 &&
           newDayOfDeath.length > 0 &&
           newDateOfMass.length > 0 &&
-          newAge.length > 0 &&
           address.length > 0 &&
           father.length > 0 &&
           mother.length > 0 &&
@@ -305,7 +262,7 @@ export default function ActionBar({
         if (!noempty) getById("empty").innerHTML = "Complete all fields";
         else getById("empty").innerHTML = " ";
 
-        return noempty && ageValid;
+        return noempty;
       },
       showCancelButton: true,
     }).then((value) => {
@@ -314,7 +271,6 @@ export default function ActionBar({
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
         let newDateOfMass = inputGetter("dateOfMass");
-        let newAge = inputGetter("age");
 
         let address = inputGetter("address");
         let father = inputGetter("father");
@@ -335,7 +291,6 @@ export default function ActionBar({
           dayOfDeath: newDayOfDeath,
           dayOfBirth: newDayOfBirth,
           dateOfMass: newDateOfMass,
-          age: newAge,
           address: address,
           father: father,
           mother: mother,
