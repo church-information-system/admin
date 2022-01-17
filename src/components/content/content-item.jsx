@@ -21,6 +21,8 @@ import {
 } from "../../api/FirebaseHelper";
 import {
   attributeSorter,
+  calculateAgeInYears,
+  calculateAgeInYearsDeath,
   convertCamelCase,
   convertTime12to24,
   customAlert,
@@ -182,7 +184,10 @@ export default function ContentItem({
             dy: dayOfDeath.getFullYear(),
             dayOfBirth: record.dayOfBirth,
             dateOfMass: record.dateOfMass,
-            age: record.age,
+            age: calculateAgeInYearsDeath(
+              new Date(record.dayOfBirth),
+              record.dayOfDeath
+            ),
             address: record.address,
             father: record.father,
             mother: record.mother,
@@ -244,7 +249,14 @@ export default function ContentItem({
             y: 453,
           },
           { value: dayOfDeath.getFullYear(), x: 356, y: 453 },
-          { value: record.age, x: 479, y: 453 },
+          {
+            value: calculateAgeInYearsDeath(
+              new Date(record.dayOfBirth),
+              record.dayOfDeath
+            ),
+            x: 479,
+            y: 453,
+          },
           { value: record.address, x: 175, y: 540 },
           { value: record.mother, x: 398, y: 510 },
           { value: record.father, x: 189, y: 510 },
@@ -687,8 +699,7 @@ export default function ContentItem({
         '<span class="swal2-input-label">Date Recorded</span>' +
         '<input id="dateRecorded" class="swal2-input" type="date">' +
         '<div id="empty" class="error-text"> </div>' +
-        '<div id="nothingChanged" class="error-text"> </div>' +
-        '<div id="invalidAge" class="error-text"> </div>',
+        '<div id="nothingChanged" class="error-text"> </div>',
       didOpen: () => {
         getById("fullname").value = record.name;
         getById("dayOfDeath").value = record.dayOfDeath;
@@ -709,8 +720,6 @@ export default function ContentItem({
         getById("dateRecorded").value = record.dateRecorded;
       },
       preConfirm: () => {
-        getById("age").value = getById("age").value.replace(/[^0-9]/g, "");
-
         let newName = inputGetter("fullname");
         let newDayOfBirth = inputGetter("dayOfBirth");
         let newDayOfDeath = inputGetter("dayOfDeath");
