@@ -17,7 +17,7 @@ export default function NavBar({ select, selected }) {
   return (
     <div id="navbar">
       <h2 className="clickable" onClick={() => select("")}>
-        National Shrine of Our Lady of sorrows
+        National Shrine of Our Lady of Sorrows
       </h2>
       <img
         src={hamburger}
