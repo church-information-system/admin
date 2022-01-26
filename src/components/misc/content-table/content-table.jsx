@@ -21,9 +21,15 @@ function Table({ columns, data }) {
       </thead>
       <tbody>
         <tr>
-          {columns.map((key, index) => (
-            <td key={data[key] + index}>{data[key].toString()}</td>
-          ))}
+          {columns.map((key, index) => {
+            let text = data[key].toString();
+            if (key === "receivedSacrament") {
+              if (text === "false") text = "no";
+              if (text === "on") text = "yes";
+            }
+
+            return <td key={data[key] + index}>{text}</td>;
+          })}
         </tr>
       </tbody>
     </table>
